@@ -35,3 +35,10 @@ Arquivo: assets/originals/precision-branded.png. Referências: precision.png (al
 Prompt: Edit only the navy clinical uniform in image 1: add a small discreet embroidered official turquoise B symbol from reference logo image 2 on the visible breast pocket area (left side of image). Keep exact symbol shape. No text necessary, just small B monogram that follows fabric and perspective. Preserve everything else exactly: scanner instrument, gloved hands, monitor, dental rendering, room, face, composition. Do not change any equipment or apply logos outside uniform. Landscape photograph.
 
 Revisão: cenas ilustrativas explicitamente identificadas; pacientes sem marca; composição central dos alinhadores usada na Home e na interna; bordados visíveis onde o uniforme permite. A fotografia de sorriso é de paciente e permanece sem bordado. Marca do site/CTA usa o arquivo real, sem reprodução gerada. Identidade bordada em imagens de IA é ilustrativa e deve ceder às fotografias oficiais quando disponíveis.
+# Logo transparente — navbar e rodapé
+
+Edição com a ferramenta integrada `image_gen`, em 30/09/2026. Origem: `public/assets/logo-original.png`. Arquivo aplicado: `public/assets/logo-transparent.png`; derivados lossless WebP de 320 e 600 px. Transparência alpha verificada. O rodapé usa a mesma imagem com filtro CSS branco para contraste sobre o azul, sem painel de fundo. O arquivo original permanece preservado.
+
+Prompt utilizado:
+
+> Background removal only. Extract the exact existing Instituto Bicalho official logo from this source image to an actual transparent background. Preserve the existing pixels/letter geometry and ORIGINAL MUTED COLORS: soft turquoise cyan emblem, slate gray/navy lettering, same muted turquoise tagline. Do NOT boost saturation or contrast, do not sharpen, do not redraw. Smooth intact clean antialiased edges, no eroded flecks or jagged outlines. Exact words: INSTITUTO Bicalho ODONTOLOGIA DE PRECISÃO. Remove all white areas including enclosed counters. Tight crop around the full logo retaining its original 3.37:1 aspect ratio. No additions. Transparent PNG.
