@@ -60,7 +60,12 @@ const unknown = await page.goto(base+'/pagina-inexistente/'); assert.equal(unkno
 const redirects=JSON.parse(await readFile('redirects.json','utf8'));
 for(const [from,to] of Object.entries(redirects)){const r=await fetch(base+from,{redirect:'manual'});assert.equal(r.status,301);assert.equal(r.headers.get('location'),to);}
 const sitemap = await (await fetch(base+'/sitemap.xml')).text(); for(const route of routes) assert(sitemap.includes('https://institutobicalho.com'+route)); assert(!sitemap.includes('404'));
-const nojs = await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}}); const np=await nojs.newPage(); await np.goto(base); assert(await np.locator('h1').isVisible()); assert(await np.locator('.noscript-nav').isVisible()); await nojs.close();
+const nojs = await browser.newContext({javaScriptEnabled:false,viewport:{width:390,height:844}}); const np=await nojs.newPage(); await np.goto(base); assert(await np.locator('h1').isVisible()); assert(await np.locator('.noscript-nav').isVisible());
+assert.equal(await np.locator('.team-panel').getAttribute('open'),null);
+await np.locator('.team-panel>summary').click();assert(await np.locator('.team-person').last().isVisible());assert.equal(await np.locator('.team-person').count(),12);
+await np.locator('.team-panel>summary').press('Enter');assert.equal(await np.locator('.team-panel').getAttribute('open'),null);
+for(const fragment of ['equipe','equipe-completa']){await np.goto(`${base}/#${fragment}`);await np.waitForFunction(()=>{const r=document.querySelector('.team-panel>summary').getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;});}
+await nojs.close();
 await page.emulateMedia({reducedMotion:'reduce'});
 async function preparePhotos(){await page.locator('img').evaluateAll(imgs=>Promise.all(imgs.map(img=>{img.loading='eager';return img.decode().catch(()=>{});})));await page.evaluate(()=>document.fonts.ready);}
 await page.setViewportSize({width:390,height:844}); await page.goto(base); await preparePhotos(); await page.screenshot({path:'artifacts/home-mobile.png',fullPage:true}); await page.screenshot({path:'artifacts/hero-mobile.png'});

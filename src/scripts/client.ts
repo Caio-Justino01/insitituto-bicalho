@@ -65,10 +65,6 @@ if ('IntersectionObserver' in window) {
 }
 
 // Basic navigation is independent from the optional animation bundle.
-document.querySelector('[data-team-open]')?.addEventListener('click', () => {
-  const panel = document.querySelector<HTMLDetailsElement>('.team-panel');
-  if (panel) panel.open = true;
-});
 import('./motion').then(module => module.initMotion()).catch(() => {
   document.body.dataset.motion = 'unavailable';
 });

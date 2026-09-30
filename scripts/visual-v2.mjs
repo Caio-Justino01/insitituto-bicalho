@@ -21,7 +21,7 @@ for(const width of [390,1440]){
  }
 }
 await page.setViewportSize({width:390,height:844});await page.goto('http://127.0.0.1:4321');await ready();
-for(const selector of ['.institution','.areas','.precision','.team','.units']){
+for(const selector of ['.institution','.areas','.precision','.units']){
  await page.locator(selector).scrollIntoViewIfNeeded();await page.screenshot({path:`artifacts/v2/scene-${selector.slice(1)}.png`});
 }
 await browser.close();console.log('V2 screenshots saved, images decoded at every viewport.');

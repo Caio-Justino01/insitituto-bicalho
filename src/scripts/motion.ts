@@ -57,7 +57,7 @@ export async function initMotion() {
       timeline.from(photo.querySelector('img'), { scale: 1.04, duration: .9, ease: 'power2.out' }, 0);
     });
 
-    all('.institution-copy>p, .team-copy>p, .section-intro>p, .precision-intro>p, .section-heading>p, .area-card-copy, .unit, .service, .portrait-note, .team-photo-label').forEach((element, index) => {
+    all('.institution-copy>p, .section-intro>p, .precision-intro>p, .section-heading>p, .area-card-copy, .unit, .service, .portrait-note').forEach((element, index) => {
       if (revealed.has(element)) return;
       const card = element.matches('.area-card-copy, .unit');
       gsap.from(element, { opacity: 0, y: card ? distance : 18, x: card && !mobile ? (index % 2 ? 12 : -12) : 0, duration: card ? .7 : .55, ease: 'power3.out', scrollTrigger: triggerFor(element), onComplete: () => { revealed.add(element); } });
