@@ -111,7 +111,7 @@ As páginas públicas apresentam horários divergentes. Publicações recentes d
 
 ## V3 — atendimento, agenda e marca oficial
 
-- `src/data/content.ts`: contatos, endereços aprovados, consultas dos mapas, agenda opcional por unidade e `socialLinks`. Facebook e Instagram ficam com `url: null` até receber os perfis oficiais; nada sem destino é exibido.
+- `src/data/content.ts`: contatos, endereços aprovados, consultas dos mapas, agenda opcional por unidade e `socialLinks`. Instagram e Facebook estão configurados com os perfis oficiais fornecidos pelo usuário, presentes no rodapé de todas as páginas e em `Organization.sameAs` nos dados estruturados.
 - Agenda limpa `https://agenda.link/os/116828`, somente João Monlevade. Todos os CTAs gerais abrem agenda rápida ou WhatsApp; BH nunca recebe a agenda de JM. A plataforma externa confirma horários e consultas.
 - `SupportAssistant.astro` e `src/scripts/assistant.ts`: fluxo tipado com respostas preparadas, 26 procedimentos, dúvidas, pacientes atuais, voltar/reiniciar, troca de unidade e resumo editável antes do WhatsApp. Estado apenas em memória; nenhum backend, gravação de conversa ou envio automático. Avatar fictício identificado como IA. O indicador verde significa disponibilidade do assistente virtual.
 - Logo oficial no rodapé, símbolo original recortado da marca no CTA, glifo reconhecível do WhatsApp e crédito para https://www.aguiadigital.com/.
@@ -122,7 +122,7 @@ As páginas públicas apresentam horários divergentes. Publicações recentes d
 - Novos testes: `node scripts/support-check.mjs` percorre todos os 26 serviços, quatro dúvidas gerais, três caminhos de pacientes, ambos os canais/unidades, voltar, reiniciar, reabrir, reload, nota segura, telas de 360–1440, paisagem, texto 200%, movimento reduzido, ausência de JS e axe no assistente.
 - `node scripts/visual-v3.mjs` produz capturas da abertura, diálogo de agendamento, conversa, resumo, unidades e rodapé em `artifacts/v3-*.png`.
 
-Pendentes para publicação: URLs oficiais de Instagram/Facebook, identificadores reais de Google/GA4, conferência dos dados profissionais e das políticas pelo Instituto e aprovação da versão navegável. Nenhuma publicação realizada.
+Pendentes para publicação: identificadores reais de Google/GA4, conferência dos dados profissionais e das políticas pelo Instituto e aprovação da versão navegável. Nenhuma publicação realizada.
 
 Medição mobile V3 local (30/09/2026): desempenho 98, acessibilidade 100, boas práticas 100; LCP 2,4 s, CLS 0 e TBT 80 ms. Rede/CPU limitadas na simulação Lighthouse; não representa garantia de campo. SEO 69 por noindex deliberado. O aviso adicional de correspondência entre rótulo visível e nome acessível do avatar foi corrigido e revalidado separadamente. Relatório de laboratório: artifacts/lighthouse-v3.report.html.
 

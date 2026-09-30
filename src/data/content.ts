@@ -9,10 +9,10 @@ export const units: Unit[] = [
   // Exact point in the official BH Point location link. Suite text can geocode to an unrelated business.
   { id: 'belo-horizonte', name: 'Belo Horizonte', phone: '5531997954111', display: '(31) 99795-4111', note: 'O cuidado do Instituto também em Belo Horizonte.', address: 'Av. Barão Homem de Melo, 55, loja 12, Nova Granada', mapLocation: '-19.935259,-43.9718161', landmark: 'BH Point' },
 ];
-// Populate only after the Institute confirms the exact official profile URLs.
+// Official profile URLs supplied by the user.
 export const socialLinks: { name: string; icon: string; url: string | null }[] = [
-  { name: 'Instagram', icon: 'instagram', url: null },
-  { name: 'Facebook', icon: 'facebook', url: null },
+  { name: 'Instagram', icon: 'instagram', url: 'https://www.instagram.com/institutobicalhoodontologia/' },
+  { name: 'Facebook', icon: 'facebook', url: 'https://www.facebook.com/institutobicalho/' },
 ];
 export const agencyUrl = 'https://www.aguiadigital.com/';
 export const mapQuery = (unit: Unit) => unit.mapLocation;
