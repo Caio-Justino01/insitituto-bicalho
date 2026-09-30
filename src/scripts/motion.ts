@@ -12,6 +12,9 @@ export async function initMotion() {
   media.add({ mobile: '(max-width:999px)', desktop: '(min-width:1000px)', reduced: '(prefers-reduced-motion:reduce)' }, context => {
     const { mobile, reduced } = context.conditions!;
     document.body.dataset.motion = reduced ? 'reduced' : 'ready';
+    // Interactive tweens may capture an in-flight press as their revert baseline.
+    // Always restore the resting CTA before rebuilding or disabling motion.
+    gsap.set('[data-booking-cta], [data-booking-cta] .brand-button-symbol', { clearProps: 'transform,backgroundColor' });
     if (reduced) return;
     const splits: SplitText[] = [];
     const cleanups: (() => void)[] = [];
