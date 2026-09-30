@@ -27,10 +27,10 @@ export const nav = [
   { href: '/odontologia-de-precisao/', label: 'Odontologia de Precisão' },
 ];
 export const media = {
-  smile: { src: 'smile', alt: 'Imagem ilustrativa de um sorriso natural', position: '40% 40%' },
-  hero: { src: 'hero-branded', alt: 'Cena ilustrativa de uma conversa acolhedora entre dentista e paciente', position: '100% 45%' },
-  aligners: { src: 'aligners', alt: 'Cena ilustrativa de uma dentista apresentando um alinhador transparente à paciente', position: '50% 40%' },
-  precision: { src: 'precision-branded', alt: 'Cena ilustrativa de escaneamento e planejamento odontológico digital', position: 'center' },
+  smile: { src: 'smile', alt: 'Sorriso natural', position: '40% 40%' },
+  hero: { src: 'hero-branded', alt: 'Conversa acolhedora entre dentista e paciente', position: '100% 45%' },
+  aligners: { src: 'aligners', alt: 'Dentista apresentando um alinhador transparente à paciente', position: '50% 40%' },
+  precision: { src: 'precision-branded', alt: 'Escaneamento e planejamento odontológico digital', position: 'center' },
   partnerOne: { src: 'partner-01', alt: 'Sócio do Instituto Bicalho em retrato institucional', position: '50% 27%' },
   partnerTwo: { src: 'partner-02', alt: 'Sócia do Instituto Bicalho em retrato institucional', position: '50% 28%' },
   professional: { src: 'professional-01', alt: 'Profissional do Instituto Bicalho em retrato institucional', position: '50% 28%' },

@@ -5,10 +5,10 @@ import Icon from './Icon.astro';
   <span class="assistant-avatar"><img src="/assets/assistant-160.webp" width="56" height="56" alt=""/><span class="online-dot" aria-hidden="true"></span></span>
   <span class="launcher-label">Posso ajudar? <small>Assistente virtual</small></span>
 </button>
-<dialog id="support-dialog" aria-labelledby="support-title" aria-describedby="support-disclosure">
+<dialog id="support-dialog" aria-labelledby="support-title">
   <header class="support-header"><span class="assistant-avatar"><img src="/assets/assistant-160.webp" width="48" height="48" alt=""/><span class="online-dot" aria-hidden="true"></span></span><div><h2 id="support-title">Assistente virtual Bicalho</h2><p>Assistente virtual disponível</p></div><button class="icon-button" type="button" data-support-close aria-label="Fechar conversa"><Icon name="close"/></button></header>
   <div class="support-toolbar"><button type="button" data-support-back>← Voltar</button><button type="button" data-support-reset>Reiniciar</button><button type="button" data-support-human>Falar com a equipe</button></div>
-  <div class="support-scroll"><p id="support-disclosure" class="support-disclosure">Conversa guiada com respostas preparadas. Personagem ilustrativa criada por IA.</p><div id="support-history" role="log" aria-label="Histórico da conversa" aria-live="polite" aria-relevant="additions"></div><div id="support-actions"></div></div>
+  <div class="support-scroll"><div id="support-history" role="log" aria-label="Histórico da conversa" aria-live="polite" aria-relevant="additions"></div><div id="support-actions"></div></div>
   <footer class="support-footer">Você escolhe o que enviar. <a href="/politica-de-privacidade/">Privacidade</a></footer>
   <template id="whatsapp-icon"><Icon name="chat" size={22}/></template>
 </dialog>
