@@ -1,0 +1,42 @@
+name: Validate website
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  website:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PUBLIC_INDEXABLE: 'false'
+      PLAYWRIGHT_CHANNEL: chromium
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Start local preview
+        run: |
+          node scripts/serve.mjs > /tmp/bicalho-preview.log 2>&1 &
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4321/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/bicalho-preview.log
+          exit 1
+      - run: npm run test:all
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: website-checks
+          path: artifacts/
+          retention-days: 14

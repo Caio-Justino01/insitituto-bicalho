@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Photo from '../components/Photo.astro';
+import Icon from '../components/Icon.astro';
+import BookingLink from '../components/BookingLink.astro';
+import Precision from '../components/Precision.astro';
+import Faq from '../components/Faq.astro';
+import Units from '../components/Units.astro';
+import { areas, team, homeQuestions } from '../data/content';
+const photos = ['hero', 'smile', 'aligners', 'precision'] as const;
+---
+<Layout title="Odontologia de Precisão em João Monlevade e BH" description="Conheça o Instituto Bicalho: tratamentos, estética, ortodontia, cirurgia e odontologia digital. Atendimento em João Monlevade e Belo Horizonte.">
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container hero-layout">
+      <div class="hero-copy">
+        <span class="hero-eyebrow"><span class="status-dot" aria-hidden="true"></span>Odontologia de Precisão</span>
+        <h1 id="hero-heading">Precisão no cuidado.<br/><span>Confiança para sorrir.</span></h1>
+        <p>Odontologia integrada, tecnologia e um olhar atento para você.</p>
+        <div class="hero-actions"><BookingLink position="hero" id="primary-booking"/><a class="text-link" href="#instituto">Conheça o Instituto<Icon name="arrow" size={18}/></a></div>
+        <span class="hero-location"><Icon name="pin" size={18}/>João Monlevade e Belo Horizonte</span>
+      </div>
+      <div class="hero-visual">
+        <Photo name="hero" class="hero-photo" eager sizes="(min-width: 1000px) 52vw, 100vw" caption/>
+        <div class="photo-tags" aria-hidden="true"><span>Escuta</span><span>Cuidado</span><span>Tecnologia</span></div>
+        <div class="hero-glass glass"><span class="circle-icon"><Icon name="tooth" size={25}/></span><div><strong>Você no centro do cuidado.</strong><p>Da primeira conversa a cada novo sorriso.</p></div></div>
+      </div>
+    </div>
+    <div class="container hero-footnote"><span>Saúde, função e estética. Juntas.</span><a href="#instituto">Explore o Instituto<Icon name="arrow" size={18}/></a></div>
+  </section>
+  <section class="section institution" id="instituto" aria-labelledby="institution-heading">
+    <div class="container institution-layout">
+      <div class="institution-copy"><span class="eyebrow">Um olhar para o todo</span><h2 id="institution-heading">Antes do sorriso,<br/>vem <span>você.</span></h2><p class="lead-copy">O cuidado começa com a escuta.</p><p>Uma equipe integrada para cuidar da sua saúde, da função e da estética do seu sorriso.</p><p>Com planejamento individualizado, clareza e acolhimento em cada etapa. Porque conhecer você é tão importante quanto conhecer o seu sorriso.</p><a class="text-link" href="#equipe">Conheça nossa equipe<Icon name="arrow" size={19}/></a></div>
+      <div class="partner-photos"><Photo name="partnerOne" sizes="(min-width: 1000px) 23vw, 46vw"/><Photo name="partnerTwo" sizes="(min-width: 1000px) 23vw, 46vw"/><div class="portrait-note glass"><span class="status-dot" aria-hidden="true"></span>Pessoas que cuidam de pessoas.</div></div>
+    </div>
+  </section>
+  <section class="section areas" aria-labelledby="areas-heading"><div class="container">
+    <div class="section-intro"><div><span class="eyebrow">Nossas áreas de cuidado</span><h2 id="areas-heading">Seu sorriso.<br/><span>Um universo de cuidado.</span></h2></div><p>Saúde, função e estética conectadas em um só planejamento.</p></div>
+    <div class="area-grid">{areas.map((area, i) => <a class={`area-card area-card-${i+1}`} href={`/${area.slug}/`}><Photo name={photos[i]} class="area-photo" sizes="(min-width: 1000px) 50vw, 100vw" caption/><span class="area-number" aria-hidden="true">0{i+1}</span><div class="area-card-copy glass"><div class="area-card-title"><h3>{area.title}</h3><span class="round-arrow"><Icon name="arrow" size={21}/></span></div><p>{area.short}</p><span class="area-link">Explorar cuidados</span></div></a>)}</div>
+  </div></section>
+  <Precision/>
+  <section class="section team" id="equipe" aria-labelledby="team-heading"><div class="container">
+    <div class="team-editorial"><div class="team-photo-composition"><Photo name="professional" class="team-photo" sizes="(min-width: 1000px) 36vw, 100vw"/><span class="team-photo-label glass">Conhecimento que se conecta.<br/><strong>Cuidado que se sente.</strong></span></div><div class="team-copy"><span class="eyebrow">Nossa equipe odontológica</span><h2 id="team-heading">Muitos olhares.<br/><span>O mesmo cuidado.</span></h2><p>Diferentes especialidades e áreas de atuação se encontram para construir o seu planejamento.</p><p>Conheça os profissionais que fazem parte do Instituto Bicalho.</p><a class="text-link" href="#equipe-completa" data-team-open>Conheça nossa equipe<Icon name="arrow" size={19}/></a></div></div>
+    <details class="team-panel" id="equipe-completa"><summary><span>Conheça nossa equipe<small>Profissionais e áreas de atuação</small></span><span class="round-arrow"><Icon name="plus" size={22}/></span></summary><div class="team-panel-content"><div class="team-grid">{team.map(person => <article class="team-person"><h3>{person.name}</h3>{person.role && <span class="team-role">{person.role}</span>}<p><span class="team-kind">{person.kind}</span>{person.work}</p></article>)}</div></div></details>
+  </div></section>
+  <Faq questions={homeQuestions}/>
+  <Units/>
+</Layout>

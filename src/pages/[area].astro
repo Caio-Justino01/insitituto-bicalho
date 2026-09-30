@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Photo from '../components/Photo.astro';
+import BookingLink from '../components/BookingLink.astro';
+import Icon from '../components/Icon.astro';
+import Faq from '../components/Faq.astro';
+import Units from '../components/Units.astro';
+import { areas, type Area } from '../data/content';
+export function getStaticPaths() { return areas.map(area => ({ params: { area: area.slug }, props: { area } })); }
+interface Props { area: Area }
+const { area } = Astro.props;
+---
+<Layout title={area.title} description={`${area.short} Conheça ${area.title.toLowerCase()} no Instituto Bicalho em João Monlevade e Belo Horizonte.`}>
+  <section class="inner-hero"><div class="container inner-hero-layout"><div class="inner-hero-copy"><nav class="breadcrumb" aria-label="Caminho da página"><a href="/">Início</a><span aria-hidden="true">/</span><span>{area.title}</span></nav><span class="eyebrow">{area.title}</span><h1>{area.heading}</h1><p>{area.intro}</p><BookingLink position="area-hero" id="primary-booking"/></div><Photo name={area.image} class="inner-hero-photo" eager caption={area.image !== 'professional'}/></div></section>
+  <section class="section services" aria-labelledby="services-heading"><div class="container service-layout"><aside class="service-index"><span class="eyebrow">Explore os cuidados</span><h2 id="services-heading">{area.title === 'Odontologia de Precisão' ? 'O digital em cada etapa.' : 'Encontre o cuidado que você procura.'}</h2><nav aria-label={`Serviços de ${area.title}`}>{area.services.map(service => <a href={`#${service.id}`}>{service.title}<Icon name="arrow" size={16}/></a>)}</nav></aside><div class="service-list">{area.services.map(service => <article class="service" id={service.id}><Icon name={area.icon} size={30}/><div><h3>{service.title}</h3><p>{service.text}</p><a class="text-link" href="/#unidades" data-booking data-position="service">Conversar com a equipe<Icon name="arrow" size={17}/></a></div></article>)}<p class="clinical-note">A indicação e as etapas de cada tratamento dependem de avaliação individual. Consulte a equipe sobre a disponibilidade na unidade de sua preferência.</p></div></div></section>
+  <section class="other-areas"><div class="container"><h2>Continue conhecendo nossos cuidados</h2><div>{areas.filter(item => item.slug !== area.slug).map(item => <a href={`/${item.slug}/`}>{item.title}<Icon name="arrow" size={19}/></a>)}</div></div></section>
+  <Faq questions={area.questions}/><Units/>
+</Layout>

@@ -1,0 +1,7 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { legalPages } from '../data/legal';
+export function getStaticPaths() { return legalPages.map(page => ({ params: { legal: page.slug }, props: { page } })); }
+const { page } = Astro.props;
+---
+<Layout title={page.title} description={page.intro}><article class="container section legal"><nav class="breadcrumb" aria-label="Caminho da página"><a href="/">Início</a><span>/</span><span>{page.title}</span></nav><h1>{page.title}</h1><p class="legal-date">Versão de 30 de setembro de 2026</p><p>{page.intro}</p>{page.sections.map(([heading, text]) => <section><h2>{heading}</h2><p>{text}</p></section>)}<p><a href="/#unidades">Fale com a equipe do Instituto Bicalho</a></p>{page.slug.includes('cookies') && <button class="button" data-cookie-settings>Revisar preferências de cookies</button>}</article></Layout>

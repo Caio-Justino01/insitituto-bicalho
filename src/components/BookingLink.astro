@@ -1,0 +1,5 @@
+---
+interface Props { label?: string; position?: string; class?: string; id?: string }
+const { label = 'Agendar uma avaliação', position = 'content', class: className = '', id } = Astro.props;
+---
+<a href="/#unidades" class:list={['button', 'booking-cta', className]} data-booking data-booking-cta data-position={position} id={id}>{label}<span class="brand-button-symbol"><img src="/assets/brand-symbol.webp" width="32" height="32" alt=""/></span></a>

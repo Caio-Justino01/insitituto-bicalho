@@ -1,0 +1,61 @@
+{
+  "framework": "astro",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/saude-e-restauracao-dental-insituto-bicalho",
+      "destination": "/tratamentos/",
+      "statusCode": 301
+    },
+    {
+      "source": "/estetica-dental-e-harmonizacao-facial-insituto-bicalho",
+      "destination": "/estetica/",
+      "statusCode": 301
+    },
+    {
+      "source": "/ortodontia-e-ortopedia-funcional-insituto-bicalho",
+      "destination": "/ortodontia-e-cirurgia/",
+      "statusCode": 301
+    },
+    {
+      "source": "/cirurgias-e-tratamentos-especializados-insituto-bicalho",
+      "destination": "/ortodontia-e-cirurgia/",
+      "statusCode": 301
+    }
+  ],
+  "installCommand": "npm ci",
+  "headers": [
+    {
+      "source": "/_astro/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ]
+}

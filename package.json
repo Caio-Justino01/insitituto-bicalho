@@ -1,0 +1,33 @@
+{
+  "name": "instituto-bicalho",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro check && astro build",
+    "preview": "node scripts/serve.mjs",
+    "check": "astro check",
+    "test": "node scripts/verify.mjs",
+    "test:flows": "node scripts/support-check.mjs && node scripts/analytics-check.mjs && node scripts/motion-check.mjs && node scripts/final-v3-check.mjs",
+    "test:cta": "node scripts/cta-check.mjs",
+    "test:all": "npm test && npm run test:flows && npm run test:cta"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
+    "astro": "^7.3.5",
+    "gsap": "^3.15.0",
+    "heic-convert": "^2.1.0",
+    "sharp": "^0.35.5",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "lighthouse": "^13.5.0"
+  },
+  "engines": {
+    "node": "24.x"
+  }
+}

@@ -1,0 +1,11 @@
+---
+import Icon from './Icon.astro';
+interface Props { questions: [string, string][] }
+const { questions } = Astro.props;
+---
+<section class="section faq" aria-labelledby="faq-heading">
+  <div class="container faq-layout">
+    <div class="section-heading" data-reveal><span class="eyebrow">Vamos conversar?</span><h2 id="faq-heading">Informação também<br/>é cuidado.</h2><p>Algumas respostas para você dar o primeiro passo com tranquilidade.</p></div>
+    <div class="faq-list">{questions.map(([question, answer]) => <details><summary>{question}<Icon name="plus" size={20}/></summary><div class="faq-answer"><p>{answer}</p></div></details>)}</div>
+  </div>
+</section>

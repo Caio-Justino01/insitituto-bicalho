@@ -1,0 +1,13 @@
+---
+import { media } from '../data/content';
+interface Props { name: keyof typeof media; class?: string; eager?: boolean; sizes?: string; caption?: boolean }
+const { name, class: className = '', eager = false, sizes = '(min-width: 900px) 50vw, 100vw', caption = false } = Astro.props;
+const photo = media[name];
+---
+<figure class:list={['photo', className]} style={`--photo-position:${photo.position}`}>
+  <picture>
+    <source type="image/avif" srcset={[480, 800, 1200, 1600].map(w => `/assets/${photo.src}-${w}.avif ${w}w`).join(', ')} sizes={sizes}/>
+    <img src={`/assets/${photo.src}-800.webp`} srcset={[480, 800, 1200, 1600].map(w => `/assets/${photo.src}-${w}.webp ${w}w`).join(', ')} sizes={sizes} width="1600" height={name.startsWith('partner') || name === 'professional' ? '2400' : '1067'} alt={photo.alt} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : 'auto'} decoding="async"/>
+  </picture>
+  {caption && <figcaption>Imagem ilustrativa</figcaption>}
+</figure>

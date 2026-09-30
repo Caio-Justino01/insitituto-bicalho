@@ -1,0 +1,19 @@
+---
+import { units, whatsapp, directions, mapEmbed } from '../data/content';
+import Icon from './Icon.astro';
+---
+<section class="section units" id="unidades" aria-labelledby="units-heading">
+  <div class="container units-layout">
+    <div class="section-heading"><span class="eyebrow">João Monlevade e Belo Horizonte</span><h2 id="units-heading">Perto de você.<br/><span>Do primeiro contato ao cuidado.</span></h2><p>Escolha sua unidade e o jeito mais prático de começar.</p></div>
+    {units.map(unit => <article class="unit glass" data-unit-card={unit.id}>
+      <div class="unit-heading"><span class="circle-icon"><Icon name="pin" size={25}/></span><span class="eyebrow">Instituto Bicalho</span></div>
+      <h3>{unit.name}</h3><address>{unit.address}<br/>{unit.name} — MG{unit.landmark && <span class="unit-landmark">No {unit.landmark}</span>}</address>
+      <div class="unit-map"><iframe src={mapEmbed(unit)} loading="lazy" title={`Mapa da unidade ${unit.name}`} referrerpolicy="no-referrer" allowfullscreen></iframe></div>
+      <a class="text-link directions-link" href={directions(unit)} target="_blank" rel="noopener noreferrer">Como chegar<Icon name="arrow" size={18}/></a>
+      <div class="unit-channels">
+        {unit.onlineBooking ? <a class="button" href={unit.onlineBooking} target="_blank" rel="noopener noreferrer" data-online-booking={unit.id} data-position="units">Agendar online<Icon name="calendar" size={20}/></a> : <p class="unit-channel-note">Agendamento e dúvidas com a equipe pelo WhatsApp.</p>}
+        <a class:list={['button', { 'button-outline': !!unit.onlineBooking }]} href={whatsapp(unit.phone)} target="_blank" rel="noopener noreferrer" data-whatsapp={unit.id} data-position="units">Conversar pelo WhatsApp<Icon name="chat" size={20}/></a>
+      </div><a class="unit-phone" href={`tel:+${unit.phone}`}>{unit.display}</a>
+    </article>)}
+  </div>
+</section>

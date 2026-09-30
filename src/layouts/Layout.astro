@@ -1,0 +1,68 @@
+---
+import jakarta from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
+import '../styles/global.css';
+import '../styles/support.css';
+import BookingDialog from '../components/BookingDialog.astro';
+import SupportAssistant from '../components/SupportAssistant.astro';
+import { site, nav, units, socialLinks, agencyUrl } from '../data/content';
+import Icon from '../components/Icon.astro';
+import BookingLink from '../components/BookingLink.astro';
+interface Props { title: string; description: string; noindex?: boolean }
+const { title, description, noindex = false } = Astro.props;
+const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true' && process.env.VERCEL_ENV !== 'preview' && !noindex;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const verification = import.meta.env.PUBLIC_GOOGLE_VERIFICATION;
+const schema = { '@context': 'https://schema.org', '@graph': [
+  { '@type': 'Organization', '@id': `${site.url}/#organization`, name: site.name, url: site.url, logo: `${site.url}/assets/logo.png`, subOrganization: units.map(u => ({ '@id': `${site.url}/#${u.id}` })) },
+  ...units.map(u => ({ '@type': 'Dentist', '@id': `${site.url}/#${u.id}`, name: `${site.name} — ${u.name}`, url: `${site.url}/#unidades`, telephone: `+${u.phone}`, parentOrganization: { '@id': `${site.url}/#organization` }, address: { '@type': 'PostalAddress', streetAddress: u.address, addressLocality: u.name, addressRegion: 'MG', addressCountry: 'BR' }, areaServed: { '@type': 'City', name: u.name } })),
+  ...(Astro.url.pathname !== '/' && !noindex ? [{ '@type': 'BreadcrumbList', itemListElement: [ { '@type': 'ListItem', position: 1, name: 'Início', item: site.url }, { '@type': 'ListItem', position: 2, name: title, item: canonical } ] }] : []),
+] };
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta name="theme-color" content="#102c42"/>
+    <link rel="preload" href={jakarta} as="font" type="font/woff2" crossorigin/>
+    <title>{title} | Instituto Bicalho</title>
+    <meta name="description" content={description}/>
+    <meta name="robots" content={indexable ? 'index, follow' : 'noindex, follow'}/>
+    <link rel="canonical" href={canonical}/>
+    <link rel="icon" type="image/png" href="/assets/favicon.png"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="pt_BR"/>
+    <meta property="og:title" content={`${title} | Instituto Bicalho`}/>
+    <meta property="og:description" content={description}/>
+    <meta property="og:url" content={canonical}/>
+    <meta property="og:image" content={`${site.url}/assets/hero-branded-1200.webp`}/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    {verification && <meta name="google-site-verification" content={verification}/>}
+    <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')}/>
+  </head>
+  <body data-ga-id={import.meta.env.PUBLIC_GA_ID || ''}>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="Instituto Bicalho — início"><img src="/assets/logo-320.webp" srcset="/assets/logo-320.webp 320w, /assets/logo.webp 600w" sizes="(min-width:1200px) 180px, 157px" alt="Instituto Bicalho — Odontologia de Precisão" width="600" height="178"/></a>
+        <nav class="desktop-nav" aria-label="Navegação principal">{nav.map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? 'page' : undefined}>{item.label}</a>)}</nav>
+        <BookingLink label="Agendar avaliação" position="header" class="header-booking"/>
+        <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-navigation"><span></span><span></span></button>
+      </div>
+      <nav class="mobile-nav" id="mobile-navigation" aria-label="Navegação mobile" hidden>{nav.map(item => <a href={item.href} aria-current={Astro.url.pathname === item.href ? 'page' : undefined}>{item.label}<Icon name="arrow" size={19}/></a>)}<a href="/#equipe">Nossa equipe</a><a href="/#unidades">Nossas unidades</a><BookingLink position="menu"/></nav>
+      <noscript><nav class="noscript-nav">{nav.map(item => <a href={item.href}>{item.label}</a>)}</nav></noscript>
+    </header>
+    <main id="conteudo" tabindex="-1"><slot/></main>
+    <footer class="site-footer">
+      <div class="container footer-top"><div><a class="footer-brand official-logo" href="/" aria-label="Instituto Bicalho — início"><img src="/assets/logo.webp" width="600" height="178" alt="Instituto Bicalho — Odontologia de Precisão" loading="lazy"/></a>{socialLinks.some(social => social.url) && <nav class="social-links" aria-label="Redes sociais">{socialLinks.filter(social => social.url).map(social => <a href={social.url!} target="_blank" rel="noopener noreferrer"><Icon name={social.icon} size={21}/>{social.name}</a>)}</nav>}</div><p>Cuidar de você.<br/>Em cada detalhe.</p><nav aria-label="Links do rodapé">{nav.slice(1).map(item => <a href={item.href}>{item.label}</a>)}</nav></div>
+      <div class="container footer-bottom"><span>© {new Date().getFullYear()} Instituto Bicalho</span><nav aria-label="Políticas"><a href="/politica-de-privacidade/">Política de Privacidade</a><a href="/termos-de-uso/">Termos de Uso</a><a href="/politica-de-cookies/">Política de Cookies</a><button type="button" data-cookie-settings>Preferências de cookies</button></nav></div>
+      <div class="container agency-credit"><a href={agencyUrl} target="_blank" rel="noopener noreferrer">Desenvolvido por <strong>Águia Digital</strong><Icon name="arrow" size={16}/></a></div>
+    </footer>
+    <div class="mobile-cta" hidden><BookingLink label="Agendar avaliação" position="mobile-bar"/></div>
+    <BookingDialog/>
+    <SupportAssistant/>
+    <aside class="cookie-notice" aria-labelledby="cookie-heading" hidden><div><h2 id="cookie-heading">Sua privacidade importa.</h2><p>Podemos usar cookies para entender as visitas e melhorar o site. Você decide. <a href="/politica-de-cookies/">Saiba mais</a></p></div><div class="cookie-actions"><button type="button" class="button button-outline" data-consent="denied">Recusar</button><button type="button" class="button" data-consent="granted">Aceitar</button></div></aside>
+    <div class="sr-only" role="status" id="consent-status"></div>
+    <script src="../scripts/client.ts"></script>
+  </body>
+</html>

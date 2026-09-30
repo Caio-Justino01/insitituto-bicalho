@@ -1,0 +1,25 @@
+---
+import { units, whatsapp } from '../data/content';
+import Icon from './Icon.astro';
+const online = units.find(unit => unit.onlineBooking)!;
+---
+<dialog id="booking-dialog" aria-labelledby="booking-title">
+  <div class="dialog-body">
+    <button type="button" class="icon-button dialog-close" aria-label="Fechar agendamento"><Icon name="close"/></button>
+    <span class="eyebrow">Seu próximo passo</span>
+    <h2 id="booking-title">Como você prefere<br/>começar?</h2>
+    <div data-booking-channels>
+      <p class="booking-intro">Pronto para marcar ou prefere conversar primeiro?</p>
+      <div class="channel-options">
+        <a class="channel-card" href={online.onlineBooking} target="_blank" rel="noopener noreferrer" data-online-booking={online.id} data-position="dialog"><span class="circle-icon"><Icon name="calendar"/></span><span><small class="channel-tag">João Monlevade · Agendamento rápido</small><strong>Agendar online</strong><span>Já quer marcar? Consulte os horários disponíveis e agende pela nossa agenda online.</span><em>Abrir agenda oficial <Icon name="arrow" size={17}/></em></span></a>
+        <button type="button" class="channel-card" data-choose-whatsapp><span class="circle-icon"><Icon name="chat"/></span><span><small class="channel-tag">João Monlevade e Belo Horizonte</small><strong>Conversar pelo WhatsApp</strong><span>Tire suas dúvidas e receba orientação da nossa equipe.</span><em>Escolher unidade <Icon name="arrow" size={17}/></em></span></button>
+      </div>
+      <p class="dialog-note">A agenda abre em outra aba. A confirmação acontece na plataforma oficial.</p>
+    </div>
+    <div data-booking-units hidden>
+      <p class="booking-intro">Escolha a unidade para conversar com nossa equipe pelo WhatsApp.</p>
+      <div class="booking-options">{units.map(unit => <a href={whatsapp(unit.phone)} target="_blank" rel="noopener noreferrer" data-whatsapp={unit.id} data-position="dialog"><Icon name="chat"/><span><strong>{unit.name}</strong><small>{unit.display}</small></span><Icon name="arrow" size={20}/></a>)}</div>
+      <button type="button" class="text-link" data-booking-back>← Voltar às opções</button>
+    </div>
+  </div>
+</dialog>
