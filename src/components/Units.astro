@@ -1,13 +1,15 @@
 ---
 import { units, whatsapp, directions, mapEmbed } from '../data/content';
 import Icon from './Icon.astro';
+interface Props { heading?: [string, string] }
+const { heading = ['Perto de você.', 'Do primeiro contato ao cuidado.'] } = Astro.props;
 ---
 <section class="section units" id="unidades" aria-labelledby="units-heading">
   <div class="container units-layout">
-    <div class="section-heading"><span class="eyebrow">João Monlevade e Belo Horizonte</span><h2 id="units-heading">Perto de você.<br/><span>Do primeiro contato ao cuidado.</span></h2><p>Escolha sua unidade e o jeito mais prático de começar.</p></div>
+    <div class="section-heading"><span class="eyebrow">João Monlevade e Belo Horizonte</span><h2 id="units-heading">{heading[0]} <br/><span>{heading[1]}</span></h2><p>Escolha sua unidade e o jeito mais prático de começar.</p></div>
     {units.map(unit => <article class="unit glass" data-unit-card={unit.id}>
       <div class="unit-heading"><span class="circle-icon"><Icon name="pin" size={25}/></span><span class="eyebrow">Instituto Bicalho</span></div>
-      <h3>{unit.name}</h3><address>{unit.address}<br/>{unit.name} — MG{unit.landmark && <span class="unit-landmark">No {unit.landmark}</span>}</address>
+      <h3>{unit.name}</h3><address>{unit.address}<br/>{unit.name} - MG{unit.landmark && <span class="unit-landmark">No {unit.landmark}</span>}</address>
       <div class="unit-map"><iframe src={mapEmbed(unit)} loading="lazy" title={`Mapa da unidade ${unit.name}`} referrerpolicy="no-referrer" allowfullscreen></iframe></div>
       <a class="text-link directions-link" href={directions(unit)} target="_blank" rel="noopener noreferrer">Como chegar<Icon name="arrow" size={18}/></a>
       <div class="unit-channels">

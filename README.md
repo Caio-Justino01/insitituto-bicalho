@@ -1,10 +1,10 @@
 # Instituto Bicalho
 
-Site institucional em Astro + TypeScript, com HTML estático, cinco páginas principais, três páginas de políticas e 404. Prévia local, ainda não publicado.
+Site institucional em Astro + TypeScript, com HTML estático, cinco páginas principais, três páginas de políticas e 404. Publicado em https://insitituto-bicalho.vercel.app/ via GitHub/Vercel; a URL temporária permanece fora da indexação.
 
 ## V2 — vidro, fotografia e movimento
 
-Visual claro com Plus Jakarta Sans variável local (400–700), navegação flutuante, botões em cápsula, fotografias em molduras e vidro com fundo sólido de fallback. A Home tem quatro áreas no mosaico, composição editorial com retratos preservados, cena azul de odontologia digital, equipe de 12 profissionais em `details` nativo, perguntas e duas unidades com igual destaque. Os retratos não estão associados a nomes não confirmados.
+Visual claro com Plus Jakarta Sans variável local (400–700), navegação flutuante, botões em cápsula, fotografias em molduras e vidro com fundo sólido de fallback. A Home tem quatro áreas no mosaico, composição editorial com retratos preservados, cena azul de odontologia digital, equipe de 14 profissionais em `details` nativo, perguntas e duas unidades com igual destaque. A legenda dos sócios usa os nomes fornecidos pelo cliente; não foram presumidas outras associações individuais.
 
 `src/scripts/motion.ts` usa GSAP, ScrollTrigger e SplitText: títulos por linhas com máscara e nome acessível, entradas de fotografias e painéis, progressão do fluxo digital e interações breves. `gsap.matchMedia()` limpa e reconstrói efeitos nos breakpoints e na alteração de movimento reduzido. SplitText recompõe linhas em mudanças de largura. Seções já visitadas não repetem a entrada. A rolagem é nativa; o botão inicial não depende da animação. O bundle de movimento é separado do código de agendamento e consentimento; o HTML permanece legível sem JavaScript.
 
@@ -49,7 +49,7 @@ Somente fontes, dependências travadas e imagens otimizadas são versionadas. `.
 
 Todos os CTAs de avaliação compartilham `BookingLink.astro`, símbolo B oficial e animação de pressão com GSAP. WhatsApp e agenda mantêm seus destinos próprios. A faixa dos retratos alinha as bordas laterais e inferior com a composição, com raio inferior de 24 px na segunda fotografia. Validação em 360, 390, 430, 768, 1024 e 1440 px, incluindo retorno de foco após fechar o agendamento pelo menu e pela barra mobile.
 
-Medição final local Lighthouse (30/09/2026), em execuções sequenciais com rede/CPU mobile simuladas:
+Medição histórica local Lighthouse (30/09/2026), em execuções sequenciais com rede/CPU mobile simuladas:
 
 | Página | Desempenho mobile | LCP | CLS |
 | --- | --- | --- | --- |
@@ -62,6 +62,12 @@ Medição final local Lighthouse (30/09/2026), em execuções sequenciais com re
 Todas obtiveram 100 em acessibilidade e boas práticas na auditoria automática. A Home desktop obteve 100 em desempenho, LCP 0,5 s. SEO 69 em todas por `noindex` intencional. Os relatórios estão em `artifacts/lighthouse-release-*.report.html` na máquina de desenvolvimento. Esses números são de laboratório local, não uma medição PageSpeed Insights de um domínio público, nem garantia de nota 100 ou desempenho real. Repetir no endereço da Vercel após o deploy. As medições V2/V3 abaixo são histórico, anteriores à entrega final.
 
 ## Conteúdo e imagens
+
+Revisão da Home em 14/10/2026: textos aplicados conforme o Markdown "Textos da Home: Instituto Bicalho (site novo)" fornecido pelo cliente. Metadados e OG usam o title completo sem repetir a marca. `homeSummary` separa a redação dos cartões da descrição das páginas internas; o componente de unidades recebe o título da Home por propriedade opcional. Roberta Souza Carneiro e Anne Sousa foram corrigidas, e Stefany de Oliveira Lima e Veridiana Salles acrescentadas à equipe de Belo Horizonte. A referência a implantes na página de Ortodontia e Cirurgia aponta ao conteúdo existente em Tratamentos, sem duplicar o serviço no atendimento virtual.
+
+O CSS da Home mantém o H1 em 34–36 px no celular e 44–56 px no desktop, legendas e textos secundários do fluxo digital em 14 px, sem alterar a tipografia das páginas internas. Conferência do conteúdo com o documento, 14 profissionais, seis larguras de 360–1440 px, ampliação de texto a 200%, painel nativo sem JavaScript e testes completos de navegação, consentimento, atendimento e movimento passaram.
+
+Lighthouse mobile local nesta revisão: desempenho 94, acessibilidade 100 e boas práticas 100; LCP aproximadamente 2,5 s, CLS inferior a 0,001 e TBT 210 ms. SEO 69 pelo `noindex` intencional. Relatórios em `artifacts/home-copy/lighthouse-mobile.report.html` e `.json`, capturas na mesma pasta. Medição de laboratório com rede/CPU simuladas, sem garantia de pontuação ou desempenho em campo.
 
 `src/data/content.ts` centraliza equipe, serviços, unidades, contatos e posições das imagens. Textos clínicos são introdutórios e precisam da conferência final da equipe. Não foram inventados registros profissionais, horários, avaliações ou estatísticas. Os endereços aprovados estão centralizados junto aos contatos.
 

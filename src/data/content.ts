@@ -36,10 +36,11 @@ export const media = {
   professional: { src: 'professional-01', alt: 'Profissional do Instituto Bicalho em retrato institucional', position: '50% 28%' },
 };
 export type Service = { id: string; title: string; text: string };
-export type Area = { slug: string; title: string; short: string; heading: string; intro: string; icon: string; image: keyof typeof media; services: Service[]; questions: [string, string][] };
+export type Area = { slug: string; title: string; short: string; homeSummary?: string; heading: string; intro: string; icon: string; image: keyof typeof media; services: Service[]; questions: [string, string][] };
 export const areas: Area[] = [
   {
     slug: 'tratamentos', title: 'Tratamentos', short: 'Saúde e função para o seu sorriso.', heading: 'Cuidado completo para a sua saúde bucal.', icon: 'tooth', image: 'hero',
+    homeSummary: 'Prevenção, tratamento de canal, periodontia e reabilitação oral.',
     intro: 'Da prevenção à reabilitação oral, cada cuidado começa por entender você. Nossa equipe reúne diferentes áreas da odontologia para construir um planejamento individualizado.',
     services: [
       { id: 'implantes-dentarios', title: 'Implantes dentários', text: 'Uma possibilidade para a reposição de dentes ausentes. A avaliação considera a saúde bucal, a estrutura óssea e as necessidades de cada pessoa antes de definir o planejamento.' },
@@ -56,6 +57,7 @@ export const areas: Area[] = [
   },
   {
     slug: 'estetica', title: 'Estética', short: 'Harmonia que respeita a sua identidade.', heading: 'Seu sorriso. Sua expressão. Sua identidade.', icon: 'spark', image: 'smile',
+    homeSummary: 'Facetas dentárias, clareamento dental e harmonização orofacial.',
     intro: 'Estética do sorriso e harmonização orofacial com atenção às suas características. O planejamento une saúde, função e suas expectativas, sem fórmulas iguais para todo mundo.',
     services: [
       { id: 'facetas', title: 'Facetas', text: 'Uma opção para modificar características como forma e cor dos dentes, quando indicada. Antes do tratamento, avaliamos a saúde bucal, a mordida e as características da estrutura dental.' },
@@ -67,6 +69,7 @@ export const areas: Area[] = [
   },
   {
     slug: 'ortodontia-e-cirurgia', title: 'Ortodontia e Cirurgia', short: 'Planejamento e cuidado em cada etapa.', heading: 'Cada movimento começa com um bom planejamento.', icon: 'align', image: 'aligners',
+    homeSummary: 'Aparelho fixo, alinhadores invisíveis, implante dentário e cirurgia bucomaxilofacial.',
     intro: 'Do alinhamento dos dentes aos cuidados cirúrgicos, o diagnóstico orienta cada decisão. Uma equipe integrada para explicar o caminho e acompanhar suas etapas.',
     services: [
       { id: 'ortodontia', title: 'Ortodontia', text: 'Avaliação do posicionamento dos dentes e da mordida. O tratamento e o acompanhamento são planejados a partir do diagnóstico, da fase de desenvolvimento e das necessidades individuais.' },
@@ -83,6 +86,7 @@ export const areas: Area[] = [
   },
   {
     slug: 'odontologia-de-precisao', title: 'Odontologia de Precisão', short: 'Tecnologia a serviço de um cuidado individual.', heading: 'Tecnologia que aproxima. Precisão que faz diferença.', icon: 'scan', image: 'precision',
+    homeSummary: 'Escaneamento digital e planejamento guiado por tecnologia, do diagnóstico à execução.',
     intro: 'Ferramentas digitais ajudam a registrar, planejar e acompanhar o cuidado. A tecnologia faz parte de um processo guiado pelo conhecimento clínico e pela atenção a cada pessoa.',
     services: [
       { id: 'escaneamento-intraoral', title: 'Escaneamento intraoral', text: 'Registro digital das estruturas da boca por meio de um scanner. As imagens podem apoiar o planejamento e a comunicação entre as etapas do tratamento, conforme a indicação.' },
@@ -95,7 +99,7 @@ export const areas: Area[] = [
 ];
 export const team = [
   { name: 'Dr. Bruno Bicalho', role: 'Sócio-proprietário', kind: 'Especialidades', work: 'Implantodontia e Cirurgia Bucomaxilofacial.' },
-  { name: 'Dra. Roberta Bicalho', role: 'Sócia-proprietária', kind: 'Especialidades', work: 'Ortodontia e tratamento com alinhadores invisíveis.' },
+  { name: 'Dra. Roberta Souza Carneiro', role: 'Sócia-proprietária', kind: 'Especialidades', work: 'Ortodontia e tratamento com alinhadores invisíveis.' },
   { name: 'Dra. Isabella Mazarelo', role: '', kind: 'Áreas de atuação', work: 'Harmonização Orofacial (HOF) e Clínica Geral.' },
   { name: 'Dra. Jéssica Bonfim', role: '', kind: 'Áreas de atuação', work: 'Implantodontia, Próteses Dentárias, Reabilitação Oral e Próteses sobre Implantes.' },
   { name: 'Dra. Lívia Teixeira', role: '', kind: 'Áreas de atuação', work: 'Prótese Dentária, Dentística, Facetas e Odontologia Estética.' },
@@ -104,8 +108,10 @@ export const team = [
   { name: 'Dra. Thaís dos Anjos', role: '', kind: 'Especialidades', work: 'Periodontia, ATM e DTM e tratamento do Bruxismo.' },
   { name: 'Dr. Paulo', role: '', kind: 'Especialidade', work: 'Ortodontia.' },
   { name: 'Dra. Ana Luiza Perdigão', role: '', kind: 'Especialidade', work: 'Odontopediatria.' },
-  { name: 'Dra. Anne Sousa', role: '', kind: 'Especialidade', work: 'Endodontia — tratamento de canal.' },
+  { name: 'Dra. Anne Sousa', role: '', kind: 'Especialidade', work: 'Endodontia, tratamento de canal.' },
   { name: 'Dra. Luísa Lima', role: 'Equipe de Belo Horizonte', kind: 'Áreas de atuação', work: 'Prótese Dentária, Clínica Geral e Harmonização Orofacial (HOF).' },
+  { name: 'Dra. Stefany de Oliveira Lima', role: 'Equipe de Belo Horizonte', kind: 'Especialidade', work: 'Próteses Dentárias.' },
+  { name: 'Dra. Veridiana Salles', role: 'Equipe de Belo Horizonte', kind: 'Especialidade', work: 'Odontopediatria.' },
 ];
 export const homeQuestions: [string, string][] = [
   ['Como agendar uma avaliação?', 'Em João Monlevade, você pode consultar horários na agenda online ou falar pelo WhatsApp. Em Belo Horizonte, o agendamento é pelo WhatsApp da unidade. Se tiver dúvidas, nossa equipe orienta você antes de marcar.'],

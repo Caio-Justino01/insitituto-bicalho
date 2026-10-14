@@ -2,13 +2,15 @@
 import jakarta from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
 import '../styles/global.css';
 import '../styles/support.css';
+import '../styles/home.css';
 import BookingDialog from '../components/BookingDialog.astro';
 import SupportAssistant from '../components/SupportAssistant.astro';
 import { site, nav, units, socialLinks, agencyUrl } from '../data/content';
 import Icon from '../components/Icon.astro';
 import BookingLink from '../components/BookingLink.astro';
-interface Props { title: string; description: string; noindex?: boolean }
-const { title, description, noindex = false } = Astro.props;
+interface Props { title: string; description: string; noindex?: boolean; appendBrand?: boolean }
+const { title, description, noindex = false, appendBrand = true } = Astro.props;
+const pageTitle = appendBrand ? `${title} | Instituto Bicalho` : title;
 const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true' && process.env.VERCEL_ENV !== 'preview' && !noindex;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const verification = import.meta.env.PUBLIC_GOOGLE_VERIFICATION;
@@ -25,14 +27,14 @@ const schema = { '@context': 'https://schema.org', '@graph': [
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta name="theme-color" content="#102c42"/>
     <link rel="preload" href={jakarta} as="font" type="font/woff2" crossorigin/>
-    <title>{title} | Instituto Bicalho</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description}/>
     <meta name="robots" content={indexable ? 'index, follow' : 'noindex, follow'}/>
     <link rel="canonical" href={canonical}/>
     <link rel="icon" type="image/png" href="/assets/favicon.png"/>
     <meta property="og:type" content="website"/>
     <meta property="og:locale" content="pt_BR"/>
-    <meta property="og:title" content={`${title} | Instituto Bicalho`}/>
+    <meta property="og:title" content={pageTitle}/>
     <meta property="og:description" content={description}/>
     <meta property="og:url" content={canonical}/>
     <meta property="og:image" content={`${site.url}/assets/hero-branded-1200.webp`}/>
@@ -40,7 +42,7 @@ const schema = { '@context': 'https://schema.org', '@graph': [
     {verification && <meta name="google-site-verification" content={verification}/>}
     <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')}/>
   </head>
-  <body data-ga-id={import.meta.env.PUBLIC_GA_ID || ''}>
+  <body class:list={{ 'home-page': Astro.url.pathname === '/' }} data-ga-id={import.meta.env.PUBLIC_GA_ID || ''}>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
     <header class="site-header">
       <div class="container header-inner">
