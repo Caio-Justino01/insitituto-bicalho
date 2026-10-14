@@ -3,9 +3,9 @@ export const site = {
   tagline: 'Odontologia de Precisão',
   url: import.meta.env.PUBLIC_SITE_URL || 'https://institutobicalho.com',
 };
-export type Unit = { id: string; name: string; phone: string; display: string; note: string; address: string; mapLocation: string; landmark?: string; onlineBooking?: string };
+export type Unit = { id: string; name: string; phone: string; display: string; note: string; address: string; mapLocation: string; landmark?: string };
 export const units: Unit[] = [
-  { id: 'joao-monlevade', name: 'João Monlevade', phone: '5531992957448', display: '(31) 99295-7448', note: 'Nossa equipe espera por você em João Monlevade.', address: 'Av. Gentil Bicalho, 384, 2º andar, Carneirinhos', mapLocation: 'Av. Gentil Bicalho, 384, Carneirinhos, João Monlevade - MG, Brasil', onlineBooking: 'https://agenda.link/os/116828' },
+  { id: 'joao-monlevade', name: 'João Monlevade', phone: '5531992957448', display: '(31) 99295-7448', note: 'Nossa equipe espera por você em João Monlevade.', address: 'Av. Gentil Bicalho, 384, 2º andar, Carneirinhos', mapLocation: 'Av. Gentil Bicalho, 384, Carneirinhos, João Monlevade - MG, Brasil' },
   // Exact point in the official BH Point location link. Suite text can geocode to an unrelated business.
   { id: 'belo-horizonte', name: 'Belo Horizonte', phone: '5531997954111', display: '(31) 99795-4111', note: 'O cuidado do Instituto também em Belo Horizonte.', address: 'Av. Barão Homem de Melo, 55, loja 12, Nova Granada', mapLocation: '-19.935259,-43.9718161', landmark: 'BH Point' },
 ];
@@ -114,7 +114,7 @@ export const team = [
   { name: 'Dra. Veridiana Salles', role: 'Equipe de Belo Horizonte', kind: 'Especialidade', work: 'Odontopediatria.' },
 ];
 export const homeQuestions: [string, string][] = [
-  ['Como agendar uma avaliação?', 'Em João Monlevade, você pode consultar horários na agenda online ou falar pelo WhatsApp. Em Belo Horizonte, o agendamento é pelo WhatsApp da unidade. Se tiver dúvidas, nossa equipe orienta você antes de marcar.'],
+  ['Como agendar uma avaliação?', 'Escolha João Monlevade ou Belo Horizonte e fale pelo WhatsApp da unidade. Nossa equipe orienta você, esclarece suas dúvidas e ajuda a agendar sua avaliação.'],
   ['O Instituto atende nas duas cidades?', 'Sim. O Instituto Bicalho está presente em João Monlevade e Belo Horizonte. Consulte a equipe sobre a disponibilidade do procedimento na unidade de sua preferência.'],
   ['Como funciona a primeira consulta?', 'É o momento de conhecer suas necessidades, conversar sobre sua saúde bucal e avaliar as possibilidades de cuidado. A equipe explica as próximas etapas e os exames necessários, quando indicados.'],
   ['Como consultar valores e formas de pagamento?', 'O planejamento e o orçamento dependem da avaliação individual. A equipe apresenta as etapas propostas e as condições de pagamento antes de você decidir pelo tratamento.'],

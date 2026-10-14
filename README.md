@@ -8,7 +8,7 @@ Visual claro com Plus Jakarta Sans variável local (400–700), navegação flut
 
 `src/scripts/motion.ts` usa GSAP, ScrollTrigger e SplitText: títulos por linhas com máscara e nome acessível, entradas de fotografias e painéis, progressão do fluxo digital e interações breves. `gsap.matchMedia()` limpa e reconstrói efeitos nos breakpoints e na alteração de movimento reduzido. SplitText recompõe linhas em mudanças de largura. Seções já visitadas não repetem a entrada. A rolagem é nativa; o botão inicial não depende da animação. O bundle de movimento é separado do código de agendamento e consentimento; o HTML permanece legível sem JavaScript.
 
-As políticas, rotas, metadados, sitemap, redirecionamentos, WhatsApp e atribuição foram preservados. Manrope e Source Sans 3 foram removidas. A V2 não ativou serviços externos. A V3 acrescenta mapas incorporados e links para a agenda oficial, descritos abaixo.
+As políticas, rotas, metadados, sitemap, redirecionamentos, WhatsApp e atribuição foram preservados. Manrope e Source Sans 3 foram removidas. A V2 não ativou serviços externos. A V3 acrescenta mapas incorporados e atendimento guiado pelo WhatsApp, descritos abaixo.
 
 ## Executar
 
@@ -117,15 +117,15 @@ As páginas públicas apresentam horários divergentes. Publicações recentes d
 
 ## V3 — atendimento, agenda e marca oficial
 
-- `src/data/content.ts`: contatos, endereços aprovados, consultas dos mapas, agenda opcional por unidade e `socialLinks`. Instagram e Facebook estão configurados com os perfis oficiais fornecidos pelo usuário, presentes no rodapé de todas as páginas e em `Organization.sameAs` nos dados estruturados.
-- Agenda limpa `https://agenda.link/os/116828`, somente João Monlevade. Todos os CTAs gerais abrem agenda rápida ou WhatsApp; BH nunca recebe a agenda de JM. A plataforma externa confirma horários e consultas.
+- `src/data/content.ts`: contatos, endereços aprovados, consultas dos mapas, canais de WhatsApp por unidade e `socialLinks`. Instagram e Facebook estão configurados com os perfis oficiais fornecidos pelo usuário, presentes no rodapé de todas as páginas e em `Organization.sameAs` nos dados estruturados.
+- Desde 14/10/2026, todos os CTAs gerais abrem diretamente a escolha entre João Monlevade e Belo Horizonte para continuar no WhatsApp. A agenda externa foi removida do site; a equipe orienta sobre horários e confirma a consulta na conversa. No assistente, a escolha da unidade leva diretamente ao resumo editável.
 - `SupportAssistant.astro` e `src/scripts/assistant.ts`: fluxo tipado com respostas preparadas, 26 procedimentos, dúvidas, pacientes atuais, voltar/reiniciar, troca de unidade e resumo editável antes do WhatsApp. Estado apenas em memória; nenhum backend, gravação de conversa ou envio automático. Avatar fictício; o atendimento permanece identificado como assistente virtual, sem aviso de produção por IA na interface. O indicador verde significa disponibilidade do assistente virtual.
 - Logo oficial no rodapé, símbolo original recortado da marca no CTA, glifo reconhecível do WhatsApp e crédito para https://www.aguiadigital.com/.
 - Os mapas incorporados carregam sob demanda perto da visualização. Google Maps é um recurso externo independente de Analytics; as políticas explicam isso. Links de rotas e endereços permanecem acessíveis.
 - JM: Av. Gentil Bicalho, 384, 2º andar, Carneirinhos (usuário e agenda). BH: Av. Barão Homem de Melo, 55, loja 12, Nova Granada, BH Point (endereço aprovado no plano; cadastro da clínica corresponde ao telefone). Referências: https://dentmap.com.br/dentistas/belo-horizonte/instituto-bicalho-odontologia-bh-4a3b68c1 e https://sites.google.com/view/bh-point/menu/localizacao . A loja 20 é a administração do empreendimento, não a clínica.
-- `online_booking_click` mede somente clique, unidade e posição, após consentimento; não mede consulta confirmada. `whatsapp_click` usa os mesmos campos, sem mensagem, procedimento ou observação. Manter medição aprimorada de cliques externos desabilitada na propriedade GA4 antes de ativar o ID real.
+- `whatsapp_click` mede somente clique, unidade e posição, após consentimento; não mede consulta confirmada. Nenhuma mensagem, procedimento ou observação é enviada ao Analytics. O evento de agenda online foi removido. Manter medição aprimorada de cliques externos desabilitada na propriedade GA4 antes de ativar o ID real.
 - `scripts/assets-v3.mjs` gera os derivados das imagens novas, preservando os originais anteriores. `hero-branded`, `precision-branded` e `aligners` são cenas ilustrativas. `assistant` é uma personagem fictícia. Os três retratos reais não foram alterados. O sorriso ilustrativo é um paciente com roupa comum, sem logomarca.
-- Novos testes: `node scripts/support-check.mjs` percorre todos os 26 serviços, quatro dúvidas gerais, três caminhos de pacientes, ambos os canais/unidades, voltar, reiniciar, reabrir, reload, nota segura, telas de 360–1440, paisagem, texto 200%, movimento reduzido, ausência de JS e axe no assistente.
+- Novos testes: `node scripts/support-check.mjs` percorre todos os 26 serviços, quatro dúvidas gerais, três caminhos de pacientes, as duas unidades no WhatsApp, voltar, reiniciar, reabrir, reload, nota segura, telas de 360–1440, paisagem, texto 200%, movimento reduzido, ausência de JS e axe no assistente.
 - `node scripts/visual-v3.mjs` produz capturas da abertura, diálogo de agendamento, conversa, resumo, unidades e rodapé em `artifacts/v3-*.png`.
 
 Pendentes para publicação: identificadores reais de Google/GA4, conferência dos dados profissionais e das políticas pelo Instituto e aprovação da versão navegável. Nenhuma publicação realizada.

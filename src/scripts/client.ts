@@ -28,7 +28,7 @@ let bookingTrigger: HTMLElement | null = null;
 let bookingPosition = 'dialog';
 $$<HTMLAnchorElement>('[data-booking]').forEach(link => link.addEventListener('click', event => {
   if (!dialog.showModal) return;
-  event.preventDefault(); bookingTrigger = link; bookingPosition = link.dataset.position || 'content'; closeMenu(); showChannels(); dialog.showModal(); document.body.classList.add('modal-open'); updateBar();
+  event.preventDefault(); bookingTrigger = link; bookingPosition = link.dataset.position || 'content'; closeMenu(); dialog.showModal(); document.body.classList.add('modal-open'); updateBar();
 }));
 $('.dialog-close')?.addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } });
@@ -38,11 +38,6 @@ dialog.addEventListener('close', () => {
   (bookingTrigger?.getClientRects().length ? bookingTrigger : fallback)?.focus({ preventScroll: true });
 });
 
-const channels = $('[data-booking-channels]')!;
-const bookingUnits = $('[data-booking-units]')!;
-function showChannels() { channels.removeAttribute('hidden'); bookingUnits.setAttribute('hidden', ''); }
-$('[data-choose-whatsapp]')!.addEventListener('click', () => { channels.setAttribute('hidden', ''); bookingUnits.removeAttribute('hidden'); bookingUnits.querySelector<HTMLElement>('a')?.focus(); });
-$('[data-booking-back]')!.addEventListener('click', () => { showChannels(); $('[data-choose-whatsapp]')!.focus(); });
 const bar = $('.mobile-cta')!;
 const launcher = $('.assistant-launcher')!;
 const support = $<HTMLDialogElement>('#support-dialog')!;
@@ -126,10 +121,10 @@ $$('[data-cookie-settings]').forEach(button => button.addEventListener('click', 
 if (gaEnabled && consent === null) notice.hidden = false;
 if (consent === 'granted') startAnalytics();
 document.addEventListener('click', event => {
-  const link = (event.target as Element).closest<HTMLAnchorElement>('a[data-whatsapp], a[data-online-booking]');
+  const link = (event.target as Element).closest<HTMLAnchorElement>('a[data-whatsapp]');
   if (!link || consent !== 'granted' || !gaEnabled || !analyticsWindow.gtag) return;
-  analyticsWindow.gtag('event', link.dataset.onlineBooking ? 'online_booking_click' : 'whatsapp_click', {
-    unit: link.dataset.onlineBooking || link.dataset.whatsapp,
+  analyticsWindow.gtag('event', 'whatsapp_click', {
+    unit: link.dataset.whatsapp,
     placement: link.dataset.position === 'dialog' ? bookingPosition : link.dataset.position,
     transport_type: 'beacon',
   });

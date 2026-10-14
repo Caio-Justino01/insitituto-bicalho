@@ -17,8 +17,6 @@ await page.locator('[data-consent="denied"]').click();await page.reload();assert
 await page.locator('[data-cookie-settings]').click();await page.locator('[data-consent="granted"]').click();
 await page.waitForFunction(()=>window.dataLayer?.length>=4);await page.waitForTimeout(200);assert.equal(tags,1);
 await page.locator('#primary-booking').click();
-const online=page.locator('#booking-dialog [data-online-booking]');await online.evaluate(el=>el.addEventListener('click',e=>e.preventDefault()));await online.click();
-await page.locator('[data-choose-whatsapp]').click();
 const link=page.locator('#booking-dialog [data-whatsapp]').first();await link.evaluate(el=>el.addEventListener('click',e=>e.preventDefault()));await link.click();
 await page.keyboard.press('Escape');await page.locator('.assistant-launcher').click();
 await page.getByRole('button',{name:'Tenho dúvidas',exact:true}).click();await page.getByRole('button',{name:'Valores e pagamento',exact:true}).click();await page.getByRole('button',{name:'Continuar com a equipe',exact:true}).click();await page.getByRole('button',{name:'Belo Horizonte',exact:true}).click();
@@ -28,7 +26,7 @@ assert.equal(events.filter(e=>e[0]==='event'&&e[1]==='page_view').length,1);
 assert(events.some(e=>e[1]==='whatsapp_click'&&e[2].unit==='joao-monlevade'&&e[2].placement==='hero'));
 assert(!JSON.stringify(events).includes('private@example.com'));
 assert(!JSON.stringify(events).includes('PRIVATE_NOTE_123'));assert(!JSON.stringify(events).includes('Valores e pagamento'));
-assert(events.some(e=>e[1]==='online_booking_click'&&e[2].unit==='joao-monlevade'&&e[2].placement==='hero'));
+assert(!events.some(e=>e[1]==='online_booking_click'));
 assert(events.some(e=>e[1]==='whatsapp_click'&&e[2].unit==='belo-horizonte'&&e[2].placement==='assistant'));
 assert(!events.some(e=>e[1]==='purchase'||e[1]==='generate_lead'));
 await page.keyboard.press('Escape');

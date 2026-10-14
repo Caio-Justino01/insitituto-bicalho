@@ -20,6 +20,8 @@ for (const route of routes) {
   assert.equal(await page.locator('h1').count(),1,route);
   const title = await page.title(); assert(!titles.has(title)); titles.add(title);
   assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex, follow');
+  assert.equal(await page.locator('a[href*="agenda.link"], [data-online-booking]').count(),0,route);
+  assert(!/agendar online|agenda online|agenda\.link/i.test(await page.locator('body').innerText()),route);
   const broken = await page.locator('img').evaluateAll(imgs => imgs.filter(i=>i.complete && !i.naturalWidth).map(i=>i.src)); assert.deepEqual(broken, [], route);
   assert(await page.locator('h1').isVisible());
   const audit = await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();

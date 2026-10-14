@@ -13,8 +13,8 @@ const { heading = ['Perto de você.', 'Do primeiro contato ao cuidado.'] } = Ast
       <div class="unit-map"><iframe src={mapEmbed(unit)} loading="lazy" title={`Mapa da unidade ${unit.name}`} referrerpolicy="no-referrer" allowfullscreen></iframe></div>
       <a class="text-link directions-link" href={directions(unit)} target="_blank" rel="noopener noreferrer">Como chegar<Icon name="arrow" size={18}/></a>
       <div class="unit-channels">
-        {unit.onlineBooking ? <a class="button" href={unit.onlineBooking} target="_blank" rel="noopener noreferrer" data-online-booking={unit.id} data-position="units">Agendar online<Icon name="calendar" size={20}/></a> : <p class="unit-channel-note">Agendamento e dúvidas com a equipe pelo WhatsApp.</p>}
-        <a class:list={['button', { 'button-outline': !!unit.onlineBooking }]} href={whatsapp(unit.phone)} target="_blank" rel="noopener noreferrer" data-whatsapp={unit.id} data-position="units">Conversar pelo WhatsApp<Icon name="chat" size={20}/></a>
+        <p class="unit-channel-note">Agendamento e dúvidas com a equipe pelo WhatsApp.</p>
+        <a class="button" href={whatsapp(unit.phone)} target="_blank" rel="noopener noreferrer" data-whatsapp={unit.id} data-position="units">Conversar pelo WhatsApp<Icon name="chat" size={20}/></a>
       </div><a class="unit-phone" href={`tel:+${unit.phone}`}>{unit.display}</a>
     </article>)}
   </div>

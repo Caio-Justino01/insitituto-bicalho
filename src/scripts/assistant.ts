@@ -1,5 +1,5 @@
 import { areas, units, homeQuestions, directions, type Unit } from '../data/content';
-export type Stage = 'start' | 'doubts' | 'areas' | 'services' | 'answer' | 'patients' | 'unit' | 'channels' | 'review';
+export type Stage = 'start' | 'doubts' | 'areas' | 'services' | 'answer' | 'patients' | 'unit' | 'review';
 export type Conversation = {
   stage: Stage; intent?: 'booking' | 'question' | 'patient'; area?: string; service?: string;
   unit?: string; answer?: string; choices: string[]; note: string;
@@ -38,7 +38,6 @@ export function initAssistant(onVisibilityChange: () => void) {
       case 'answer': return state.answer || '';
       case 'patients': return 'Que bom ter você por aqui. Do que você precisa?';
       case 'unit': return 'Em qual unidade você prefere receber atendimento?';
-      case 'channels': return unit()?.onlineBooking ? 'Em João Monlevade, você pode consultar a agenda online agora ou conversar com a equipe. Qual caminho prefere?' : 'Em Belo Horizonte, o agendamento é feito com a equipe pelo WhatsApp. Vamos preparar sua mensagem?';
       case 'review': return `Tudo pronto para falar com a equipe de ${unit()?.name}. Confira o resumo e acrescente uma observação, se quiser.`;
     }
   }
@@ -64,7 +63,7 @@ export function initAssistant(onVisibilityChange: () => void) {
     const button = el('button', 'chat-choice', label); button.type = 'button';
     button.addEventListener('click', () => advance(label, patch, record)); actions.append(button);
   }
-  function external(label: string, url: string, kind?: 'whatsapp' | 'onlineBooking') {
+  function external(label: string, url: string, kind?: 'whatsapp') {
     const link = el('a', 'chat-choice chat-external', label); link.href = url; link.target = '_blank'; link.rel = 'noopener noreferrer';
     if (kind) { link.dataset[kind] = state.unit!; link.dataset.position = 'assistant'; }
     if (kind === 'whatsapp') link.append(document.querySelector<HTMLTemplateElement>('#whatsapp-icon')!.content.cloneNode(true));
@@ -91,14 +90,7 @@ export function initAssistant(onVisibilityChange: () => void) {
         option('Continuar com a equipe', nextUnit, false); break;
       case 'patients':
         ['Retorno', 'Consulta agendada', 'Falar com a equipe'].forEach(label => option(label, nextUnit)); break;
-      case 'unit': units.forEach(u => option(u.name, { unit: u.id, stage: state.intent === 'booking' ? 'channels' : 'review' }, false)); break;
-      case 'channels':
-        if (unit()?.onlineBooking) {
-          external('Agendar online · João Monlevade ↗', unit()!.onlineBooking!, 'onlineBooking');
-          actions.append(el('p', 'chat-hint', 'A agenda oficial abre em outra aba. Horários e confirmação são consultados nela.'));
-        }
-        option('Conversar pelo WhatsApp', { stage: 'review' }, false);
-        option('Trocar unidade', nextUnit, false); break;
+      case 'unit': units.forEach(u => option(u.name, { unit: u.id, stage: 'review' }, false)); break;
       case 'review': {
         const selected = unit()!;
         const label = el('label', 'chat-note-label', 'Observação (opcional)'); label.htmlFor = 'support-note';
