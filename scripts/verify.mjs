@@ -9,7 +9,7 @@ const context = await browser.newContext({ viewport: { width:390, height:844 }, 
 const page = await context.newPage();
 const failures = [];
 page.on('pageerror', error => failures.push(error.message));
-const routes = ['/', '/tratamentos/', '/estetica/', '/ortodontia-e-cirurgia/', '/odontologia-de-precisao/', '/politica-de-privacidade/', '/termos-de-uso/', '/politica-de-cookies/'];
+const routes = ['/', '/tratamentos/', '/estetica/', '/ortodontia-e-cirurgia/', '/odontologia-de-precisao/', '/contato/', '/politica-de-privacidade/', '/termos-de-uso/', '/politica-de-cookies/'];
 const titles = new Set();
 const results = { routes: [], widths: [], interactions: [], accessibility: [] };
 for (const route of routes) {
@@ -24,13 +24,26 @@ for (const route of routes) {
   assert(!/agendar online|agenda online|agenda\.link/i.test(await page.locator('body').innerText()),route);
   const broken = await page.locator('img').evaluateAll(imgs => imgs.filter(i=>i.complete && !i.naturalWidth).map(i=>i.src)); assert.deepEqual(broken, [], route);
   assert(await page.locator('h1').isVisible());
+  for(const selector of ['.desktop-nav','.mobile-nav','.footer-top nav[aria-label="Links do rodapé"]'])assert.equal(await page.locator(`${selector} a[href="/contato/"]`).count(),1,route);
+  if(route==='/contato/'){
+    await page.waitForFunction(()=>['ready','reduced','unavailable'].includes(document.body.dataset.motion)&&+getComputedStyle(document.querySelector('.unit')).opacity>=.99);
+    assert.equal(title,'Contato e unidades | Instituto Bicalho');
+    assert.equal(await page.locator('meta[property="og:title"]').getAttribute('content'),title);
+    assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://institutobicalho.com/contato/');
+    assert.equal(await page.locator('.desktop-nav [aria-current="page"]').textContent(),'Contato');
+    assert.equal(await page.locator('#unidades [data-position="contact-units"]').count(),2);
+    assert(await page.locator('.unit').evaluateAll(cards=>cards.every(card=>{
+      const wa=card.querySelector('[data-whatsapp]'),phone=card.querySelector('.unit-phone'),map=card.querySelector('iframe');
+      return !!(wa.compareDocumentPosition(phone)&Node.DOCUMENT_POSITION_FOLLOWING)&&!!(phone.compareDocumentPosition(map)&Node.DOCUMENT_POSITION_FOLLOWING);
+    })),'Contact channels must precede maps in DOM');
+  }
   const audit = await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
   results.accessibility.push({ route, violations:audit.violations.map(v=>({id:v.id,impact:v.impact,nodes:v.nodes.map(n=>n.target)})) });
   results.routes.push({route,status:response.status(),title});
 }
 for (const width of [360,390,430,768,1024,1440]) {
   await page.setViewportSize({width,height:width>900?1000:844});
-  for (const route of routes.slice(0,5)) {
+  for (const route of routes.slice(0,6)) {
     await page.goto(base+route); await page.evaluate(()=>document.fonts.ready);
     const size = await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:innerWidth}));
     assert(size.scroll<=size.client, `${route} overflows at ${width}: ${JSON.stringify(size)}`);
@@ -67,6 +80,7 @@ assert.equal(await np.locator('.team-panel').getAttribute('open'),null);
 await np.locator('.team-panel>summary').click();assert(await np.locator('.team-person').last().isVisible());assert.equal(await np.locator('.team-person').count(),14);
 await np.locator('.team-panel>summary').press('Enter');assert.equal(await np.locator('.team-panel').getAttribute('open'),null);
 for(const fragment of ['equipe','equipe-completa']){await np.goto(`${base}/#${fragment}`);await np.waitForFunction(()=>{const r=document.querySelector('.team-panel>summary').getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;});}
+await np.locator('.noscript-nav a[href="/contato/"]').click();assert.equal(new URL(np.url()).pathname,'/contato/');assert.equal(await np.locator('.noscript-nav [aria-current="page"]').textContent(),'Contato');assert.equal(await np.locator('#unidades [data-whatsapp]').count(),2);
 await nojs.close();
 await page.emulateMedia({reducedMotion:'reduce'});
 async function preparePhotos(){await page.locator('img').evaluateAll(imgs=>Promise.all(imgs.map(img=>{img.loading='eager';return img.decode().catch(()=>{});})));await page.evaluate(()=>document.fonts.ready);}

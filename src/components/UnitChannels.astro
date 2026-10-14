@@ -1,0 +1,11 @@
+---
+import { whatsapp, type Unit } from '../data/content';
+import Icon from './Icon.astro';
+interface Props { unit: Unit; position: string; compact?: boolean }
+const { unit, position, compact = false } = Astro.props;
+---
+<div class="unit-channels">
+  {!compact && <p class="unit-channel-note">Agendamento e dúvidas com a equipe pelo WhatsApp.</p>}
+  <a class="button" href={whatsapp(unit.phone)} target="_blank" rel="noopener noreferrer" data-whatsapp={unit.id} data-position={position}>Conversar pelo WhatsApp<Icon name="chat" size={20}/></a>
+</div>
+<a class="unit-phone" href={`tel:+${unit.phone}`}>{unit.display}</a>

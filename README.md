@@ -1,6 +1,6 @@
 # Instituto Bicalho
 
-Site institucional em Astro + TypeScript, com HTML estático, cinco páginas principais, três páginas de políticas e 404. Publicado em https://insitituto-bicalho.vercel.app/ via GitHub/Vercel; a URL temporária permanece fora da indexação.
+Site institucional em Astro + TypeScript, com HTML estático, seis páginas principais, três páginas de políticas e 404. Publicado em https://insitituto-bicalho.vercel.app/ via GitHub/Vercel; a URL temporária permanece fora da indexação.
 
 ## V2 — vidro, fotografia e movimento
 
@@ -60,6 +60,10 @@ Medição histórica local Lighthouse (30/09/2026), em execuções sequenciais c
 | Odontologia de Precisão | 98 | 2,1 s | 0 |
 
 Todas obtiveram 100 em acessibilidade e boas práticas na auditoria automática. A Home desktop obteve 100 em desempenho, LCP 0,5 s. SEO 69 em todas por `noindex` intencional. Os relatórios estão em `artifacts/lighthouse-release-*.report.html` na máquina de desenvolvimento. Esses números são de laboratório local, não uma medição PageSpeed Insights de um domínio público, nem garantia de nota 100 ou desempenho real. Repetir no endereço da Vercel após o deploy. As medições V2/V3 abaixo são histórico, anteriores à entrega final.
+
+## Página de Contato
+
+`/contato/` reúne as unidades, WhatsApp, telefones, endereços e mapas. A aba Contato usa a navegação central em desktop, mobile, sem JavaScript, rodapé e sitemap. `Units.astro` recebe `contactFirst` (padrão false) para colocar os canais antes do mapa e `position` (padrão units) para identificar os cliques consentidos; a página Contato usa contact-units. `UnitChannels.astro` compartilha os mesmos canais e números entre todas as páginas. A Home e os serviços preservam sua ordem de apresentação e os links /#unidades. A nova página tem metadados próprios, canonical /contato/, breadcrumb e os mesmos dados estruturados das duas unidades, mantendo noindex nesta fase. Não foram acrescentados horários, e-mail ou formulário. A validação da entrega cobriu nove páginas, 36 verificações de largura, navegação sem JavaScript, teclado, texto ampliado e consentimento; mapas carregaram sem falhas. Capturas em artifacts/contact/.
 
 ## Conteúdo e imagens
 

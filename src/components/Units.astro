@@ -1,21 +1,21 @@
 ---
-import { units, whatsapp, directions, mapEmbed } from '../data/content';
+import { units, directions, mapEmbed } from '../data/content';
 import Icon from './Icon.astro';
-interface Props { heading?: [string, string] }
-const { heading = ['Perto de você.', 'Do primeiro contato ao cuidado.'] } = Astro.props;
+import UnitChannels from './UnitChannels.astro';
+interface Props { heading?: [string, string]; contactFirst?: boolean; position?: string }
+const { heading = ['Perto de você.', 'Do primeiro contato ao cuidado.'], contactFirst = false, position = 'units' } = Astro.props;
+const UnitHeading = contactFirst ? 'h2' : 'h3';
 ---
-<section class="section units" id="unidades" aria-labelledby="units-heading">
+<section class:list={['section', 'units', { 'contact-units': contactFirst }]} id="unidades" aria-labelledby={contactFirst ? undefined : 'units-heading'} aria-label={contactFirst ? 'Unidades de atendimento' : undefined}>
   <div class="container units-layout">
-    <div class="section-heading"><span class="eyebrow">João Monlevade e Belo Horizonte</span><h2 id="units-heading">{heading[0]} <br/><span>{heading[1]}</span></h2><p>Escolha sua unidade e o jeito mais prático de começar.</p></div>
+    {!contactFirst && <div class="section-heading"><span class="eyebrow">João Monlevade e Belo Horizonte</span><h2 id="units-heading">{heading[0]} <br/><span>{heading[1]}</span></h2><p>Escolha sua unidade e o jeito mais prático de começar.</p></div>}
     {units.map(unit => <article class="unit glass" data-unit-card={unit.id}>
       <div class="unit-heading"><span class="circle-icon"><Icon name="pin" size={25}/></span><span class="eyebrow">Instituto Bicalho</span></div>
-      <h3>{unit.name}</h3><address>{unit.address}<br/>{unit.name} - MG{unit.landmark && <span class="unit-landmark">No {unit.landmark}</span>}</address>
+      <UnitHeading>{unit.name}</UnitHeading><address>{unit.address}<br/>{unit.name} - MG{unit.landmark && <span class="unit-landmark">No {unit.landmark}</span>}</address>
+      {contactFirst && <UnitChannels unit={unit} position={position} compact/>}
       <div class="unit-map"><iframe src={mapEmbed(unit)} loading="lazy" title={`Mapa da unidade ${unit.name}`} referrerpolicy="no-referrer" allowfullscreen></iframe></div>
       <a class="text-link directions-link" href={directions(unit)} target="_blank" rel="noopener noreferrer">Como chegar<Icon name="arrow" size={18}/></a>
-      <div class="unit-channels">
-        <p class="unit-channel-note">Agendamento e dúvidas com a equipe pelo WhatsApp.</p>
-        <a class="button" href={whatsapp(unit.phone)} target="_blank" rel="noopener noreferrer" data-whatsapp={unit.id} data-position="units">Conversar pelo WhatsApp<Icon name="chat" size={20}/></a>
-      </div><a class="unit-phone" href={`tel:+${unit.phone}`}>{unit.display}</a>
+      {!contactFirst && <UnitChannels unit={unit} position={position}/>}
     </article>)}
   </div>
 </section>

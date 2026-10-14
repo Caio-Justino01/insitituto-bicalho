@@ -25,6 +25,7 @@ export const nav = [
   { href: '/estetica/', label: 'Estética' },
   { href: '/ortodontia-e-cirurgia/', label: 'Ortodontia e Cirurgia' },
   { href: '/odontologia-de-precisao/', label: 'Odontologia de Precisão' },
+  { href: '/contato/', label: 'Contato' },
 ];
 export const media = {
   smile: { src: 'smile', alt: 'Sorriso natural', position: '40% 40%' },
