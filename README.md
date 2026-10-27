@@ -4,11 +4,13 @@ Site institucional em Astro + TypeScript, com HTML estático, seis páginas prin
 
 ## Revisão atual — composição original e fotos oficiais
 
+As quatro páginas de serviços incluem uma faixa azul-escura com uma fotografia inédita da pasta do cliente, depois dos serviços e do aviso clínico, antes de “Conheça outras áreas de atendimento”. O componente compartilhado `ServicePhotoBand.astro` não acrescenta texto, legenda ou controles. A foto tem até 1240 px de largura, altura de 320 px abaixo de 1024 px e 440 px nas telas maiores. A Home foi preservada. O cadastro `Area.sectionImage` define a fotografia de cada página; a seleção completa está em `assets/PHOTO-SOURCES.md`.
+
 A composição anterior foi restaurada: cabeçalho flutuante, botões em cápsula, superfícies de vidro, mosaico e movimento. `src/styles/responsive.css` concentra os ajustes de encaixe, tamanhos de texto, rodapé e painéis, sem substituir essa linguagem visual. Os textos, contatos, rotas e integrações permanecem preservados.
 
 A seleção usa a recepção na hero, cenas de atendimento nas áreas de cuidado e a reunião no painel da equipe. Consultórios e atendimento geral ilustram institucionalmente as áreas sem registro específico de procedimento, conforme a escolha do cliente. Os retratos dos sócios ficam na apresentação institucional. `assets/PHOTO-SOURCES.md` registra os arquivos. Os derivados horizontais têm até 2936 px, WebP em qualidade 92 e AVIF em qualidade 72. Os originais permanecem intactos. A escolha de resolução considera o recorte ampliado, com verificação em telas 2× e 3× por `npm run test:photos`.
 
-A navegação completa começa em 1200 px. As atualizações seguem o repositório `Caio-Justino01/insitituto-bicalho`, branch `main`, ligado ao projeto Vercel existente `insitituto-bicalho` e ao endereço https://insitituto-bicalho.vercel.app/. A implantação Preview de 27/10/2026 pertence ao mesmo projeto. A indexação continua desativada; o domínio institucional e suas configurações foram preservados. A suíte inclui navegação, agendamento, consentimento, painéis, movimento, 230 verificações responsivas de 320 a 2560 px com texto a 200% e 156 verificações de resolução de fotografias em telas 2× e 3×, além do fallback sem JavaScript.
+A navegação completa começa em 1200 px. As atualizações seguem o repositório `Caio-Justino01/insitituto-bicalho`, branch `main`, ligado ao projeto Vercel existente `insitituto-bicalho` e ao endereço https://insitituto-bicalho.vercel.app/. Na configuração local atual, esse repositório é o remoto `upstream`; `origin` aponta para o fork da Águia. A implantação Preview de 27/10/2026 pertence ao mesmo projeto. A indexação continua desativada; o domínio institucional e suas configurações foram preservados. A suíte inclui navegação, agendamento, consentimento, painéis, movimento, 230 verificações responsivas de 320 a 2560 px com texto a 200% e 204 verificações de resolução de fotografias em telas 2× e 3×, além do fallback sem JavaScript.
 
 ## Revisão para apresentação ao cliente — 27/10/2026
 
@@ -19,7 +21,7 @@ Os mapas agora identificam a clínica no Google, e os links de rotas usam o Plac
 - [João Monlevade — perfil oficial](https://www.google.com/maps/search/?api=1&query=Instituto+Bicalho+Joao+Monlevade&query_place_id=ChIJU1SbPXMHpQARw7UoLTBid8k).
 - [Belo Horizonte — perfil oficial](https://www.google.com/maps/search/?api=1&query=Instituto+Bicalho+Belo+Horizonte&query_place_id=ChIJRWZqfhmXpgARwWg7SmnBfFY).
 
-`npm run test:seo` confere as dez páginas, dados estruturados, compartilhamento, links do Google e XMP dos 128 derivados de imagem. A suíte `test:all` inclui essa verificação e a auditoria de resolução das fotografias. Relatórios e capturas da revisão ficam em `artifacts/release-review/` e `artifacts/photo-quality/`.
+`npm run test:seo` confere as dez páginas, dados estruturados, compartilhamento, links do Google e XMP dos 184 derivados de imagem. A suíte `test:all` inclui essa verificação e a auditoria de resolução das fotografias. O teste de fotos também confere a posição e a ausência de textos nas novas faixas. Relatórios e capturas da revisão ficam em `artifacts/release-review/` e `artifacts/photo-quality/`.
 
 Lighthouse local mobile desta revisão: desempenho 95, acessibilidade 100, boas práticas 100, LCP 2,8 s e CLS 0,032. A nota de SEO é 69 pelo bloqueio de indexação intencional da prévia; títulos, descrições, canonical e dados de imagens foram validados separadamente.
 

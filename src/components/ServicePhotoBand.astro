@@ -1,0 +1,18 @@
+---
+import Photo from './Photo.astro';
+import { media, photoSizes } from '../data/photos';
+interface Props { image: keyof typeof media }
+const { image } = Astro.props;
+---
+<div class="section service-photo-band">
+  <div class="container">
+    <Photo name={image} class="service-band-photo" sizes={photoSizes.wide}/>
+  </div>
+</div>
+<style>
+  .service-photo-band { background: #102f43; }
+  .service-photo-band :global(.service-band-photo) { height: 320px; border-radius: 28px; }
+  @media (min-width: 1024px) {
+    .service-photo-band :global(.service-band-photo) { height: 440px; border-radius: 36px; }
+  }
+</style>

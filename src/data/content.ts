@@ -33,10 +33,10 @@ export const nav = [
   { href: '/contato/', label: 'Contato' },
 ];
 export type Service = { id: string; title: string; text: string };
-export type Area = { slug: string; title: string; short: string; homeSummary?: string; heading: string; intro: string; icon: string; image: keyof typeof media; services: Service[]; questions: [string, string][]; seoTitle: string; seoDescription: string; eyebrow: string; servicesHeading: string; faqIntro: string; relatedLinks: { label: string; href: string }[] };
+export type Area = { slug: string; title: string; short: string; homeSummary?: string; heading: string; intro: string; icon: string; image: keyof typeof media; sectionImage: keyof typeof media; services: Service[]; questions: [string, string][]; seoTitle: string; seoDescription: string; eyebrow: string; servicesHeading: string; faqIntro: string; relatedLinks: { label: string; href: string }[] };
 export const areas: Area[] = [
   {
-    slug: 'tratamentos', title: 'Tratamentos', short: 'Saúde e função para o seu sorriso.', icon: 'tooth', image: 'care',
+    slug: 'tratamentos', title: 'Tratamentos', short: 'Saúde e função para o seu sorriso.', icon: 'tooth', image: 'care', sectionImage: 'serviceTreatments',
     homeSummary: 'Prevenção, tratamento de canal, periodontia e reabilitação oral.',
     seoTitle: 'Tratamentos odontológicos | Instituto Bicalho',
     seoDescription: 'Tratamentos odontológicos em João Monlevade e Belo Horizonte: implantes, próteses, canal e prevenção, com avaliação individualizada no Instituto Bicalho.',
@@ -67,7 +67,7 @@ export const areas: Area[] = [
     ],
   },
   {
-    slug: 'estetica', title: 'Estética', short: 'Harmonia que respeita a sua identidade.', icon: 'spark', image: 'smile',
+    slug: 'estetica', title: 'Estética', short: 'Harmonia que respeita a sua identidade.', icon: 'spark', image: 'smile', sectionImage: 'serviceAesthetics',
     homeSummary: 'Facetas dentárias, clareamento dental e harmonização orofacial.',
     seoTitle: 'Estética dental e orofacial | Instituto Bicalho',
     seoDescription: 'Estética dental em João Monlevade e Belo Horizonte: facetas, lentes de contato dental, clareamento e harmonização orofacial, com avaliação individualizada.',
@@ -93,7 +93,7 @@ export const areas: Area[] = [
     ],
   },
   {
-    slug: 'ortodontia-e-cirurgia', title: 'Ortodontia e Cirurgia', short: 'Planejamento e cuidado em cada etapa.', icon: 'align', image: 'aligners',
+    slug: 'ortodontia-e-cirurgia', title: 'Ortodontia e Cirurgia', short: 'Planejamento e cuidado em cada etapa.', icon: 'align', image: 'aligners', sectionImage: 'serviceOrthodontics',
     homeSummary: 'Aparelho fixo, alinhadores invisíveis, implante dentário e cirurgia bucomaxilofacial.',
     seoTitle: 'Ortodontia e cirurgia odontológica | Instituto Bicalho',
     seoDescription: 'Ortodontia e cirurgia odontológica em João Monlevade e Belo Horizonte: aparelhos, alinhadores, sisos e avaliação de DTM no Instituto Bicalho.',
@@ -124,7 +124,7 @@ export const areas: Area[] = [
     ],
   },
   {
-    slug: 'odontologia-de-precisao', title: 'Odontologia de Precisão', short: 'Tecnologia a serviço de um cuidado individual.', icon: 'scan', image: 'precision',
+    slug: 'odontologia-de-precisao', title: 'Odontologia de Precisão', short: 'Tecnologia a serviço de um cuidado individual.', icon: 'scan', image: 'precision', sectionImage: 'servicePrecision',
     homeSummary: 'Escaneamento digital e planejamento guiado por tecnologia, do diagnóstico à execução.',
     seoTitle: 'Odontologia de precisão e digital | Instituto Bicalho',
     seoDescription: 'Odontologia de precisão com escaneamento intraoral, planejamento digital e próteses. Conheça o Instituto Bicalho em João Monlevade e Belo Horizonte.',
