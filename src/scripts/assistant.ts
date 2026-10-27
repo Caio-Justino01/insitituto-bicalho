@@ -110,7 +110,8 @@ export function initAssistant(onVisibilityChange: () => void) {
     }
     if (moveFocus) {
       const latest = log.lastElementChild as HTMLElement; latest.tabIndex = -1; latest.focus({ preventScroll: true });
-      scroll.scrollTop = latest.offsetTop - 12;
+      // Measure inside the scroll surface rather than relying on an offset parent.
+      scroll.scrollTop += latest.getBoundingClientRect().top - scroll.getBoundingClientRect().top - 12;
       document.dispatchEvent(new CustomEvent('bicalho:chat-step', { detail: { element: actions } }));
     }
   }
@@ -118,7 +119,8 @@ export function initAssistant(onVisibilityChange: () => void) {
   launcher.addEventListener('click', () => {
     if (!messages.length) { messages = [{ who: 'assistant', text: prompt() }]; render(); }
     dialog.showModal(); document.body.classList.add('modal-open'); onVisibilityChange();
-    actions.querySelector<HTMLElement>('button, a')?.focus({ preventScroll: true });
+    const latest = log.lastElementChild as HTMLElement;
+    latest.tabIndex = -1; latest.focus({ preventScroll: true });
   });
   dialog.querySelector('[data-support-close]')!.addEventListener('click', () => dialog.close());
   dialog.addEventListener('close', () => { document.body.classList.remove('modal-open'); onVisibilityChange(); launcher.focus({ preventScroll: true }); });
@@ -126,6 +128,16 @@ export function initAssistant(onVisibilityChange: () => void) {
   dialog.querySelector('[data-support-human]')!.addEventListener('click', () => advance('Falar com a equipe', { stage: 'unit', unit: undefined, intent: state.intent === 'booking' ? 'question' : state.intent }, !state.choices.length));
   back.addEventListener('click', () => { const snapshot = previous.pop(); if (snapshot) { state = snapshot.state; messages = snapshot.messages; render(true); } });
   // The visual viewport shrinks when a mobile keyboard opens; the composer stays reachable.
-  function resize() { if (window.visualViewport) { dialog.style.setProperty('--support-height', `${window.visualViewport.height}px`); dialog.style.setProperty('--support-top', `${window.visualViewport.offsetTop}px`); } }
+  function resize() {
+    const viewport = window.visualViewport;
+    if (!viewport) return;
+    dialog.style.setProperty('--support-height', `${viewport.height}px`);
+    dialog.style.setProperty('--support-width', `${viewport.width}px`);
+    dialog.style.setProperty('--support-top', `${viewport.offsetTop}px`);
+    dialog.style.setProperty('--support-left', `${viewport.offsetLeft}px`);
+    if (document.activeElement instanceof HTMLTextAreaElement && dialog.contains(document.activeElement)) {
+      document.activeElement.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+    }
+  }
   window.visualViewport?.addEventListener('resize', resize); window.visualViewport?.addEventListener('scroll', resize); resize();
 }

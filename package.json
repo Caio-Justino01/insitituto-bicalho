@@ -11,7 +11,11 @@
     "test": "node scripts/verify.mjs",
     "test:flows": "node scripts/support-check.mjs && node scripts/analytics-check.mjs && node scripts/motion-check.mjs && node scripts/final-v3-check.mjs",
     "test:cta": "node scripts/cta-check.mjs",
-    "test:all": "npm test && npm run test:flows && npm run test:cta"
+    "test:mobile": "node scripts/mobile-panels-check.mjs",
+    "test:all": "npm test && npm run test:flows && npm run test:cta && npm run test:mobile && npm run test:responsive && npm run test:seo && npm run test:photos",
+    "test:photos": "node scripts/photo-quality-check.mjs",
+    "test:seo": "node scripts/seo-check.mjs",
+    "test:responsive": "node scripts/responsive-check.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

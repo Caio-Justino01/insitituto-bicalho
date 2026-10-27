@@ -4,21 +4,26 @@ import '../styles/global.css';
 import '../styles/support.css';
 import '../styles/home.css';
 import '../styles/contact.css';
+import '../styles/responsive.css';
 import BookingDialog from '../components/BookingDialog.astro';
 import SupportAssistant from '../components/SupportAssistant.astro';
-import { site, nav, units, socialLinks, agencyUrl } from '../data/content';
+import { site, nav, units, socialLinks, agencyUrl, media, googleProfile } from '../data/content';
 import Icon from '../components/Icon.astro';
 import BookingLink from '../components/BookingLink.astro';
-interface Props { title: string; description: string; noindex?: boolean; appendBrand?: boolean }
-const { title, description, noindex = false, appendBrand = true } = Astro.props;
+interface Props { title: string; description: string; noindex?: boolean; appendBrand?: boolean; image?: keyof typeof media }
+const { title, description, noindex = false, appendBrand = true, image = 'hero' } = Astro.props;
 const pageTitle = appendBrand ? `${title} | Instituto Bicalho` : title;
 const breadcrumbName = nav.find(item => item.href === Astro.url.pathname)?.label ?? title;
 const indexable = import.meta.env.PUBLIC_INDEXABLE === 'true' && process.env.VERCEL_ENV !== 'preview' && !noindex;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const verification = import.meta.env.PUBLIC_GOOGLE_VERIFICATION;
+const pageImage = media[image];
+const pageImageUrl = `${site.url}/assets/${pageImage.src}-1200.webp`;
 const schema = { '@context': 'https://schema.org', '@graph': [
+  { '@type': 'WebSite', '@id': `${site.url}/#website`, name: site.name, url: site.url, inLanguage: 'pt-BR', publisher: { '@id': `${site.url}/#organization` } },
+  { '@type': 'WebPage', '@id': `${canonical}#webpage`, name: pageTitle, description, url: canonical, inLanguage: 'pt-BR', isPartOf: { '@id': `${site.url}/#website` }, about: { '@id': `${site.url}/#organization` }, primaryImageOfPage: { '@type': 'ImageObject', '@id': `${site.url}/#foto-${pageImage.src}`, contentUrl: `${site.url}/assets/${pageImage.src}-1600.webp`, name: pageImage.title, description: pageImage.alt, width: pageImage.width, height: pageImage.height, creditText: 'Acervo institucional do Instituto Bicalho' } },
   { '@type': 'Organization', '@id': `${site.url}/#organization`, name: site.name, url: site.url, logo: `${site.url}/assets/logo-transparent.png`, sameAs: socialLinks.flatMap(social => social.url ? [social.url] : []), subOrganization: units.map(u => ({ '@id': `${site.url}/#${u.id}` })) },
-  ...units.map(u => ({ '@type': 'Dentist', '@id': `${site.url}/#${u.id}`, name: `${site.name} — ${u.name}`, url: `${site.url}/#unidades`, telephone: `+${u.phone}`, parentOrganization: { '@id': `${site.url}/#organization` }, address: { '@type': 'PostalAddress', streetAddress: u.address, addressLocality: u.name, addressRegion: 'MG', addressCountry: 'BR' }, areaServed: { '@type': 'City', name: u.name } })),
+  ...units.map(u => ({ '@type': 'Dentist', '@id': `${site.url}/#${u.id}`, name: `${site.name} — ${u.name}`, url: `${site.url}/#unidades`, telephone: `+${u.phone}`, parentOrganization: { '@id': `${site.url}/#organization` }, address: { '@type': 'PostalAddress', streetAddress: u.address, addressLocality: u.name, addressRegion: 'MG', addressCountry: 'BR' }, areaServed: { '@type': 'City', name: u.name }, hasMap: googleProfile(u), sameAs: [googleProfile(u)], geo: { '@type': 'GeoCoordinates', latitude: u.latitude, longitude: u.longitude } })),
   ...(Astro.url.pathname !== '/' && !noindex ? [{ '@type': 'BreadcrumbList', itemListElement: [ { '@type': 'ListItem', position: 1, name: 'Início', item: site.url }, { '@type': 'ListItem', position: 2, name: breadcrumbName, item: canonical } ] }] : []),
 ] };
 ---
@@ -39,8 +44,16 @@ const schema = { '@context': 'https://schema.org', '@graph': [
     <meta property="og:title" content={pageTitle}/>
     <meta property="og:description" content={description}/>
     <meta property="og:url" content={canonical}/>
-    <meta property="og:image" content={`${site.url}/assets/hero-branded-1200.webp`}/>
+    <meta property="og:image" content={pageImageUrl}/>
+    <meta property="og:image:alt" content={pageImage.alt}/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content={String(Math.round(pageImage.height * 1200 / pageImage.width))}/>
+    <meta property="og:image:type" content="image/webp"/>
     <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content={pageTitle}/>
+    <meta name="twitter:description" content={description}/>
+    <meta name="twitter:image" content={pageImageUrl}/>
+    <meta name="twitter:image:alt" content={pageImage.alt}/>
     {verification && <meta name="google-site-verification" content={verification}/>}
     <script type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')}/>
   </head>

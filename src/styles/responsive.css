@@ -1,0 +1,100 @@
+/* Fit the approved rounded/glass composition without replacing its visual language. */
+body{overflow-wrap:anywhere}
+main :is(h1,h2,h3){overflow-wrap:anywhere}
+:is(.hero-layout,.institution-layout,.section-intro,.precision-intro,.inner-hero-layout,.service-layout,.faq-layout,.units-layout,.area-grid,.team-grid,.footer-top)>*{min-width:0}
+.button,.text-link,.service-index nav a{min-width:0;max-width:100%;white-space:normal}
+.button{line-height:1.4}.button>svg{flex-shrink:0}
+.section{padding-block:56px}
+.site-header{top:8px;margin-top:8px}.header-inner{min-height:62px}.brand{width:140px}
+.hero{padding-top:28px}
+.hero-copy>p,.inner-hero-copy>p,.institution-copy p,.service p{font-size:1rem;line-height:1.65;max-width:65ch}
+.home-page .hero h1,.inner-hero h1,.contact-intro h1{font-size:clamp(1.875rem,8.4vw,2.125rem);line-height:1.15;letter-spacing:-.045em;max-width:none}
+.home-page main section h2,.faq h2,.units #units-heading{font-size:clamp(1.625rem,6.8vw,1.875rem);line-height:1.2}
+.hero-copy>p{margin-top:16px}.hero-actions{margin-top:20px;gap:8px 20px}
+.hero-location,.hero-footnote,.photo-tags span,.area-number{font-size:.875rem}
+.hero-visual{--hero-height:clamp(17.5rem,76vw,22.5rem);min-height:var(--hero-height)}
+.hero-photo{width:100%;height:var(--hero-height)}
+.hero-photo img{object-position:var(--photo-position)}
+.hero-glass{position:relative;left:auto;right:auto;bottom:auto;margin:-120px 16px 0;z-index:2;max-width:360px;width:calc(100% - 32px)}
+.hero-glass>div{min-width:0}.hero-glass strong{font-size:1rem}.hero-glass p{font-size:.875rem}
+.hero-glass .circle-icon{width:36px;height:36px}
+.photo-tags{z-index:2}.photo-tags span{font-size:.75rem}
+.partner-photos{row-gap:0}.partner-photos .photo{width:100%;height:280px}
+.partner-photos .photo:nth-child(2){margin-top:28px}
+.portrait-note{position:relative;left:auto;right:auto;bottom:auto;grid-column:1/-1;margin-top:-72px;min-height:72px;z-index:2;font-size:.875rem;line-height:1.5;padding:12px}
+.home-page .portrait-note{font-size:.875rem}
+.team-panel{margin-top:32px}.team-panel>summary{padding:20px}.team-person{padding-block:20px}
+.team-photo{max-width:880px;margin:0 auto 24px}.team-photo,.team-photo picture,.team-photo img{height:auto}.team-photo picture{overflow:hidden}.team-photo img{aspect-ratio:2936/1957;object-fit:contain}
+.team-person p,.area-card p,.faq-answer p,.digital-flow p{font-size:1rem}
+.team-role,.team-kind,.team-panel summary small,.digital-flow small{font-size:.875rem}
+.area-card{min-height:390px;padding-top:64px}.area-card-copy{padding:18px}.area-card h3{font-size:1.25rem}
+.area-grid .area-card-1{min-height:clamp(32.5rem,143vw,35rem)}.area-card-1 img{object-position:var(--photo-position)}.area-card-2 img,.area-card-3 img{object-position:var(--photo-position)}
+.area-card-3 .area-photo img{position:absolute;bottom:0;height:160%;object-position:80% 50%}.area-card-4 .area-photo img{position:absolute;bottom:0;height:150%;object-position:90% 50%}
+.precision-photo{height:320px}.precision-note{font-size:.875rem;bottom:24px}.precision-intro{gap:20px}
+.precision-note{position:relative;inset:auto;width:fit-content;max-width:100%;margin-top:16px}
+.digital-flow{grid-template-columns:1fr}.digital-flow li{padding-block:16px}
+.service-index h2{font-size:1.5rem;line-height:1.25;max-width:none}
+.service-index nav a{font-size:.875rem}.service{padding:22px 20px}.service h3{font-size:1.25rem}
+.other-areas a{min-width:0;line-height:1.5}.clinical-note{font-size:.875rem}
+.units-layout{grid-template-columns:1fr}.unit{padding:24px}.unit address{min-height:0;line-height:1.6}
+.unit-heading .circle-icon{margin-bottom:0}.unit-map{height:200px}.unit .unit-channel-note{min-height:0}
+.unit .button{font-size:.875rem}.unit-phone{font-size:.875rem}
+.unit-map-links{display:flex;align-items:center;flex-wrap:wrap;gap:0 20px;margin-top:12px}.unit-map-links .text-link{font-size:.875rem;min-height:44px;margin:0;line-height:1.5}.unit-map-links svg{flex-shrink:0}
+.site-footer{padding:36px 0 88px}.site-footer .official-logo{width:160px}
+.footer-top{gap:20px}.footer-top>p{display:block;font-size:1.125rem}
+.footer-top nav[aria-label='Links do rodapé']{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+.footer-bottom{margin-top:24px;padding-top:16px;gap:12px;font-size:.875rem}
+.footer-bottom nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+.social-links{gap:8px 12px!important;margin-top:12px}.social-links a{font-size:.875rem;padding:6px 10px}
+.agency-credit{margin-top:16px;padding-top:12px}.agency-credit a{font-size:.875rem}
+.assistant-launcher[data-obstructed]{visibility:hidden;pointer-events:none}
+.assistant-avatar img{object-fit:contain}
+.support-toolbar{flex-wrap:wrap}.support-toolbar button{font-size:.875rem;min-height:44px}
+.support-header h2{font-size:1rem}.support-header p,.support-footer,.launcher-label small,.chat-hint{font-size:.875rem}
+.chat-bubble,.chat-choice{font-size:1rem;line-height:1.5}.chat-note-label{font-size:1rem}
+.support-footer a{min-height:44px}.support-footer{padding-block:4px}
+#support-dialog{max-width:none}#booking-dialog{max-width:calc(100% - 24px);overflow-y:auto;overscroll-behavior:contain}
+#booking-dialog .dialog-body{padding:24px}#booking-title{padding-right:42px;font-size:1.5rem;line-height:1.2}
+.support-header .icon-button{width:44px;height:44px}.booking-options a>span{min-width:0}
+@media(max-width:599px){
+  .home-page .hero h1 br,.institution-copy h2 br,.precision h2 br,.units h2 br{display:none}
+  #support-dialog{--support-gap-left:max(8px,env(safe-area-inset-left));--support-gap-right:max(8px,env(safe-area-inset-right));--support-gap-top:max(8px,env(safe-area-inset-top));--support-gap-bottom:max(8px,env(safe-area-inset-bottom));inset:auto;top:calc(var(--support-top,0px) + var(--support-gap-top));left:calc(var(--support-left,0px) + var(--support-gap-left));width:calc(var(--support-width,100vw) - var(--support-gap-left) - var(--support-gap-right));height:calc(var(--support-height,100dvh) - var(--support-gap-top) - var(--support-gap-bottom));max-height:none;margin:0}
+  .support-header{padding:12px;gap:8px}.support-scroll{padding:12px;scroll-padding-block:12px}.chat-bubble{padding:12px 14px;max-width:100%}#support-actions{margin-top:12px;gap:8px}
+  #booking-dialog{width:calc(100% - 24px);max-height:calc(100dvh - 24px);margin:auto;border-radius:24px}#booking-dialog .dialog-body{padding:20px 16px}#booking-dialog .booking-options{gap:10px;margin:16px 0 10px}#booking-dialog .booking-options a{padding:14px 12px}
+  .mobile-cta .button{font-size:.875rem;gap:8px;padding-left:14px}.mobile-cta .brand-button-symbol{width:30px;height:30px}.mobile-cta .brand-button-symbol img{width:24px;height:24px}
+}
+@media(min-width:600px){
+  .section{padding-block:64px}.site-footer .official-logo{width:180px}
+  .home-page .hero h1,.inner-hero h1,.contact-intro h1{font-size:clamp(2.125rem,4.9vw,2.5rem)}
+  .home-page main section h2,.faq h2,.units #units-heading{font-size:clamp(1.875rem,4vw,2.125rem)}
+  .hero-visual{--hero-height:420px}.hero-glass{margin-left:auto;margin-right:24px}
+  .partner-photos .photo{height:380px}.partner-photos .photo:nth-child(2){margin-top:40px}
+  .area-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.area-card{min-height:420px}
+  .footer-top{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 32px}.footer-top>p{grid-column:1;grid-row:2}.footer-top nav[aria-label='Links do rodapé']{grid-column:2;grid-row:1/span 2;grid-template-columns:1fr}
+}
+@media(min-width:600px) and (max-width:767px){.flow-connection{left:21px;top:64px;bottom:-15px;width:2px;height:calc(100% - 48px)}.area-grid{grid-template-columns:1fr}.team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:768px){.units-layout{grid-template-columns:repeat(2,minmax(0,1fr))}.unit-map{height:240px}.digital-flow{grid-template-columns:repeat(3,minmax(0,1fr))}.flow-connection{left:56px;top:22px;bottom:auto;width:calc(100% - 35px);height:2px}}
+@media(min-width:600px) and (max-width:1199px){.team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:1023px){.hero-layout,.institution-layout,.inner-hero-layout,.precision-intro,.faq-layout,.service-layout{grid-template-columns:minmax(0,1fr)}.inner-hero-photo{height:340px}.service-index{position:static}}
+@media(min-width:1024px){
+  .section{padding-block:80px}.hero-visual{--hero-height:440px}
+  .home-page .hero-layout{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr)}.inner-hero-layout{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:40px}.inner-hero h1,.contact-intro h1{font-size:clamp(2.5rem,3.4vw,3rem)}.inner-hero-photo{height:480px}
+  .home-page .hero h1{font-size:clamp(2.75rem,4vw,3.5rem)}.home-page main section h2,.faq h2,.units #units-heading{font-size:clamp(2.5rem,3.6vw,3rem)}
+  .institution-layout,.faq-layout{gap:48px}.service-layout{grid-template-columns:minmax(0,.85fr) minmax(0,1.8fr);gap:40px}
+  .area-grid{grid-template-columns:repeat(5,minmax(0,1fr))}.area-card h3{font-size:1.5rem}.area-card-copy{padding:24px}
+  .precision-photo{height:440px}.unit-map{height:260px}
+  .site-footer{padding-top:48px}.site-footer .official-logo{width:210px}.footer-top{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:40px}.footer-top>p{grid-column:2;grid-row:1;font-size:1.375rem}.footer-top nav[aria-label='Links do rodapé']{grid-column:3;grid-row:1;grid-template-columns:1fr}.footer-bottom nav{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:1199px){
+  .desktop-nav,.header-booking{display:none}.menu-toggle{display:grid}.site-header{top:8px;margin-top:8px}.header-inner{min-height:62px;padding:8px 12px 8px 18px}.brand{width:140px}
+  .assistant-launcher,.booking-dock-visible .assistant-launcher{width:56px;min-height:56px;padding:5px;right:14px;border-radius:50%}.assistant-avatar img{width:44px;height:44px}.launcher-label,.booking-dock-visible .launcher-label{display:none}
+  .mobile-cta{display:block!important;right:82px}.mobile-cta[hidden]{display:none!important}
+}
+@media(min-width:1200px){
+  .desktop-nav{display:flex;flex:1;flex-wrap:wrap;justify-content:center;min-width:0;gap:2px}.desktop-nav a{font-size:.75rem;padding-inline:10px}.menu-toggle{display:none}.header-booking{display:inline-flex;flex-shrink:0;max-width:220px}.brand{width:164px}.header-inner{gap:16px;min-height:78px}
+  .hero-visual{--hero-height:440px}.hero-glass{margin-inline:24px;margin-top:-112px}.hero-glass strong{font-size:1rem}.hero-glass p{font-size:.875rem}
+  .site-header{top:18px;margin-top:18px}.mobile-cta{display:none!important}
+  .footer-bottom nav{grid-template-columns:repeat(4,minmax(0,1fr))}.footer-top nav[aria-label='Links do rodapé']{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .units-visible .assistant-launcher,.footer-visible .assistant-launcher{padding:5px;min-height:56px;width:56px;bottom:16px}.units-visible .assistant-avatar img,.footer-visible .assistant-avatar img{width:44px;height:44px}.units-visible .launcher-label,.footer-visible .launcher-label{display:none}
+}
+@supports(grid-template-rows:subgrid){@media(min-width:768px){.units-layout{row-gap:0}.units .section-heading{margin-bottom:24px}.unit{display:grid;grid-row:span 7;grid-template-rows:subgrid;row-gap:0}.unit-channels{align-self:stretch}}}

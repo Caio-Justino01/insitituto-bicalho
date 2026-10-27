@@ -12,3 +12,6 @@ research/
 test-results/
 playwright-report/
 *.log
+
+.vercel
+.env*

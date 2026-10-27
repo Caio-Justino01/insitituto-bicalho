@@ -1,20 +1,20 @@
 ---
-import { units, directions, mapEmbed } from '../data/content';
+import { units, directions, mapEmbed, googleReviews } from '../data/content';
 import Icon from './Icon.astro';
 import UnitChannels from './UnitChannels.astro';
-interface Props { heading?: [string, string]; contactFirst?: boolean; position?: string }
-const { heading = ['Perto de você.', 'Do primeiro contato ao cuidado.'], contactFirst = false, position = 'units' } = Astro.props;
+interface Props { heading?: string | [string, string]; intro?: string; contactFirst?: boolean; position?: string }
+const { heading = ['Perto de você.', 'Do primeiro contato ao cuidado.'], intro = 'Escolha sua unidade e o jeito mais prático de começar.', contactFirst = false, position = 'units' } = Astro.props;
 const UnitHeading = contactFirst ? 'h2' : 'h3';
 ---
 <section class:list={['section', 'units', { 'contact-units': contactFirst }]} id="unidades" aria-labelledby={contactFirst ? undefined : 'units-heading'} aria-label={contactFirst ? 'Unidades de atendimento' : undefined}>
   <div class="container units-layout">
-    {!contactFirst && <div class="section-heading"><span class="eyebrow">João Monlevade e Belo Horizonte</span><h2 id="units-heading">{heading[0]} <br/><span>{heading[1]}</span></h2><p>Escolha sua unidade e o jeito mais prático de começar.</p></div>}
+    {!contactFirst && <div class="section-heading"><span class="eyebrow">João Monlevade e Belo Horizonte</span><h2 id="units-heading">{typeof heading === 'string' ? heading : <>{heading[0]}  <span>{heading[1]}</span></>}</h2><p>{intro}</p></div>}
     {units.map(unit => <article class="unit glass" data-unit-card={unit.id}>
-      <div class="unit-heading"><span class="circle-icon"><Icon name="pin" size={25}/></span><span class="eyebrow">Instituto Bicalho</span></div>
-      <UnitHeading>{unit.name}</UnitHeading><address>{unit.address}<br/>{unit.name} - MG{unit.landmark && <span class="unit-landmark">No {unit.landmark}</span>}</address>
-      {contactFirst && <UnitChannels unit={unit} position={position} compact/>}
+      <div class="unit-heading"><span class="circle-icon"><Icon name="pin" size={25}/></span><span class="eyebrow">{contactFirst ? 'Instituto Bicalho Odontologia de Precisão.' : 'Instituto Bicalho'}</span></div>
+      <UnitHeading>{unit.name}</UnitHeading><address>{unit.address}<br/>{unit.name} - MG{contactFirst && `, CEP ${unit.postalCode}`}{unit.landmark && <span class="unit-landmark">No {unit.landmark}</span>}</address>
+      {contactFirst && <UnitChannels unit={unit} position={position} compact label={`Falar com a unidade de ${unit.name}.`}/>}
       <div class="unit-map"><iframe src={mapEmbed(unit)} loading="lazy" title={`Mapa da unidade ${unit.name}`} referrerpolicy="no-referrer" allowfullscreen></iframe></div>
-      <a class="text-link directions-link" href={directions(unit)} target="_blank" rel="noopener noreferrer">Como chegar<Icon name="arrow" size={18}/></a>
+      <div class="unit-map-links"><a class="text-link directions-link" href={directions(unit)} target="_blank" rel="noopener noreferrer">Como chegar<Icon name="arrow" size={18}/></a><a class="text-link google-reviews-link" href={googleReviews(unit)} target="_blank" rel="noopener noreferrer" aria-label={`Ver avaliações da unidade ${unit.name} no Google`}>Avaliações no Google<Icon name="arrow" size={18}/></a></div>
       {!contactFirst && <UnitChannels unit={unit} position={position}/>}
     </article>)}
   </div>

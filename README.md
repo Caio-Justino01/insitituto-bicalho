@@ -2,7 +2,32 @@
 
 Site institucional em Astro + TypeScript, com HTML estático, seis páginas principais, três páginas de políticas e 404. Publicado em https://insitituto-bicalho.vercel.app/ via GitHub/Vercel; a URL temporária permanece fora da indexação.
 
-## V2 — vidro, fotografia e movimento
+## Revisão atual — composição original e fotos oficiais
+
+A composição anterior foi restaurada: cabeçalho flutuante, botões em cápsula, superfícies de vidro, mosaico e movimento. `src/styles/responsive.css` concentra os ajustes de encaixe, tamanhos de texto, rodapé e painéis, sem substituir essa linguagem visual. Os textos, contatos, rotas e integrações permanecem preservados.
+
+A seleção usa a recepção na hero, cenas de atendimento nas áreas de cuidado e a reunião no painel da equipe. Consultórios e atendimento geral ilustram institucionalmente as áreas sem registro específico de procedimento, conforme a escolha do cliente. Os retratos dos sócios ficam na apresentação institucional. `assets/PHOTO-SOURCES.md` registra os arquivos. Os derivados horizontais têm até 2936 px, WebP em qualidade 92 e AVIF em qualidade 72. Os originais permanecem intactos. A escolha de resolução considera o recorte ampliado, com verificação em telas 2× e 3× por `npm run test:photos`.
+
+A navegação completa começa em 1200 px. As atualizações seguem o repositório `Caio-Justino01/insitituto-bicalho`, branch `main`, ligado ao projeto Vercel existente `insitituto-bicalho` e ao endereço https://insitituto-bicalho.vercel.app/. A implantação Preview de 27/10/2026 pertence ao mesmo projeto. A indexação continua desativada; o domínio institucional e suas configurações foram preservados. A suíte inclui navegação, agendamento, consentimento, painéis, movimento, 230 verificações responsivas de 320 a 2560 px com texto a 200% e 156 verificações de resolução de fotografias em telas 2× e 3×, além do fallback sem JavaScript.
+
+## Revisão para apresentação ao cliente — 27/10/2026
+
+Os textos aprovados, títulos SEO, descrições, canonical e indexação foram preservados. A revisão acrescenta Open Graph e Twitter com descrições das imagens, WebSite/WebPage/ImageObject e os perfis oficiais das duas unidades no schema. `src/data/photos.ts` centraliza as descrições do HTML e do XMP incorporado nos arquivos WebP/AVIF. Não foram presumidos fotógrafo, licença ou localização das fotografias.
+
+Os mapas agora identificam a clínica no Google, e os links de rotas usam o Place ID de cada unidade. Cada endereço inclui acesso às avaliações públicas, sem copiar depoimentos, notas ou contagens para o site. Telefones e endereços conferem com os perfis consultados:
+
+- [João Monlevade — perfil oficial](https://www.google.com/maps/search/?api=1&query=Instituto+Bicalho+Joao+Monlevade&query_place_id=ChIJU1SbPXMHpQARw7UoLTBid8k).
+- [Belo Horizonte — perfil oficial](https://www.google.com/maps/search/?api=1&query=Instituto+Bicalho+Belo+Horizonte&query_place_id=ChIJRWZqfhmXpgARwWg7SmnBfFY).
+
+`npm run test:seo` confere as dez páginas, dados estruturados, compartilhamento, links do Google e XMP dos 128 derivados de imagem. A suíte `test:all` inclui essa verificação e a auditoria de resolução das fotografias. Relatórios e capturas da revisão ficam em `artifacts/release-review/` e `artifacts/photo-quality/`.
+
+Lighthouse local mobile desta revisão: desempenho 95, acessibilidade 100, boas práticas 100, LCP 2,8 s e CLS 0,032. A nota de SEO é 69 pelo bloqueio de indexação intencional da prévia; títulos, descrições, canonical e dados de imagens foram validados separadamente.
+
+Pendências encontradas fora do site, nos perfis do Google: o link de uma postagem de João Monlevade usa o número incompleto `553192957448`, e o link de agendamento da filial usa `553197954111`. Os destinos corretos são `5531992957448` e `5531997954111`, respectivamente. João Monlevade também mantém `agenda.link/116828` em “Agendar on-line”, enquanto o fluxo aprovado do site usa WhatsApp. Esses campos externos não foram alterados nesta revisão.
+
+Referências técnicas: [Google Search Central — imagens](https://developers.google.com/search/docs/appearance/google-images), [metadados das imagens](https://developers.google.com/search/docs/appearance/structured-data/image-license-metadata) e [URLs do Google Maps](https://developers.google.com/maps/documentation/urls/get-started).
+
+## Histórico da V2 — vidro, fotografia e movimento
 
 Visual claro com Plus Jakarta Sans variável local (400–700), navegação flutuante, botões em cápsula, fotografias em molduras e vidro com fundo sólido de fallback. A Home tem quatro áreas no mosaico, composição editorial com retratos preservados, cena azul de odontologia digital, equipe de 14 profissionais em `details` nativo, perguntas e duas unidades com igual destaque. A legenda dos sócios usa os nomes fornecidos pelo cliente; não foram presumidas outras associações individuais.
 
@@ -12,7 +37,7 @@ As políticas, rotas, metadados, sitemap, redirecionamentos, WhatsApp e atribui�
 
 ## Executar
 
-Node 24 LTS, fixado em `.nvmrc` e `package.json`. Build validado em Node 24.21.0.
+Node 24 LTS, fixado em `.nvmrc` e `package.json`.
 
 ```sh
 npm ci
@@ -75,7 +100,7 @@ Lighthouse mobile local nesta revisão: desempenho 94, acessibilidade 100 e boas
 
 `src/data/content.ts` centraliza equipe, serviços, unidades, contatos e posições das imagens. Textos clínicos são introdutórios e precisam da conferência final da equipe. Não foram inventados registros profissionais, horários, avaliações ou estatísticas. Os endereços aprovados estão centralizados junto aos contatos.
 
-Os originais estão em `assets/originals/`; imagens otimizadas ficam em `public/assets/`. Retratos originais não foram retocados. A fotografia HEIC foi convertida em `clinic-reference.jpg` para avaliação e permanece como referência, sem identificação presumida. As cenas `hero`, `precision` e `smile` foram geradas por IA; sua origem permanece documentada neste README e nos prompts. Por solicitação do usuário, os avisos de produção foram removidos da interface pública e dos textos alternativos. Troque essas imagens por materiais aprovados mantendo o nome-base e execute `node scripts/assets.mjs` para gerar os quatro tamanhos de cada formato (480, 800, 1200 e 1600), ou atualize o componente Photo e o manifesto de mídia em conjunto. A capa prioriza carregamento e as outras fotos usam lazy loading. Os prompts completos estão em `assets/IMAGE-PROMPTS.md`.
+Os originais estão em `assets/originals/`; imagens otimizadas ficam em `public/assets/`. Retratos originais não foram retocados. A fotografia HEIC foi convertida em `clinic-reference.jpg` para avaliação e permanece como referência, sem identificação presumida. As cenas antigas `hero`, `precision` e `smile` foram geradas por IA e foram substituídas na revisão de 26/10/2026; sua origem histórica permanece documentada nos prompts. Por solicitação do usuário, os avisos de produção foram removidos da interface pública e dos textos alternativos. Troque essas imagens por materiais aprovados mantendo o nome-base e execute `node scripts/assets.mjs` para gerar os quatro tamanhos de cada formato (480, 800, 1200 e 1600), ou atualize o componente Photo e o manifesto de mídia em conjunto. A capa prioriza carregamento e as outras fotos usam lazy loading. Os prompts completos estão em `assets/IMAGE-PROMPTS.md`.
 
 ## Google, consentimento e campanhas
 
@@ -123,7 +148,7 @@ As páginas públicas apresentam horários divergentes. Publicações recentes d
 
 - `src/data/content.ts`: contatos, endereços aprovados, consultas dos mapas, canais de WhatsApp por unidade e `socialLinks`. Instagram e Facebook estão configurados com os perfis oficiais fornecidos pelo usuário, presentes no rodapé de todas as páginas e em `Organization.sameAs` nos dados estruturados.
 - Desde 14/10/2026, todos os CTAs gerais abrem diretamente a escolha entre João Monlevade e Belo Horizonte para continuar no WhatsApp. A agenda externa foi removida do site; a equipe orienta sobre horários e confirma a consulta na conversa. No assistente, a escolha da unidade leva diretamente ao resumo editável.
-- `SupportAssistant.astro` e `src/scripts/assistant.ts`: fluxo tipado com respostas preparadas, 26 procedimentos, dúvidas, pacientes atuais, voltar/reiniciar, troca de unidade e resumo editável antes do WhatsApp. Estado apenas em memória; nenhum backend, gravação de conversa ou envio automático. Avatar fictício; o atendimento permanece identificado como assistente virtual, sem aviso de produção por IA na interface. O indicador verde significa disponibilidade do assistente virtual.
+- `SupportAssistant.astro` e `src/scripts/assistant.ts`: fluxo tipado com respostas preparadas, 26 procedimentos, dúvidas, pacientes atuais, voltar/reiniciar, troca de unidade e resumo editável antes do WhatsApp. Estado apenas em memória; nenhum backend, gravação de conversa ou envio automático. O atendimento permanece identificado como assistente virtual; na revisão atual, o avatar usa o símbolo oficial da marca. O indicador verde significa disponibilidade do assistente virtual.
 - Logo oficial no rodapé, símbolo original recortado da marca no CTA, glifo reconhecível do WhatsApp e crédito para https://www.aguiadigital.com/.
 - Os mapas incorporados carregam sob demanda perto da visualização. Google Maps é um recurso externo independente de Analytics; as políticas explicam isso. Links de rotas e endereços permanecem acessíveis.
 - JM: Av. Gentil Bicalho, 384, 2º andar, Carneirinhos (usuário e agenda). BH: Av. Barão Homem de Melo, 55, loja 12, Nova Granada, BH Point (endereço aprovado no plano; cadastro da clínica corresponde ao telefone). Referências: https://dentmap.com.br/dentistas/belo-horizonte/instituto-bicalho-odontologia-bh-4a3b68c1 e https://sites.google.com/view/bh-point/menu/localizacao . A loja 20 é a administração do empreendimento, não a clínica.

@@ -1,17 +1,35 @@
 import { initAssistant } from './assistant';
 const $ = <T extends Element = HTMLElement>(selector: string) => document.querySelector<T>(selector);
 const $$ = <T extends Element = HTMLElement>(selector: string) => [...document.querySelectorAll<T>(selector)];
+
+// Width descriptors must cover the complete photo behind a crop, not just its visible frame.
+// Recheck when wrapping text, zoom, breakpoints or the team panel change that frame's size.
+function updatePhotoSize(image: HTMLImageElement) {
+  const width = image.clientWidth, height = image.clientHeight;
+  if (!width || !height) return;
+  const aspect = Number(image.getAttribute('width')) / Number(image.getAttribute('height'));
+  const slot = Math.ceil(getComputedStyle(image).objectFit === 'cover' ? Math.max(width, height * aspect) : width);
+  const sizes = `${slot}px`;
+  if (image.sizes === sizes) return;
+  image.closest('picture')?.querySelectorAll('source').forEach(source => { source.sizes = sizes; });
+  image.sizes = sizes;
+}
+const photoImages = $$<HTMLImageElement>('.photo img');
+if ('ResizeObserver' in window) {
+  const photoObserver = new ResizeObserver(entries => entries.forEach(entry => updatePhotoSize(entry.target as HTMLImageElement)));
+  photoImages.forEach(image => { updatePhotoSize(image); photoObserver.observe(image); });
+}
 const menu = $('.mobile-nav')!;
 const menuButton = $<HTMLButtonElement>('.menu-toggle')!;
-function closeMenu() { menu.setAttribute('hidden', ''); menuButton.setAttribute('aria-expanded', 'false'); menuButton.setAttribute('aria-label', 'Abrir menu'); }
+function closeMenu() { menu.setAttribute('hidden', ''); menuButton.setAttribute('aria-expanded', 'false'); menuButton.setAttribute('aria-label', 'Abrir menu'); updateBar(); }
 menuButton.addEventListener('click', () => {
   const opening = menuButton.getAttribute('aria-expanded') !== 'true';
-  menu.toggleAttribute('hidden', !opening); menuButton.setAttribute('aria-expanded', String(opening)); menuButton.setAttribute('aria-label', opening ? 'Fechar menu' : 'Abrir menu');
+  menu.toggleAttribute('hidden', !opening); menuButton.setAttribute('aria-expanded', String(opening)); menuButton.setAttribute('aria-label', opening ? 'Fechar menu' : 'Abrir menu'); updateBar();
 });
 document.addEventListener('keydown', event => { if (event.key === 'Escape' && !menu.hasAttribute('hidden')) { closeMenu(); menuButton.focus(); } });
 document.addEventListener('click', event => { if (!(event.target as HTMLElement).closest('.site-header')) closeMenu(); });
 menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
-matchMedia('(min-width:1000px)').addEventListener('change', event => { if (event.matches) closeMenu(); });
+matchMedia('(min-width:1200px)').addEventListener('change', event => { if (event.matches) closeMenu(); });
 
 const dialog = $<HTMLDialogElement>('#booking-dialog')!;
 // Explicit wrapping also covers browsers that move focus to browser chrome at the dialog boundary.
@@ -44,19 +62,45 @@ const support = $<HTMLDialogElement>('#support-dialog')!;
 const notice = $('.cookie-notice')!;
 let heroPassed = false;
 let unitsVisible = false;
+let footerVisible = false;
+let clearanceFrame = 0;
+const pageActions = $$('main a, main button, main summary, .site-footer a, .site-footer button');
+function updateLauncherClearance() {
+  clearanceFrame = 0;
+  if (launcher.hidden || document.activeElement === launcher) {
+    launcher.removeAttribute('data-obstructed');
+    return;
+  }
+  const helper = launcher.getBoundingClientRect();
+  const obstructed = pageActions.some(action => {
+    const rect = action.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && rect.left < helper.right && rect.right > helper.left && rect.top < helper.bottom && rect.bottom > helper.top;
+  });
+  launcher.toggleAttribute('data-obstructed', obstructed);
+}
+function scheduleLauncherClearance() {
+  if (!clearanceFrame) clearanceFrame = requestAnimationFrame(updateLauncherClearance);
+}
 function updateBar() {
-  const blocked = dialog.open || support.open || !notice.hasAttribute('hidden');
-  const visible = heroPassed && !unitsVisible && !blocked;
+  const blocked = dialog.open || support.open || !notice.hasAttribute('hidden') || !menu.hidden;
+  const visible = heroPassed && !unitsVisible && !footerVisible && !blocked;
   bar.toggleAttribute('hidden', !visible);
   launcher.toggleAttribute('hidden', blocked);
   document.body.classList.toggle('booking-dock-visible', visible);
+  document.body.classList.toggle('footer-visible', footerVisible);
+  document.body.classList.toggle('units-visible', unitsVisible);
+  scheduleLauncherClearance();
 }
 initAssistant(updateBar);
+window.addEventListener('scroll', scheduleLauncherClearance, { passive: true });
+window.addEventListener('resize', scheduleLauncherClearance);
 if ('IntersectionObserver' in window) {
   const primary = $('#primary-booking');
   if (primary) new IntersectionObserver(entries => { const entry = entries[0]; heroPassed = !entry.isIntersecting && entry.boundingClientRect.top < $('.site-header')!.getBoundingClientRect().height; updateBar(); }, { threshold: 0, rootMargin: `-${$('.site-header')!.getBoundingClientRect().height}px 0px 0px 0px` }).observe(primary);
   const units = $('#unidades');
   if (units) new IntersectionObserver(entries => { unitsVisible = entries[0].isIntersecting; updateBar(); }, { threshold: .05 }).observe(units);
+  const footer = $('.site-footer');
+  if (footer) new IntersectionObserver(entries => { footerVisible = entries[0].isIntersecting; updateBar(); }, { threshold: 0 }).observe(footer);
 }
 
 // Basic navigation is independent from the optional animation bundle.

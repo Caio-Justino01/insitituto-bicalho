@@ -7,7 +7,7 @@ const errors=[];page.on('pageerror',e=>errors.push(e.message));
 await page.goto('http://127.0.0.1:4321');
 await page.waitForFunction(()=>document.body.dataset.motion==='ready');
 await page.waitForTimeout(1200);
-assert((await page.locator('.motion-line').count())>0);
+assert((await page.locator('.motion-line').count())>0,'The approved heading entrance is restored');
 assert.equal((await page.locator('h1').getAttribute('aria-label')).replace(/\s+/g,' ').trim(),'Clínica odontológica em João Monlevade e Belo Horizonte.');
 assert.equal(await page.locator('#instituto .team-panel').count(),1);
 assert.equal(await page.locator('.team-panel').getAttribute('open'),null);
@@ -65,5 +65,5 @@ assert(await page.locator('main [style]').evaluateAll(els=>els.every(el=>+getCom
 await page.emulateMedia({reducedMotion:'no-preference'});await page.waitForTimeout(300);
 assert.equal(await page.locator('body').getAttribute('data-motion'),'ready');
 assert.deepEqual(errors,[]);
-await writeFile('artifacts/motion-v2.json',JSON.stringify({motion:'GSAP active',headings:'accessible labels + line masks',scroll:'fast scroll and return, no hidden content',accordions:'team 14, FAQ, pointer, Enter and close',responsive:'desktop/mobile/orientation/200% text/reduced motion live rebuild',errors},null,2));
+await writeFile('artifacts/motion-v2.json',JSON.stringify({motion:'approved entrance composition and interactive transitions',headings:'accessible line masks',scroll:'fast scroll and return, no hidden content',accordions:'team 14, FAQ, pointer, Enter and close',responsive:'desktop/mobile/orientation/200% text/reduced motion live rebuild',errors},null,2));
 console.log('Motion tests passed');await browser.close();

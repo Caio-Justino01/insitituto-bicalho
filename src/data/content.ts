@@ -1,13 +1,16 @@
+import { media } from './photos';
+export { media } from './photos';
+
 export const site = {
   name: 'Instituto Bicalho',
   tagline: 'Odontologia de Precisão',
   url: import.meta.env.PUBLIC_SITE_URL || 'https://institutobicalho.com',
 };
-export type Unit = { id: string; name: string; phone: string; display: string; note: string; address: string; mapLocation: string; landmark?: string };
+export type Unit = { id: string; name: string; phone: string; display: string; note: string; address: string; postalCode: string; mapLocation: string; googlePlaceId: string; googleEmbed: string; latitude: number; longitude: number; landmark?: string };
 export const units: Unit[] = [
-  { id: 'joao-monlevade', name: 'João Monlevade', phone: '5531992957448', display: '(31) 99295-7448', note: 'Nossa equipe espera por você em João Monlevade.', address: 'Av. Gentil Bicalho, 384, 2º andar, Carneirinhos', mapLocation: 'Av. Gentil Bicalho, 384, Carneirinhos, João Monlevade - MG, Brasil' },
-  // Exact point in the official BH Point location link. Suite text can geocode to an unrelated business.
-  { id: 'belo-horizonte', name: 'Belo Horizonte', phone: '5531997954111', display: '(31) 99795-4111', note: 'O cuidado do Instituto também em Belo Horizonte.', address: 'Av. Barão Homem de Melo, 55, loja 12, Nova Granada', mapLocation: '-19.935259,-43.9718161', landmark: 'BH Point' },
+  { id: 'joao-monlevade', name: 'João Monlevade', phone: '5531992957448', display: '(31) 99295-7448', note: 'Nossa equipe espera por você em João Monlevade.', address: 'Av. Gentil Bicalho, 384, 2º andar, Carneirinhos', postalCode: '35930-478', mapLocation: 'Av. Gentil Bicalho, 384, Carneirinhos, João Monlevade - MG, Brasil', googlePlaceId: 'ChIJU1SbPXMHpQARw7UoLTBid8k', latitude: -19.8076883, longitude: -43.184102, googleEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3753.761942485491!2d-43.18410199999999!3d-19.8076883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa507733d9b5453%3A0xc97762302d28b5c3!2sInstituto%20Bicalho%20Odontologia%20de%20Precis%C3%A3o!5e0!3m2!1spt-BR!2sbr!4v1793071332500!5m2!1spt-BR!2sbr' },
+  // Both Place IDs and embed URLs were checked in the official Google Maps profiles.
+  { id: 'belo-horizonte', name: 'Belo Horizonte', phone: '5531997954111', display: '(31) 99795-4111', note: 'O cuidado do Instituto também em Belo Horizonte.', address: 'Av. Barão Homem de Melo, 55, loja 12, Nova Granada', postalCode: '30431-285', mapLocation: '-19.935259,-43.9718161', landmark: 'BH Point', googlePlaceId: 'ChIJRWZqfhmXpgARwWg7SmnBfFY', latitude: -19.935259, longitude: -43.9718161, googleEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3750.742359191241!2d-43.9718161!3d-19.935259000000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa697197e6a6645%3A0x567cc1694a3b68c1!2sInstituto%20Bicalho%20Odontologia%20de%20Precis%C3%A3o%20%7C%20Filial!5e0!3m2!1spt-BR!2sbr!4v1793071475238!5m2!1spt-BR!2sbr' },
 ];
 // Official profile URLs supplied by the user.
 export const socialLinks: { name: string; icon: string; url: string | null }[] = [
@@ -16,8 +19,10 @@ export const socialLinks: { name: string; icon: string; url: string | null }[] =
 ];
 export const agencyUrl = 'https://www.aguiadigital.com/';
 export const mapQuery = (unit: Unit) => unit.mapLocation;
-export const directions = (unit: Unit) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery(unit))}`;
-export const mapEmbed = (unit: Unit) => `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery(unit))}&z=16&output=embed`;
+export const googleProfile = (unit: Unit) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.name} ${unit.name}`)}&query_place_id=${unit.googlePlaceId}`;
+export const googleReviews = (unit: Unit) => `https://search.google.com/local/reviews?placeid=${unit.googlePlaceId}`;
+export const directions = (unit: Unit) => `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery(unit))}&destination_place_id=${unit.googlePlaceId}`;
+export const mapEmbed = (unit: Unit) => unit.googleEmbed;
 export const whatsapp = (phone: string) => `https://wa.me/${phone}?text=${encodeURIComponent('Olá! Vim pelo site do Instituto Bicalho e gostaria de agendar uma avaliação.')}`;
 export const nav = [
   { href: '/', label: 'Início' },
@@ -27,75 +32,122 @@ export const nav = [
   { href: '/odontologia-de-precisao/', label: 'Odontologia de Precisão' },
   { href: '/contato/', label: 'Contato' },
 ];
-export const media = {
-  smile: { src: 'smile', alt: 'Sorriso natural', position: '40% 40%' },
-  hero: { src: 'hero-branded', alt: 'Conversa acolhedora entre dentista e paciente', position: '100% 45%' },
-  aligners: { src: 'aligners', alt: 'Dentista apresentando um alinhador transparente à paciente', position: '50% 40%' },
-  precision: { src: 'precision-branded', alt: 'Escaneamento e planejamento odontológico digital', position: 'center' },
-  partnerOne: { src: 'partner-01', alt: 'Sócio do Instituto Bicalho em retrato institucional', position: '50% 27%' },
-  partnerTwo: { src: 'partner-02', alt: 'Sócia do Instituto Bicalho em retrato institucional', position: '50% 28%' },
-  professional: { src: 'professional-01', alt: 'Profissional do Instituto Bicalho em retrato institucional', position: '50% 28%' },
-};
 export type Service = { id: string; title: string; text: string };
-export type Area = { slug: string; title: string; short: string; homeSummary?: string; heading: string; intro: string; icon: string; image: keyof typeof media; services: Service[]; questions: [string, string][] };
+export type Area = { slug: string; title: string; short: string; homeSummary?: string; heading: string; intro: string; icon: string; image: keyof typeof media; services: Service[]; questions: [string, string][]; seoTitle: string; seoDescription: string; eyebrow: string; servicesHeading: string; faqIntro: string; relatedLinks: { label: string; href: string }[] };
 export const areas: Area[] = [
   {
-    slug: 'tratamentos', title: 'Tratamentos', short: 'Saúde e função para o seu sorriso.', heading: 'Cuidado completo para a sua saúde bucal.', icon: 'tooth', image: 'hero',
+    slug: 'tratamentos', title: 'Tratamentos', short: 'Saúde e função para o seu sorriso.', icon: 'tooth', image: 'care',
     homeSummary: 'Prevenção, tratamento de canal, periodontia e reabilitação oral.',
-    intro: 'Da prevenção à reabilitação oral, cada cuidado começa por entender você. Nossa equipe reúne diferentes áreas da odontologia para construir um planejamento individualizado.',
+    seoTitle: 'Tratamentos odontológicos | Instituto Bicalho',
+    seoDescription: 'Tratamentos odontológicos em João Monlevade e Belo Horizonte: implantes, próteses, canal e prevenção, com avaliação individualizada no Instituto Bicalho.',
+    eyebrow: 'Saúde bucal e reabilitação.',
+    heading: 'Tratamentos odontológicos em João Monlevade e Belo Horizonte.',
+    intro: 'Você encontra no Instituto Bicalho Odontologia de Precisão cuidados de prevenção, tratamento de canal, próteses e reabilitação oral. Na avaliação, o dentista examina sua saúde bucal e conversa sobre o que você precisa para definir as etapas do tratamento.',
+    servicesHeading: 'Tratamentos odontológicos para dentes, gengivas e mastigação.',
     services: [
-      { id: 'implantes-dentarios', title: 'Implantes dentários', text: 'Uma possibilidade para a reposição de dentes ausentes. A avaliação considera a saúde bucal, a estrutura óssea e as necessidades de cada pessoa antes de definir o planejamento.' },
-      { id: 'proteses-dentarias', title: 'Próteses dentárias', text: 'Soluções para recuperar dentes ausentes, a mastigação e a harmonia do sorriso. O planejamento pode incluir próteses convencionais ou sobre implantes, conforme a avaliação.' },
-      { id: 'coroas-dentarias', title: 'Coroas dentárias', text: 'Restaurações que recobrem a estrutura de um dente quando há indicação clínica. Material, formato e adaptação são definidos de acordo com a função e as características do sorriso.' },
-      { id: 'tratamento-de-canal', title: 'Tratamento de canal', text: 'Cuidado endodôntico voltado à parte interna do dente. O diagnóstico orienta a indicação e as etapas do tratamento, buscando preservar o dente quando possível.' },
-      { id: 'restauracoes', title: 'Restaurações', text: 'Reconstrução de partes do dente comprometidas por cáries, fraturas ou desgaste. A avaliação considera a extensão da alteração e a melhor forma de recuperar função e aparência.' },
-      { id: 'prevencao', title: 'Prevenção', text: 'Acompanhamento da saúde bucal, orientação de higiene e cuidados preventivos individualizados. A frequência das consultas é definida a partir das necessidades de cada paciente.' },
-      { id: 'odontopediatria', title: 'Odontopediatria', text: 'Atenção à saúde bucal de crianças, com acolhimento e orientação à família. O cuidado acompanha as fases do desenvolvimento e incentiva hábitos de prevenção desde cedo.' },
-      { id: 'periodontia', title: 'Periodontia', text: 'Avaliação e cuidado das gengivas e dos tecidos que sustentam os dentes. O planejamento inclui orientação, tratamento quando indicado e acompanhamento da saúde periodontal.' },
-      { id: 'reabilitacao-oral', title: 'Reabilitação oral', text: 'Um planejamento integrado para casos que envolvem diferentes necessidades, como dentes ausentes, desgaste e alterações na mastigação. As etapas são organizadas de forma individual.' },
+      { id: 'implantes-dentarios', title: 'Implantes dentários', text: 'O implante funciona como uma raiz artificial para dar suporte à reposição de dentes ausentes. O dentista avalia a gengiva, o osso e seu histórico de saúde para planejar o tratamento e a prótese que será instalada sobre ele.' },
+      { id: 'proteses-dentarias', title: 'Próteses dentárias', text: 'Próteses substituem dentes ausentes e podem ajudar na mastigação e na fala. A avaliação define as possibilidades de prótese fixa, removível ou sobre implantes, considerando a condição da boca e os cuidados necessários no dia a dia.' },
+      { id: 'coroas-dentarias', title: 'Coroas dentárias', text: 'A coroa recobre um dente quando sua estrutura precisa de reconstrução e proteção. A indicação depende da quantidade de dente preservada, da mordida e das condições clínicas. O planejamento considera material, formato e adaptação.' },
+      { id: 'tratamento-de-canal', title: 'Tratamento de canal', text: 'O tratamento de canal cuida da parte interna do dente quando a polpa está inflamada ou infectada. A avaliação e os exames indicados orientam o procedimento e a restauração necessária para recuperar a estrutura do dente após o tratamento.' },
+      { id: 'restauracoes', title: 'Restaurações dentárias', text: 'Restaurações recompõem partes do dente afetadas por cáries, fraturas ou desgaste. O dentista avalia a extensão da alteração para definir o material e a forma de reconstrução, considerando a mastigação e a aparência do dente.' },
+      { id: 'prevencao', title: 'Prevenção odontológica', text: 'Consultas de prevenção permitem acompanhar dentes e gengivas, identificar alterações e orientar sua rotina de higiene. Os cuidados profissionais e o intervalo entre os retornos são definidos conforme sua saúde bucal e suas necessidades.' },
+      { id: 'odontopediatria', title: 'Odontopediatria', text: 'O atendimento odontológico infantil acompanha o desenvolvimento da boca e dos dentes. A consulta considera a idade, a adaptação da criança e a participação da família, com orientações de higiene, alimentação e prevenção adequadas a cada fase.' },
+      { id: 'periodontia', title: 'Periodontia: cuidado com a gengiva', text: 'A periodontia cuida da gengiva e dos tecidos que sustentam os dentes. Sangramento, inchaço ou alterações na gengiva precisam de avaliação. O diagnóstico orienta o tratamento e o acompanhamento da saúde periodontal.' },
+      { id: 'reabilitacao-oral', title: 'Reabilitação oral', text: 'Quando há dentes ausentes, desgastes ou dificuldades na mastigação, a reabilitação oral organiza diferentes cuidados em um mesmo plano. As etapas podem envolver restaurações, próteses e implantes, conforme a indicação clínica e as prioridades do caso.' },
     ],
-    questions: [ ['Por onde começar meu tratamento?', 'O primeiro passo é uma avaliação. A equipe escuta suas necessidades, avalia sua saúde bucal e explica as possibilidades e as etapas indicadas para você.'], ['Posso tratar mais de uma necessidade no Instituto?', 'O Instituto reúne profissionais de diferentes áreas. Na avaliação, a equipe organiza o cuidado e informa onde cada etapa pode ser realizada.'] ],
+    relatedLinks: [
+      { label: 'Estética do sorriso', href: '/estetica/' },
+      { label: 'Ortodontia e cirurgia odontológica', href: '/ortodontia-e-cirurgia/' },
+      { label: 'Recursos de odontologia de precisão', href: '/odontologia-de-precisao/' },
+    ],
+    faqIntro: 'Entenda como a avaliação orienta seu plano de tratamento.',
+    questions: [
+      ['Como saber de qual tratamento odontológico preciso?', 'Conte ao dentista o que está incomodando e quais mudanças você percebeu. O exame clínico e, quando necessários, os exames complementares ajudam a identificar as causas e definir as opções de cuidado. Você recebe explicações sobre as etapas propostas e pode esclarecer suas dúvidas.'],
+      ['Posso combinar diferentes tratamentos no mesmo planejamento?', 'Sim, quando houver indicação. Um caso pode envolver cuidados com a gengiva, restaurações e reposição de dentes, por exemplo. O planejamento organiza a sequência desses atendimentos, e a equipe informa a disponibilidade dos serviços na unidade escolhida.'],
+    ],
   },
   {
-    slug: 'estetica', title: 'Estética', short: 'Harmonia que respeita a sua identidade.', heading: 'Seu sorriso. Sua expressão. Sua identidade.', icon: 'spark', image: 'smile',
+    slug: 'estetica', title: 'Estética', short: 'Harmonia que respeita a sua identidade.', icon: 'spark', image: 'smile',
     homeSummary: 'Facetas dentárias, clareamento dental e harmonização orofacial.',
-    intro: 'Estética do sorriso e harmonização orofacial com atenção às suas características. O planejamento une saúde, função e suas expectativas, sem fórmulas iguais para todo mundo.',
+    seoTitle: 'Estética dental e orofacial | Instituto Bicalho',
+    seoDescription: 'Estética dental em João Monlevade e Belo Horizonte: facetas, lentes de contato dental, clareamento e harmonização orofacial, com avaliação individualizada.',
+    eyebrow: 'Estética do sorriso e da face.',
+    heading: 'Estética dental e harmonização orofacial.',
+    intro: 'Cor, formato dos dentes e características da face fazem parte da conversa sobre o que você deseja mudar. No Instituto Bicalho Odontologia de Precisão, em João Monlevade e Belo Horizonte, o planejamento considera sua saúde bucal, a mordida e as possibilidades de cada procedimento.',
+    servicesHeading: 'Procedimentos de estética dental e orofacial.',
     services: [
-      { id: 'facetas', title: 'Facetas', text: 'Uma opção para modificar características como forma e cor dos dentes, quando indicada. Antes do tratamento, avaliamos a saúde bucal, a mordida e as características da estrutura dental.' },
-      { id: 'lentes-de-contato-dental', title: 'Lentes de contato dental', text: 'Laminados cerâmicos planejados de acordo com o sorriso. A indicação, a espessura e a necessidade de preparo dependem da avaliação de cada dente e dos objetivos do tratamento.' },
-      { id: 'clareamento-dental', title: 'Clareamento dental', text: 'Tratamento para modificar a tonalidade dos dentes com acompanhamento profissional. A técnica e os cuidados são definidos após avaliação; a resposta varia entre as pessoas.' },
-      { id: 'harmonizacao-orofacial', title: 'Harmonização orofacial', text: 'Avaliação das proporções e características da face para um planejamento individualizado. Na consulta, o profissional explica indicações, limites e cuidados dos procedimentos propostos.' },
+      { id: 'facetas', title: 'Facetas dentárias', text: 'Facetas recobrem a parte da frente dos dentes e podem ser indicadas para alterações de forma ou cor. A escolha considera a estrutura dental, a mordida e os objetivos do tratamento. Na consulta, você entende o preparo necessário e os cuidados de manutenção.' },
+      { id: 'lentes-de-contato-dental', title: 'Lentes de contato dental', text: 'As lentes de contato dental são laminados cerâmicos cuja indicação depende das características de cada dente. O planejamento avalia cor, forma, espessura e necessidade de preparo para discutir as possibilidades de mudança no sorriso.' },
+      { id: 'clareamento-dental', title: 'Clareamento dental', text: 'O clareamento modifica a tonalidade dos dentes naturais com acompanhamento do dentista. A avaliação considera a saúde bucal, a presença de restaurações e a sensibilidade para definir a técnica e orientar os cuidados durante o tratamento.' },
+      { id: 'harmonizacao-orofacial', title: 'Harmonização orofacial', text: 'A harmonização orofacial reúne procedimentos voltados às características e proporções da face, dentro da atuação odontológica. A avaliação considera suas expectativas e seu histórico de saúde. O profissional explica as opções, os cuidados e as indicações para o seu caso.' },
     ],
-    questions: [ ['Como saber qual procedimento é indicado?', 'A escolha começa por uma avaliação da saúde bucal e uma conversa sobre suas expectativas. O profissional apresenta possibilidades, cuidados e limites antes de qualquer decisão.'], ['O planejamento considera meu sorriso natural?', 'Sim. As características da face, dos dentes e da mordida fazem parte da avaliação, junto com suas preferências e as possibilidades clínicas.'] ],
+    relatedLinks: [
+      { label: 'Cuidados com a saúde bucal', href: '/tratamentos/' },
+      { label: 'Ortodontia e alinhadores', href: '/ortodontia-e-cirurgia/' },
+      { label: 'Planejamento digital do sorriso', href: '/odontologia-de-precisao/#planejamento-digital-do-sorriso' },
+    ],
+    faqIntro: 'Conheça os critérios usados para conversar sobre mudanças no sorriso.',
+    questions: [
+      ['Facetas e lentes de contato dental são a mesma coisa?', 'Os dois nomes se relacionam a revestimentos aplicados sobre a superfície dos dentes, mas o planejamento e o preparo podem variar. O nome do procedimento, sozinho, não define quanto desgaste será necessário. O dentista examina cada dente e explica a opção proposta.'],
+      ['Como escolher entre clareamento e outros procedimentos estéticos?', 'A escolha depende do que você deseja modificar e das condições dos dentes e da gengiva. Cor, forma e posição podem exigir abordagens diferentes. Na avaliação, você conversa sobre essas possibilidades, os cuidados envolvidos e as expectativas para o tratamento.'],
+    ],
   },
   {
-    slug: 'ortodontia-e-cirurgia', title: 'Ortodontia e Cirurgia', short: 'Planejamento e cuidado em cada etapa.', heading: 'Cada movimento começa com um bom planejamento.', icon: 'align', image: 'aligners',
+    slug: 'ortodontia-e-cirurgia', title: 'Ortodontia e Cirurgia', short: 'Planejamento e cuidado em cada etapa.', icon: 'align', image: 'aligners',
     homeSummary: 'Aparelho fixo, alinhadores invisíveis, implante dentário e cirurgia bucomaxilofacial.',
-    intro: 'Do alinhamento dos dentes aos cuidados cirúrgicos, o diagnóstico orienta cada decisão. Uma equipe integrada para explicar o caminho e acompanhar suas etapas.',
+    seoTitle: 'Ortodontia e cirurgia odontológica | Instituto Bicalho',
+    seoDescription: 'Ortodontia e cirurgia odontológica em João Monlevade e Belo Horizonte: aparelhos, alinhadores, sisos e avaliação de DTM no Instituto Bicalho.',
+    eyebrow: 'Alinhamento, mordida e cuidados cirúrgicos.',
+    heading: 'Ortodontia e cirurgia odontológica.',
+    intro: 'O posicionamento dos dentes, a mordida e as condições da boca orientam o planejamento de cada atendimento. No Instituto Bicalho Odontologia de Precisão, em João Monlevade e Belo Horizonte, você recebe avaliação para cuidados ortodônticos e cirúrgicos, conforme a necessidade do seu caso.',
+    servicesHeading: 'Cuidados em ortodontia e cirurgia odontológica.',
     services: [
-      { id: 'ortodontia', title: 'Ortodontia', text: 'Avaliação do posicionamento dos dentes e da mordida. O tratamento e o acompanhamento são planejados a partir do diagnóstico, da fase de desenvolvimento e das necessidades individuais.' },
-      { id: 'alinhadores-transparentes', title: 'Alinhadores transparentes', text: 'Uma alternativa ortodôntica removível para casos com indicação. O planejamento define a sequência de alinhadores e o acompanhamento; o uso conforme orientação é parte do tratamento.' },
-      { id: 'extracao-de-sisos', title: 'Extração de sisos', text: 'A necessidade de remover os terceiros molares é avaliada por exame clínico e, quando indicado, exames de imagem. A equipe orienta sobre o procedimento e os cuidados de recuperação.' },
-      { id: 'cirurgia-bucomaxilofacial', title: 'Cirurgia bucomaxilofacial', text: 'Avaliação e tratamento cirúrgico de condições da boca, dos maxilares e de estruturas relacionadas. O diagnóstico define o procedimento, a estrutura necessária e o acompanhamento.' },
-      { id: 'cirurgias-com-sedacao', title: 'Cirurgias com sedação', text: 'A sedação pode integrar o planejamento de procedimentos selecionados. Sua indicação depende da avaliação de saúde, do procedimento e da equipe responsável. Consulte a disponibilidade por unidade.' },
-      { id: 'biopsias', title: 'Realização de biópsias', text: 'Quando indicada, a coleta de uma amostra de tecido auxilia a investigação de alterações na boca. A avaliação profissional orienta a necessidade, o exame e os próximos cuidados.' },
-      { id: 'tratamento-de-dtm', title: 'Tratamento de DTM', text: 'Avaliação de disfunções que podem envolver os músculos da mastigação e a articulação da mandíbula. O cuidado é definido a partir do diagnóstico e pode envolver diferentes abordagens.' },
-      { id: 'avaliacao-da-atm', title: 'Avaliação e tratamento da ATM', text: 'Investigação de queixas relacionadas à articulação temporomandibular, como dor ou dificuldade de movimento. O exame individual orienta os cuidados e a necessidade de acompanhamento.' },
-      { id: 'bruxismo', title: 'Bruxismo', text: 'Avaliação do apertamento ou ranger dos dentes e de seus possíveis efeitos. O acompanhamento busca compreender cada caso e orientar medidas de cuidado e proteção quando indicadas.' },
+      { id: 'ortodontia', title: 'Ortodontia e aparelho fixo', text: 'A ortodontia avalia a posição dos dentes e a forma como eles se encaixam ao fechar a boca. O aparelho fixo pode integrar o tratamento quando indicado. O planejamento considera os movimentos necessários, a saúde bucal e o acompanhamento durante as etapas.' },
+      { id: 'alinhadores-transparentes', title: 'Alinhadores transparentes', text: 'Alinhadores são dispositivos removíveis usados em uma sequência planejada para movimentar os dentes. A indicação depende da avaliação ortodôntica. O uso conforme a orientação e os retornos ao dentista fazem parte do acompanhamento.' },
+      { id: 'extracao-de-sisos', title: 'Extração de sisos', text: 'A retirada dos dentes do siso depende de avaliação clínica e, quando indicados, exames de imagem. O dentista verifica a posição dos dentes e as condições da região para explicar a indicação, o procedimento e os cuidados após a cirurgia.' },
+      { id: 'cirurgia-bucomaxilofacial', title: 'Cirurgia bucomaxilofacial', text: 'A área bucomaxilofacial avalia condições da boca, dos maxilares e de estruturas relacionadas. Quando há indicação cirúrgica, o diagnóstico orienta o procedimento, o local adequado para realizá-lo e o acompanhamento necessário.' },
+      { id: 'cirurgias-com-sedacao', title: 'Cirurgias com sedação', text: 'A sedação pode fazer parte de procedimentos selecionados, conforme a avaliação de saúde e o planejamento da equipe responsável. Na consulta, você recebe orientações sobre a indicação e os cuidados necessários. Confirme a disponibilidade na unidade de sua preferência.' },
+      { id: 'biopsias', title: 'Biópsias de lesões da boca', text: 'A biópsia consiste na coleta de uma amostra de tecido para ajudar a investigar uma alteração na boca. O profissional avalia a lesão e, quando indica o exame, explica a coleta, a análise do material e como será o retorno para discutir o resultado.' },
+      { id: 'tratamento-de-dtm', title: 'Tratamento de DTM', text: 'As disfunções temporomandibulares podem envolver a articulação da mandíbula e os músculos da mastigação. A avaliação considera dor, movimentos e outras queixas para orientar o cuidado. As abordagens são definidas conforme o diagnóstico.' },
+      { id: 'avaliacao-da-atm', title: 'Avaliação e tratamento da ATM', text: 'ATM é a articulação que liga a mandíbula ao crânio. Dor ou dificuldade para abrir e movimentar a boca são motivos para avaliação. O dentista examina a região e investiga a queixa para orientar o acompanhamento e as possibilidades de tratamento.' },
+      { id: 'bruxismo', title: 'Bruxismo', text: 'Bruxismo é o hábito de apertar ou ranger os dentes, que pode ocorrer durante o sono ou enquanto você está acordado. A avaliação investiga os sinais e possíveis efeitos sobre dentes e músculos para orientar medidas de cuidado e proteção quando indicadas.' },
     ],
-    questions: [ ['Todo caso pode ser tratado com alinhadores?', 'A indicação depende da avaliação ortodôntica. O profissional considera a mordida, os movimentos necessários e as condições de saúde bucal para apresentar as alternativas.'], ['Como saber em qual unidade realizar uma cirurgia?', 'Fale com a equipe da unidade de sua preferência. Ela confirma a disponibilidade e orienta sobre a avaliação e o local adequado para o procedimento.'] ],
+    relatedLinks: [
+      { label: 'Tratamentos e reabilitação oral', href: '/tratamentos/' },
+      { label: 'Estética dental e orofacial', href: '/estetica/' },
+      { label: 'Planejamento com recursos digitais', href: '/odontologia-de-precisao/' },
+    ],
+    faqIntro: 'Veja o que considerar ao conversar sobre aparelhos e procedimentos cirúrgicos.',
+    questions: [
+      ['Como saber se preciso de aparelho fixo ou alinhadores?', 'A avaliação ortodôntica considera a mordida, a posição dos dentes e os movimentos necessários. O profissional apresenta as alternativas indicadas e explica o uso, a higiene e o acompanhamento de cada opção. A escolha combina as necessidades clínicas e sua rotina.'],
+      ['O que preciso saber para agendar uma avaliação cirúrgica?', 'Informe sua queixa e a unidade em que deseja atendimento. A equipe orienta o agendamento e confirma a disponibilidade do serviço. Na avaliação, o profissional analisa seu histórico de saúde e informa os exames, o local do procedimento e os cuidados indicados.'],
+    ],
   },
   {
-    slug: 'odontologia-de-precisao', title: 'Odontologia de Precisão', short: 'Tecnologia a serviço de um cuidado individual.', heading: 'Tecnologia que aproxima. Precisão que faz diferença.', icon: 'scan', image: 'precision',
+    slug: 'odontologia-de-precisao', title: 'Odontologia de Precisão', short: 'Tecnologia a serviço de um cuidado individual.', icon: 'scan', image: 'precision',
     homeSummary: 'Escaneamento digital e planejamento guiado por tecnologia, do diagnóstico à execução.',
-    intro: 'Ferramentas digitais ajudam a registrar, planejar e acompanhar o cuidado. A tecnologia faz parte de um processo guiado pelo conhecimento clínico e pela atenção a cada pessoa.',
+    seoTitle: 'Odontologia de precisão e digital | Instituto Bicalho',
+    seoDescription: 'Odontologia de precisão com escaneamento intraoral, planejamento digital e próteses. Conheça o Instituto Bicalho em João Monlevade e Belo Horizonte.',
+    eyebrow: 'Registros, planejamento e execução.',
+    heading: 'Odontologia de precisão com planejamento digital.',
+    intro: 'Registros digitais ajudam o dentista a estudar sua boca, discutir as possibilidades de tratamento e compartilhar informações entre as etapas clínicas e laboratoriais. Conheça os recursos do Instituto Bicalho Odontologia de Precisão, com unidades em João Monlevade e Belo Horizonte.',
+    servicesHeading: 'Recursos de odontologia de precisão no seu tratamento.',
     services: [
-      { id: 'escaneamento-intraoral', title: 'Escaneamento intraoral', text: 'Registro digital das estruturas da boca por meio de um scanner. As imagens podem apoiar o planejamento e a comunicação entre as etapas do tratamento, conforme a indicação.' },
-      { id: 'planejamento-digital-do-sorriso', title: 'Planejamento digital do sorriso', text: 'Recursos digitais auxiliam a análise do sorriso e a discussão das possibilidades de tratamento. Simulações são instrumentos de planejamento e não garantias de resultado.' },
-      { id: 'laboratorio-digital', title: 'Laboratório digital', text: 'Integração entre registros digitais, planejamento e produção de peças odontológicas. Esse fluxo aproxima as informações clínicas e laboratoriais ao longo do cuidado.' },
-      { id: 'proteses-e-restauracoes-digitais', title: 'Próteses e restaurações digitais', text: 'Planejamento e confecção apoiados por recursos digitais, considerando a adaptação, a função e as características de cada caso. A indicação e os ajustes seguem a avaliação clínica.' },
+      { id: 'escaneamento-intraoral', title: 'Escaneamento intraoral', text: 'O scanner intraoral registra digitalmente a superfície dos dentes e da gengiva. Essas imagens ajudam no planejamento e podem substituir moldagens em situações indicadas. A escolha do recurso depende do tipo de tratamento e da avaliação clínica.' },
+      { id: 'planejamento-digital-do-sorriso', title: 'Planejamento digital do sorriso', text: 'Imagens e registros digitais permitem analisar características do sorriso e conversar sobre as mudanças propostas. As simulações ajudam a discutir objetivos e possibilidades. O planejamento considera também a saúde bucal, a mordida e a resposta individual ao tratamento.' },
+      { id: 'laboratorio-digital', title: 'Laboratório digital', text: 'O fluxo digital conecta os registros feitos na clínica ao planejamento e à confecção de peças odontológicas. O compartilhamento dessas informações apoia a comunicação entre dentista e laboratório durante o desenvolvimento e os ajustes do trabalho.' },
+      { id: 'proteses-e-restauracoes-digitais', title: 'Próteses e restaurações digitais', text: 'Recursos digitais podem apoiar o desenho e a confecção de próteses e restaurações. A avaliação define quando esse fluxo é indicado, e o dentista verifica adaptação, contato entre os dentes e características da peça nas etapas clínicas.' },
     ],
-    questions: [ ['A tecnologia substitui a avaliação do dentista?', 'Não. Os recursos digitais apoiam o trabalho clínico. A avaliação, a indicação e o acompanhamento continuam sendo realizados pelos profissionais.'], ['O fluxo digital é utilizado em todos os tratamentos?', 'Os recursos são escolhidos conforme a necessidade de cada caso. Na avaliação, a equipe explica quais ferramentas fazem sentido para o seu planejamento.'] ],
+    relatedLinks: [
+      { label: 'Implantes, próteses e restaurações', href: '/tratamentos/' },
+      { label: 'Facetas e estética do sorriso', href: '/estetica/' },
+      { label: 'Ortodontia e cirurgia', href: '/ortodontia-e-cirurgia/' },
+    ],
+    faqIntro: 'Entenda como os registros digitais participam do planejamento.',
+    questions: [
+      ['O escaneamento intraoral é utilizado em todo tratamento?', 'O dentista escolhe os registros conforme o procedimento e as condições clínicas. Em casos indicados, o escaneamento pode substituir a moldagem tradicional. Outros exames e formas de registro podem ser necessários para completar o planejamento.'],
+      ['A simulação digital mostra exatamente como ficará o resultado?', 'A simulação é uma referência para discutir possibilidades e alinhar expectativas. A execução e a resposta ao tratamento dependem das condições clínicas de cada pessoa. O dentista explica como os registros digitais serão usados no seu planejamento.'],
+    ],
   },
 ];
 export const team = [

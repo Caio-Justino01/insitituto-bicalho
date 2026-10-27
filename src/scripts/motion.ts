@@ -3,13 +3,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
+ScrollTrigger.config({ ignoreMobileResize: true });
 const all = <T extends Element = HTMLElement>(selector: string) => [...document.querySelectorAll<T>(selector)];
 const revealed = new WeakSet<Element>();
 
 export async function initMotion() {
   await document.fonts.ready;
   const media = gsap.matchMedia();
-  media.add({ mobile: '(max-width:999px)', desktop: '(min-width:1000px)', reduced: '(prefers-reduced-motion:reduce)' }, context => {
+  media.add({ mobile: '(max-width:1199px)', desktop: '(min-width:1200px)', reduced: '(prefers-reduced-motion:reduce)' }, context => {
     const { mobile, reduced } = context.conditions!;
     document.body.dataset.motion = reduced ? 'reduced' : 'ready';
     // Interactive tweens may capture an in-flight press as their revert baseline.
@@ -18,8 +19,8 @@ export async function initMotion() {
     if (reduced) return;
     const splits: SplitText[] = [];
     const cleanups: (() => void)[] = [];
-    const distance = mobile ? 24 : 42;
-    const triggerFor = (element: Element) => ({ trigger: element, start: 'top 92%', once: true, onLeave: (self: ScrollTrigger) => { self.animation?.progress(1); } });
+    const distance = mobile ? 14 : 42;
+    const triggerFor = (element: Element) => ({ trigger: element.matches('.unit') ? element.closest('.units') || element : element, start: mobile ? 'top 82%' : 'top 92%', once: true, onLeave: (self: ScrollTrigger) => { self.animation?.progress(1); } });
 
     // SplitText keeps one accessible label, while its visual lines are aria-hidden.
     all('main h1, main section h2').filter(el => !el.closest('.legal')).forEach(heading => {
@@ -39,28 +40,37 @@ export async function initMotion() {
     });
 
     const hero = document.querySelector('.hero, .inner-hero');
-    if (hero && !revealed.has(hero)) {
-      const support = hero.querySelectorAll('.hero-copy>p, .hero-eyebrow, .hero-location, .inner-hero-copy>p');
-      gsap.from(support, { y: 15, opacity: 0, duration: .6, stagger: .055, delay: .15, ease: 'power2.out' });
-      const photograph = hero.querySelector('.hero-photo, .inner-hero-photo');
-      if (photograph) gsap.from(photograph, { y: mobile ? 18 : 30, scale: .97, duration: .8, delay: .12, ease: 'power3.out' });
-      const glass = hero.querySelectorAll('.hero-glass, .photo-tags');
-      if (glass.length) gsap.from(glass, { y: 20, opacity: 0, duration: .6, delay: .35, stagger: .08, ease: 'power3.out' });
-      revealed.add(hero);
+    if (hero) {
+      hero.querySelectorAll('.hero-copy>p, .hero-eyebrow, .hero-location, .inner-hero-copy>p').forEach((element, index) => {
+        if (revealed.has(element)) return;
+        gsap.from(element, { y: mobile ? 10 : 15, opacity: 0, duration: .55, ease: 'power2.out',
+          ...(mobile ? { scrollTrigger: triggerFor(element) } : { delay: .15 + index * .055 }),
+          onComplete: () => { revealed.add(element); },
+        });
+      });
     }
-
-    // Each photograph reveals inside its frame. Never transform the whole scroll surface.
-    all('main .photo').filter(photo => !photo.closest('.hero, .inner-hero')).forEach(photo => {
+    all('main .photo').forEach(photo => {
       if (revealed.has(photo)) return;
-      const timeline = gsap.timeline({ scrollTrigger: triggerFor(photo), onComplete: () => { revealed.add(photo); } });
-      timeline.from(photo, { clipPath: 'inset(8% 0 0 0 round 28px)', y: mobile ? 18 : 28, duration: .75, ease: 'power3.out' });
-      timeline.from(photo.querySelector('img'), { scale: 1.04, duration: .9, ease: 'power2.out' }, 0);
+      const heroPhoto = photo.matches('.hero-photo, .inner-hero-photo');
+      const timeline = gsap.timeline({
+        ...(heroPhoto && !mobile ? { delay: .12 } : { scrollTrigger: triggerFor(photo) }),
+        onComplete: () => { revealed.add(photo); },
+      });
+      timeline.from(photo.querySelector('picture'), {
+        ...(mobile ? { opacity: 0, y: 12 } : { clipPath: 'inset(8% 0 0 0 round 28px)', y: 28 }),
+        duration: mobile ? .6 : .75, ease: 'power3.out',
+      });
+      timeline.from(photo.querySelector('img'), { scale: 1.035, duration: mobile ? .7 : .9, ease: 'power2.out' }, 0);
+      if (heroPhoto) {
+        const overlays = photo.parentElement!.querySelectorAll('.hero-glass, .photo-tags');
+        if (overlays.length) timeline.from(overlays, { y: mobile ? 10 : 20, opacity: 0, duration: .45, stagger: .06, ease: 'power3.out' }, .15);
+      }
     });
 
     all('.institution-copy>p, .section-intro>p, .precision-intro>p, .section-heading>p, .area-card-copy, .unit, .service, .portrait-note').forEach((element, index) => {
       if (revealed.has(element)) return;
       const card = element.matches('.area-card-copy, .unit');
-      gsap.from(element, { opacity: 0, y: card ? distance : 18, x: card && !mobile ? (index % 2 ? 12 : -12) : 0, duration: card ? .7 : .55, ease: 'power3.out', scrollTrigger: triggerFor(element), onComplete: () => { revealed.add(element); } });
+      gsap.from(element, { opacity: 0, y: card ? distance : mobile ? 10 : 18, x: card && !mobile ? (index % 2 ? 12 : -12) : 0, duration: card ? .7 : .55, ease: 'power3.out', scrollTrigger: triggerFor(element), onComplete: () => { revealed.add(element); } });
     });
 
     const steps = all('.digital-flow li');
@@ -142,6 +152,13 @@ export async function initMotion() {
     return () => { dialogObserver.disconnect(); menuObserver.disconnect(); cleanups.forEach(cleanup => cleanup()); splits.forEach(split => split.revert()); steps.forEach(step => step.classList.remove('is-current')); };
   });
   // Refresh document geometry after native details and image decodes as well.
-  document.addEventListener('toggle', () => ScrollTrigger.refresh(), true);
-  all<HTMLImageElement>('img').forEach(img => { if (!img.complete) img.addEventListener('load', () => ScrollTrigger.refresh(), { once: true }); });
+  let refreshTimer: ReturnType<typeof setTimeout>;
+  const refresh = () => { clearTimeout(refreshTimer); refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 120); };
+  document.addEventListener('toggle', refresh, true);
+  all<HTMLImageElement>('img').forEach(img => { if (!img.complete) img.addEventListener('load', refresh, { once: true }); });
+  let layoutWidth = document.documentElement.clientWidth;
+  new ResizeObserver(() => {
+    const width = document.documentElement.clientWidth;
+    if (width !== layoutWidth) { layoutWidth = width; refresh(); }
+  }).observe(document.documentElement);
 }
