@@ -1,8 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SplitText } from 'gsap/SplitText';
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ ignoreMobileResize: true });
 const all = <T extends Element = HTMLElement>(selector: string) => [...document.querySelectorAll<T>(selector)];
 const revealed = new WeakSet<Element>();
@@ -17,26 +16,18 @@ export async function initMotion() {
     // Always restore the resting CTA before rebuilding or disabling motion.
     gsap.set('[data-booking-cta], [data-booking-cta] .brand-button-symbol', { clearProps: 'transform,backgroundColor' });
     if (reduced) return;
-    const splits: SplitText[] = [];
     const cleanups: (() => void)[] = [];
     const distance = mobile ? 14 : 42;
     const triggerFor = (element: Element) => ({ trigger: element.matches('.unit') ? element.closest('.units') || element : element, start: mobile ? 'top 82%' : 'top 92%', once: true, onLeave: (self: ScrollTrigger) => { self.animation?.progress(1); } });
 
-    // SplitText keeps one accessible label, while its visual lines are aria-hidden.
+    // Animate the heading as a whole so CSS owns its balanced, accessible lines.
     all('main h1, main section h2').filter(el => !el.closest('.legal')).forEach(heading => {
       if (revealed.has(heading)) return;
       const hero = !!heading.closest('.hero, .inner-hero');
-      const split = SplitText.create(heading, {
-        type: 'lines', mask: 'lines', linesClass: 'motion-line', aria: 'auto', autoSplit: true,
-        onSplit(self) {
-          if (revealed.has(heading)) return;
-          return gsap.from(self.lines, { yPercent: 110, duration: mobile ? .65 : .8, stagger: .075, ease: 'power3.out',
-            ...(hero ? { delay: .03 } : { scrollTrigger: triggerFor(heading) }),
-            onComplete: () => { revealed.add(heading); },
-          });
-        },
+      gsap.from(heading, { y: mobile ? 10 : 18, opacity: 0, duration: mobile ? .65 : .8, ease: 'power3.out',
+        ...(hero ? { delay: .03 } : { scrollTrigger: triggerFor(heading) }),
+        onComplete: () => { revealed.add(heading); },
       });
-      splits.push(split);
     });
 
     const hero = document.querySelector('.hero, .inner-hero');
@@ -149,7 +140,7 @@ export async function initMotion() {
     const menuObserver = new MutationObserver(() => context.animateMenu());
     menuObserver.observe(menu, { attributes: true, attributeFilter: ['hidden'] });
     ScrollTrigger.refresh();
-    return () => { dialogObserver.disconnect(); menuObserver.disconnect(); cleanups.forEach(cleanup => cleanup()); splits.forEach(split => split.revert()); steps.forEach(step => step.classList.remove('is-current')); };
+    return () => { dialogObserver.disconnect(); menuObserver.disconnect(); cleanups.forEach(cleanup => cleanup()); steps.forEach(step => step.classList.remove('is-current')); };
   });
   // Refresh document geometry after native details and image decodes as well.
   let refreshTimer: ReturnType<typeof setTimeout>;

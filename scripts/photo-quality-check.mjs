@@ -69,7 +69,7 @@ try {
         });
         assert(result.ratio >= .98, JSON.stringify({ width, dpr, route, ...result }));
         checks.push({ width, dpr, route, ...result });
-        if (route === '/' && dpr === 3 && [390, 1366].includes(width) && [0, 6, 7, 8].includes(index)) {
+        if (route === '/' && dpr === 3 && [390, 1366].includes(width) && await photo.evaluate(el => el.matches('.hero-photo,.partner-photos .photo,.precision-photo,.area-card-3 .photo,.area-card-4 .photo'))) {
           await photo.screenshot({ path: `artifacts/photo-quality/${width}-photo-${index}.png` });
         }
       }

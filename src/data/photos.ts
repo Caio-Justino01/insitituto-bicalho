@@ -16,6 +16,7 @@ export const media = {
   servicePrecision: { src: 'official-service-precisao', title: 'Consultório com mesa de avaliação do Instituto Bicalho', alt: 'Consultório do Instituto Bicalho com mesa de avaliação, bancada e cadeira odontológica', position: '65% 56%', width: 1600, height: 1066, original: 'official-20261026/DSC00991.jpg' },
   partnerOne: { src: 'partner-01', title: 'Retrato institucional de sócio do Instituto Bicalho', alt: 'Sócio do Instituto Bicalho em retrato institucional', position: '50% 27%', width: 1600, height: 2400, original: 'partner-01.jpg' },
   partnerTwo: { src: 'partner-02', title: 'Retrato institucional de sócia do Instituto Bicalho', alt: 'Sócia do Instituto Bicalho em retrato institucional', position: '50% 28%', width: 1600, height: 2400, original: 'partner-02.jpg' },
+  partnersTogether: { src: 'official-partners-together', title: 'Dr. Bruno Bicalho e Dra. Roberta Souza Carneiro', alt: 'Dr. Bruno Bicalho e Dra. Roberta Souza Carneiro juntos em retrato institucional', position: '50% 30%', width: 1600, height: 2400, original: 'official-20261026/THA02227-Editar-Editar.jpg' },
   professional: { src: 'professional-01', title: 'Retrato de profissional do Instituto Bicalho', alt: 'Profissional do Instituto Bicalho em retrato institucional', position: '50% 28%', width: 1600, height: 2400, original: 'professional-01.jpg' },
 } satisfies Record<string, PhotoDefinition>;
 
@@ -26,9 +27,9 @@ export const photoWidths = (photo: PhotoDefinition) => photo.src.startsWith('off
 // Account for the full raster behind object-fit:cover, including the approved zoomed crops.
 // These server-rendered fallbacks also work before JavaScript and with scripts disabled.
 export const photoSizes = {
-  hero: '(min-width: 1024px) 661px, (min-width: 600px) max(calc(100vw - 64px), 631px), max(calc(100vw - 40px), clamp(421px, 114vw, 541px))',
-  innerLandscape: '(min-width: 1024px) 721px, (min-width: 600px) max(calc(100vw - 64px), 511px), max(calc(100vw - 40px), 511px)',
-  innerPortrait: '(min-width: 1328px) 567px, (min-width: 1024px) calc((100vw - 128px) / 2.12), (min-width: 600px) calc(100vw - 64px), calc(100vw - 40px)',
+  hero: '(min-width: 1200px) 661px, (min-width: 600px) max(calc(100vw - 56px), 631px), max(calc(100vw - 40px), clamp(421px, 114vw, 541px))',
+  innerLandscape: '(min-width: 1200px) 721px, (min-width: 600px) max(calc(100vw - 56px), 511px), max(calc(100vw - 40px), 511px)',
+  innerPortrait: '(min-width: 1304px) 567px, (min-width: 1200px) calc((100vw - 104px) / 2.12), (min-width: 600px) calc(100vw - 56px), calc(100vw - 40px)',
   area: [
     '(min-width: 1024px) 735px, (min-width: 768px) max(calc((100vw - 82px) / 2), 374px), (min-width: 600px) calc(100vw - 64px), max(calc(100vw - 40px), 374px)',
     '(min-width: 768px) 841px, (min-width: 600px) max(calc(100vw - 64px), 631px), max(calc(100vw - 40px), 586px)',

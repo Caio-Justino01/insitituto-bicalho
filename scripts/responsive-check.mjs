@@ -21,7 +21,8 @@ try {
         const layout = await page.evaluate(() => {
           const box = el => el.getBoundingClientRect();
           const cards = [...document.querySelectorAll('.unit-heading')].map(el => {
-            const icon = box(el.querySelector('.circle-icon')), label = box(el.querySelector('.eyebrow'));
+            const iconElement=el.querySelector('.circle-icon'); if(getComputedStyle(iconElement).display==='none')return 0;
+            const icon = box(iconElement), label = box(el.querySelector('.eyebrow'));
             return Math.abs(icon.top + icon.height / 2 - label.top - label.height / 2);
           });
           return {

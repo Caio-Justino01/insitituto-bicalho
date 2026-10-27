@@ -1,0 +1,52 @@
+[
+  {
+    "route": "/",
+    "blocks": 148,
+    "sha256": "61330a7527e271b213851ffe4a116920c75d00008b7a8a26e8001823d6a84f18"
+  },
+  {
+    "route": "/tratamentos/",
+    "blocks": 126,
+    "sha256": "102b01bcc98cd5485661a6570ae4685ae1a569e195d0d42140852aab3995a5b5"
+  },
+  {
+    "route": "/estetica/",
+    "blocks": 106,
+    "sha256": "3647165b38c6b6f08829f9c86c031c8d6f9b1a961e6a925107805e7d651ee9a4"
+  },
+  {
+    "route": "/ortodontia-e-cirurgia/",
+    "blocks": 127,
+    "sha256": "2ddd28849331f4d44085fa6e1180a07886bb431911756d671da193ba19876562"
+  },
+  {
+    "route": "/odontologia-de-precisao/",
+    "blocks": 106,
+    "sha256": "1635a9ce52841975c2ed64345efec9a73f45746b1713a7bef5f6e3f36f04902b"
+  },
+  {
+    "route": "/contato/",
+    "blocks": 69,
+    "sha256": "b3d996d469a9ec3ee60c2fcff1c9a9f6bd444f49954c627eadb1886515e488d8"
+  },
+  {
+    "route": "/politica-de-privacidade/",
+    "blocks": 74,
+    "sha256": "16f6915e92406f6e8667948810cdfe8ddf2e6a36330185e9121a5db33e0a27dc"
+  },
+  {
+    "route": "/termos-de-uso/",
+    "blocks": 68,
+    "sha256": "b7b5e45a649d7ff3063b2605700f1799e9f0b527277d1fed54815417fcc2e33e"
+  },
+  {
+    "route": "/politica-de-cookies/",
+    "blocks": 69,
+    "sha256": "7edf33eec64975d760a706fc6e00985a970f7abaa2f9fca6b6bd459dcdc891b1"
+  },
+  {
+    "route": "/404.html",
+    "blocks": 60,
+    "sha256": "5b10a854628ef0ccf90493d5f2492d5ed4c8c250bf72fb12a75dd449e95ac80d"
+  }
+]

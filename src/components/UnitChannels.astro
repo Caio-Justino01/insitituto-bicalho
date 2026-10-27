@@ -1,11 +1,12 @@
 ---
+import Text from './TypographyText.astro';
 import { whatsapp, type Unit } from '../data/content';
 import Icon from './Icon.astro';
 interface Props { unit: Unit; position: string; compact?: boolean; label?: string }
 const { unit, position, compact = false, label = 'Conversar pelo WhatsApp' } = Astro.props;
 ---
 <div class="unit-channels">
-  {!compact && <p class="unit-channel-note">Agendamento e dúvidas com a equipe pelo WhatsApp.</p>}
-  <a class="button" href={whatsapp(unit.phone)} target="_blank" rel="noopener noreferrer" data-whatsapp={unit.id} data-position={position}>{label}<Icon name="chat" size={20}/></a>
+  {!compact && <p class="unit-channel-note"><Text text="Agendamento e dúvidas com a equipe pelo WhatsApp."/></p>}
+  <a class="button" href={whatsapp(unit.phone)} target="_blank" rel="noopener noreferrer" data-whatsapp={unit.id} data-position={position}><span><Text text={label}/></span><Icon name="chat" size={20}/></a>
 </div>
 <a class="unit-phone" href={`tel:+${unit.phone}`}>{unit.display}</a>

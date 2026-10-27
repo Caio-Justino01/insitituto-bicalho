@@ -1,12 +1,13 @@
 ---
+import Text from '../components/TypographyText.astro';
 import Layout from '../layouts/Layout.astro';
 import Units from '../components/Units.astro';
 ---
 <Layout title="Contato e unidades" description="Clínica odontológica em João Monlevade e Belo Horizonte. Consulte endereços, telefones e fale com o Instituto Bicalho para agendar uma avaliação.">
   <section class="container contact-intro" aria-labelledby="contact-heading">
     <nav class="breadcrumb" aria-label="Caminho da página"><a href="/">Início</a><span aria-hidden="true">/</span><span aria-current="page">Contato</span></nav>
-    <h1 id="contact-heading">Fale com o Instituto Bicalho</h1>
-    <p>Escolha a clínica odontológica em João Monlevade ou Belo Horizonte e fale com a equipe pelo WhatsApp. Você pode solicitar uma avaliação com o dentista e esclarecer dúvidas sobre o atendimento na unidade de sua preferência. Para consultar um tratamento específico, informe à equipe a unidade em que deseja atendimento.</p>
+    <h1 id="contact-heading"><Text keepEnd={false} text="Fale com o Instituto Bicalho"/></h1>
+    <p><Text text="Escolha a clínica odontológica em João Monlevade ou Belo Horizonte e fale com a equipe pelo WhatsApp. Você pode solicitar uma avaliação com o dentista e esclarecer dúvidas sobre o atendimento na unidade de sua preferência. Para consultar um tratamento específico, informe à equipe a unidade em que deseja atendimento."/></p>
   </section>
   <Units contactFirst position="contact-units"/>
 </Layout>

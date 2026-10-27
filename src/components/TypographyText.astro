@@ -1,0 +1,25 @@
+---
+interface Props { text: string; keepEnd?: boolean }
+const { text, keepEnd = true } = Astro.props;
+// Only add inline layout groups. Every original character, including spaces, is retained.
+const groups = [...text.matchAll(/(?:João Monlevade|Belo Horizonte|Instituto Bicalho)[.,;:!?]?|\S+-\S+/g)]
+  .map(match => ({ start: match.index!, end: match.index! + match[0].length }));
+const ending = keepEnd ? /\S+\s+\S+\s*$/.exec(text) : null;
+if (ending) groups.push({ start: ending.index, end: ending.index + ending[0].length });
+groups.sort((a, b) => a.start - b.start);
+const merged: { start: number; end: number }[] = [];
+for (const group of groups) {
+  const previous = merged.at(-1);
+  if (previous && group.start < previous.end) previous.end = Math.max(previous.end, group.end);
+  else merged.push({ ...group });
+}
+const parts: { text: string; keep: boolean }[] = [];
+let offset = 0;
+for (const group of merged) {
+  if (group.start > offset) parts.push({ text: text.slice(offset, group.start), keep: false });
+  parts.push({ text: text.slice(group.start, group.end), keep: true });
+  offset = group.end;
+}
+if (offset < text.length) parts.push({ text: text.slice(offset), keep: false });
+---
+{parts.map(part => part.keep ? <span class:list={['text-keep', { 'text-word': /[A-Za-zÀ-ÿ]+-[A-Za-zÀ-ÿ]+/.test(part.text) && !/\s/.test(part.text) }]}>{part.text}</span> : part.text)}

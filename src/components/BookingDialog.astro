@@ -1,14 +1,15 @@
 ---
+import Text from './TypographyText.astro';
 import { units, whatsapp } from '../data/content';
 import Icon from './Icon.astro';
 ---
 <dialog id="booking-dialog" aria-labelledby="booking-title">
   <div class="dialog-body">
     <button type="button" class="icon-button dialog-close" aria-label="Fechar agendamento"><Icon name="close"/></button>
-    <h2 id="booking-title">Agende pelo WhatsApp</h2>
+    <h2 id="booking-title"><Text text="Agende pelo WhatsApp"/></h2>
     <div data-booking-units>
-      <p class="booking-intro">Escolha a unidade. Nossa equipe ajuda você a agendar sua avaliação.</p>
-      <div class="booking-options">{units.map(unit => <a href={whatsapp(unit.phone)} target="_blank" rel="noopener noreferrer" data-whatsapp={unit.id} data-position="dialog"><Icon name="chat"/><span><strong>{unit.name}</strong><small>{unit.display}</small></span><Icon name="arrow" size={20}/></a>)}</div>
+      <p class="booking-intro"><Text text="Escolha a unidade. Nossa equipe ajuda você a agendar sua avaliação."/></p>
+      <div class="booking-options">{units.map(unit => <a href={whatsapp(unit.phone)} target="_blank" rel="noopener noreferrer" data-whatsapp={unit.id} data-position="dialog"><Icon name="chat"/><span><strong><Text text={unit.name}/></strong><small>{unit.display}</small></span><Icon name="arrow" size={20}/></a>)}</div>
     </div>
   </div>
 </dialog>

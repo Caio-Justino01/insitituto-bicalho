@@ -1,11 +1,9 @@
 .contact-intro{padding-block:32px 24px}
 .contact-intro .breadcrumb{margin-bottom:20px}
-.contact-intro h1{max-width:20ch;overflow-wrap:anywhere}
-.contact-intro>p{max-width:58ch;margin-top:20px;font-size:1rem;line-height:1.7}
+.contact-intro>p{max-width:58ch;margin-top:20px}
 .contact-units{padding-top:16px}
 .contact-units .units-layout{max-width:1020px}
 .contact-units .unit{min-width:0}
-.contact-units .unit h2{font-size:1.5rem;letter-spacing:-.035em;overflow-wrap:anywhere}
 .contact-units .unit-heading .circle-icon{margin-bottom:0}
 .contact-units .unit address{min-height:0;margin:14px 0 18px}
 .contact-units .unit-channels{margin-top:0}
@@ -19,7 +17,4 @@
 @media(min-width:600px){.contact-units .unit address{min-height:84px}}
 @media(min-width:1000px){
   .contact-intro{max-width:1020px;padding-block:52px 24px}
-  .contact-intro h1{font-size:clamp(2.75rem,3.6vw,3.25rem)}
-  .contact-intro>p{font-size:1.125rem}
-  .contact-units .unit h2{font-size:1.75rem}
 }

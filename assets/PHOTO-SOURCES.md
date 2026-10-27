@@ -18,8 +18,9 @@ Material fornecido pelo cliente em 26/10/2026, com 36 JPGs. Originais preservado
 | consultior4.jpg | DSC01054.jpg | official-service-estetica | Faixa fotográfica de Estética: consultório com espelho |
 | DSC00998.jpg | DSC00998.jpg | official-service-ortodontia | Faixa fotográfica de Ortodontia e Cirurgia: cadeira e estrutura clínica |
 | consultorio2.jpg | DSC00991.jpg | official-service-precisao | Faixa fotográfica de Odontologia de Precisão: consultório com mesa de avaliação |
+| THA02227-Editar-Editar.jpg | THA02227-Editar-Editar.jpg | official-partners-together | Foto conjunta dos sócios na seção institucional da Home, legenda abaixo |
 
-Os retratos institucionais reais já aprovados na seção dos sócios foram mantidos. A nova seleção não associa retratos individuais a nomes ou especialidades sem identificação fornecida pelo cliente.
+A seção institucional dos sócios usa agora a foto conjunta THA02227-Editar-Editar.jpg, indicada pelo cliente, em uma moldura 4:5 de até 420 px. Os dois rostos foram preservados e a legenda completa permanece abaixo da imagem. Os retratos individuais anteriores não aparecem nessa seção.
 
 Os nomes indicados pelo cliente correspondem aos mesmos arquivos originais, conferidos por SHA-256. A imagem de procedimento mais escura (THA03315.jpg / atnedimento 4.jpg) e os retratos de estúdio usados antes na hero e em Estética saíram dos destaques. Nem todas as fotos recebidas precisam aparecer no site.
 

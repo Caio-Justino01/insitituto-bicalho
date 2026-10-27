@@ -1,17 +1,18 @@
 ---
+import Text from './TypographyText.astro';
 import Photo from './Photo.astro';
 import Icon from './Icon.astro';
 import { photoSizes } from '../data/photos';
 ---
 <section class="section precision" aria-labelledby="precision-heading">
   <div class="container">
-    <div class="precision-intro"><div><span class="eyebrow">Odontologia de Precisão</span><h2 id="precision-heading">Planejamento digital <br/><span>antes de qualquer procedimento.</span></h2></div><p>O escaneamento intraoral substitui a moldagem tradicional e alimenta o planejamento digital, do dente único à reabilitação completa.</p></div>
+    <div class="precision-intro"><div><span class="eyebrow">Odontologia de Precisão</span><h2 id="precision-heading"><Text keepEnd={false} text="Planejamento digital "/><br/><span><Text keepEnd={false} text="antes de qualquer procedimento."/></span></h2></div><p><Text text="O escaneamento intraoral substitui a moldagem tradicional e alimenta o planejamento digital, do dente único à reabilitação completa."/></p></div>
     <div class="precision-stage"><Photo name="clinic" class="precision-photo" sizes={photoSizes.wide}/></div>
     <div class="precision-note glass"><Icon name="scan" size={30}/><span>Imagem digital.<br/><strong>Base para o plano de tratamento.</strong></span></div>
     <ol class="digital-flow">
-      <li><span class="flow-number">01</span><svg class="flow-connection" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0L100 100" pathLength="100" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/></svg><div><h3>Escaneamento</h3><p>Captura intraoral digital.</p><small>Substitui a moldagem tradicional e registra a arcada em poucos minutos.</small></div></li>
-      <li><span class="flow-number">02</span><svg class="flow-connection" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0L100 100" pathLength="100" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/></svg><div><h3>Planejamento</h3><p>Simulação do tratamento.</p><small>A equipe define etapas e antecipa o resultado antes de iniciar o procedimento.</small></div></li>
-      <li><span class="flow-number">03</span><div><h3>Execução</h3><p>Procedimento guiado pelo plano.</p><small>O tratamento segue o planejamento definido com o paciente.</small></div></li>
+      <li><span class="flow-number">01</span><svg class="flow-connection" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0L100 100" pathLength="100" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/></svg><div><h3><Text keepEnd={false} text="Escaneamento"/></h3><p><Text text="Captura intraoral digital."/></p><small>Substitui a moldagem tradicional e registra a arcada em poucos minutos.</small></div></li>
+      <li><span class="flow-number">02</span><svg class="flow-connection" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0L100 100" pathLength="100" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke"/></svg><div><h3><Text keepEnd={false} text="Planejamento"/></h3><p><Text text="Simulação do tratamento."/></p><small>A equipe define etapas e antecipa o resultado antes de iniciar o procedimento.</small></div></li>
+      <li><span class="flow-number">03</span><div><h3><Text keepEnd={false} text="Execução"/></h3><p><Text text="Procedimento guiado pelo plano."/></p><small>O tratamento segue o planejamento definido com o paciente.</small></div></li>
     </ol>
     <a class="button button-light" href="/odontologia-de-precisao/">Conheça o fluxo digital<Icon name="arrow" size={19}/></a>
   </div>

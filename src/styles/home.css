@@ -1,23 +1,12 @@
 /* Longer client copy stays readable without changing the service-page typography. */
-.home-page .hero h1{font-size:clamp(2.125rem,8.5vw,2.25rem);max-width:none;line-height:1.15;letter-spacing:-.045em;text-wrap:initial}
 .home-page .hero-copy>p{max-width:46ch}
-.home-page main :is(h1,h2,h3){overflow-wrap:anywhere}
 .home-page :is(.hero-layout,.institution-layout,.section-intro,.precision-intro,.units-layout)>*{min-width:0}
-.home-page main section h2{font-size:clamp(2.125rem,8.6vw,2.5rem)}
-.home-page .institution-copy p{max-width:52ch;font-size:1rem;line-height:1.7}
-.home-page .institution-copy .lead-copy{font-size:1.125rem;max-width:40ch;line-height:1.5}
-.home-page .portrait-note{font-size:.875rem;line-height:1.5;text-align:center}
+.home-page .institution-copy p{max-width:52ch}
+.home-page .institution-copy .lead-copy{max-width:40ch}
+.home-page .portrait-note{text-align:center}
 .home-page .portrait-note>span:last-child{min-width:0}
-.home-page .digital-flow small{font-size:.875rem;line-height:1.6}
 .home-page .team-person{min-width:0}
 .service-related{max-width:100%;margin-top:18px}
-@media(min-width:600px) and (max-width:999px){
-  .home-page .hero h1{font-size:clamp(2.75rem,5.5vw,3.25rem);max-width:24ch}
-  .home-page main section h2{font-size:clamp(2.5rem,5.5vw,3rem)}
-}
 @media(min-width:1000px){
   .home-page .hero-layout{grid-template-columns:1.12fr 1fr}
-  .home-page .hero h1{font-size:clamp(2.75rem,4vw,3.5rem);max-width:22ch}
-  .home-page main section h2{font-size:clamp(2.75rem,3.6vw,3.25rem)}
-  .home-page .institution-copy .lead-copy{font-size:1.25rem}
 }
