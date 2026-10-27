@@ -17,7 +17,8 @@
     "test:seo": "node scripts/seo-check.mjs",
     "test:responsive": "node scripts/responsive-check.mjs",
     "test:typography": "node scripts/typography-check.mjs",
-    "test:copy": "node scripts/copy-check.mjs"
+    "test:copy": "node scripts/copy-check.mjs",
+    "photos:copyright": "node scripts/photo-copyright.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
+    "exiftool-vendored": "^39.0.1",
     "lighthouse": "^13.5.0"
   },
   "engines": {

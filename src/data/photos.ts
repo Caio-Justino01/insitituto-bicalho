@@ -1,4 +1,5 @@
 export type PhotoDefinition = { src: string; title: string; alt: string; position: string; width: number; height: number; original: string };
+export const photoCopyright = 'Instituto Bicalho Odontologia de Precisão';
 
 // Descriptions identify what is visible; they do not infer procedures or authorship.
 export const media = {

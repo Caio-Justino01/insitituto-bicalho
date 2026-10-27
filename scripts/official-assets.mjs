@@ -1,6 +1,8 @@
 import sharp from 'sharp';
 import { existsSync } from 'node:fs';
 import { media, photoWidths } from '../src/data/photos.ts';
+import { exiftool } from 'exiftool-vendored';
+import { writePhotoCopyright } from './photo-rights.mjs';
 
 // Keep originals unchanged and describe only the visible content in published files.
 const escape = value => value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[char]);
@@ -8,6 +10,7 @@ const xmp = photo => `<x:xmpmeta xmlns:x="adobe:ns:meta/"><rdf:RDF xmlns:rdf="ht
 
 const requested = new Set(process.argv.slice(2));
 const missingOnly = requested.delete('--missing');
+try {
 for (const photo of Object.values(media).filter(photo => !requested.size || requested.has(photo.src))) {
   const input = `assets/originals/${photo.original}`;
   const original = await sharp(input).metadata();
@@ -17,6 +20,8 @@ for (const photo of Object.values(media).filter(photo => !requested.size || requ
     if (missingOnly && ['webp', 'avif'].every(extension => existsSync(`public/assets/${photo.src}-${width}.${extension}`))) continue;
     await sharp(input).rotate().resize({ width, withoutEnlargement: true }).withXmp(xmp(photo)).webp({ quality: 92, effort: 5 }).toFile(`public/assets/${photo.src}-${width}.webp`);
     await sharp(input).rotate().resize({ width, withoutEnlargement: true }).withXmp(xmp(photo)).avif({ quality: 72, effort: 5 }).toFile(`public/assets/${photo.src}-${width}.avif`);
+    for (const extension of ['webp','avif']) await writePhotoCopyright(exiftool, `public/assets/${photo.src}-${width}.${extension}`);
   }
   console.log('Optimized official photograph with XMP:', photo.src);
 }
+} finally { await exiftool.end(); }

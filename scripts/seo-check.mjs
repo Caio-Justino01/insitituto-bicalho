@@ -1,8 +1,9 @@
 import { chromium } from '@playwright/test';
 import assert from 'node:assert/strict';
 import sharp from 'sharp';
+import { exiftool } from 'exiftool-vendored';
 import { mkdir, writeFile } from 'node:fs/promises';
-import { media, photoWidths } from '../src/data/photos.ts';
+import { media, photoWidths, photoCopyright } from '../src/data/photos.ts';
 
 const base = process.env.TEST_URL || 'http://127.0.0.1:4321';
 const routes = ['/', '/tratamentos/', '/estetica/', '/ortodontia-e-cirurgia/', '/odontologia-de-precisao/', '/contato/', '/politica-de-privacidade/', '/termos-de-uso/', '/politica-de-cookies/', '/404.html'];
@@ -73,22 +74,29 @@ try {
         const file = `public/assets/${photo.src}-${width}.${extension}`;
         const metadata = await sharp(file).metadata();
         assert.equal(metadata.width, width, file);
-        assert(!metadata.exif, `${file} must not copy private EXIF fields`);
+        const tags = await exiftool.read(file, { groupNames: true });
+        assert.equal(tags['EXIF:Copyright'], photoCopyright, `${file}: copyright field`);
+        assert.equal(tags['XMP:Rights'], photoCopyright, `${file}: XMP copyright`);
+        assert.equal(tags['XMP:Rights-pt-BR'], photoCopyright, `${file}: Portuguese copyright`);
+        // The newly requested copyright and the structural YCbCr default are public.
+        // Do not reintroduce camera data, GPS, serial numbers or capture dates.
+        assert.deepEqual(Object.keys(tags).filter(key => key.startsWith('EXIF:') && !['EXIF:Copyright','EXIF:YCbCrPositioning'].includes(key)), [], `${file}: private EXIF fields`);
         assert(metadata.xmp, `${file} is missing its photo description`);
         images.push({ file, xml: metadata.xmp.toString('utf8'), title: photo.title, description: photo.alt });
       }
     }
   }
-  const invalidXmp = await page.evaluate(photos => photos.flatMap(photo => {
+  const invalidXmp = await page.evaluate(({ photos, copyright }) => photos.flatMap(photo => {
     const xml = new DOMParser().parseFromString(photo.xml, 'application/xml');
     const dc = 'http://purl.org/dc/elements/1.1/';
     const text = field => xml.getElementsByTagNameNS(dc, field)[0]?.textContent;
-    return xml.querySelector('parsererror') || !text('title')?.includes(photo.title) || !text('description')?.includes(photo.description) ? [photo.file] : [];
-  }), images);
+    return xml.querySelector('parsererror') || !text('title')?.includes(photo.title) || !text('description')?.includes(photo.description) || !text('rights')?.includes(copyright) ? [photo.file] : [];
+  }), { photos: images, copyright: photoCopyright });
   assert.deepEqual(invalidXmp, []);
   await mkdir('artifacts/release-review', { recursive: true });
-  await writeFile('artifacts/release-review/seo-verification.json', JSON.stringify({ pages: results, imageFiles: images.length, invalidXmp }, null, 2));
+  await writeFile('artifacts/release-review/seo-verification.json', JSON.stringify({ pages: results, imageFiles: images.length, copyright: photoCopyright, invalidXmp }, null, 2));
   console.log(`PASS: ${routes.length} pages, canonical/OG/Twitter/JSON-LD, official Maps links, and ${images.length} WebP/AVIF files with verified XMP.`);
 } finally {
   await browser.close();
+  await exiftool.end();
 }

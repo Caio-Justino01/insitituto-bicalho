@@ -4,6 +4,8 @@ Site institucional em Astro + TypeScript, com HTML estático, seis páginas prin
 
 ## Revisão atual — composição original e fotos oficiais
 
+Os 194 derivados fotográficos têm o campo de direitos autorais “Instituto Bicalho Odontologia de Precisão”, conforme solicitado pelo usuário, em EXIF Copyright e XMP dc:rights. `npm run photos:copyright` edita somente os metadados e verifica que os pixels decodificados não mudaram. Os originais ficam intactos. `npm run test:seo` valida o campo, os títulos e as descrições, sem permitir a inclusão de dados privados da câmera. A exibição de System.Copyright foi conferida no Windows para os dois formatos. Isso não altera o bloqueio atual de indexação.
+
 `src/styles/typography.css` reúne a escala de fontes em rem, entrelinhas, larguras e espaçamentos. As aberturas usam uma coluna abaixo de 1200 px e duas acima. Títulos usam balanceamento; `TypographyText.astro` preserva os caracteres originais e mantém cidades, palavras com hífen e pares finais juntos quando há espaço. Em texto ampliado, os grupos podem ocupar mais linhas. Cartões, serviços, rodapé e painéis deixam o texto utilizar a largura disponível.
 
 A seção institucional da Home usa uma única foto conjunta dos sócios, `THA02227-Editar-Editar.jpg`, em moldura 4:5 de até 420 px. A legenda completa fica abaixo. Os dez derivados novos, WebP/AVIF de 480 a 1920 px, preservam os rostos e o original, com descrição alternativa e XMP. As demais fotografias permanecem nas posições aprovadas.
